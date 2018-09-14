@@ -6,69 +6,38 @@ import java.util.Stack;
 
 public class Game
 {	
-	public static void create_deck(Card[] deck, int index)
-	{
-		/* create the deck, 1406 */
-		for(int r=2; r<=14; r+=1)
-		{
-			for(int s=0; s<4; s+=1)
-			{
-				deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
-			}
-		}
-	}
 	
-	public static void shuffle_deck(Card[] deck)
+	public static void play()
 	{
-		/* shuffle the deck, 1406 */
-		Random rnd = new Random();
-		Card swap;
-		for(int i = deck.length-1; i>=0; i=i-1)
-		{
-			int pos = rnd.nextInt(i+1);
-			swap = deck[pos];
-			deck[pos] = deck[i];
-			deck[i] = swap;
-		}
-	}
-	
-	public static void populate_draw_pile(Stack<Card> draw_pile, Card[] deck, int deck_size)
-	{
-		for(int i = 0; i < deck_size; ++i){draw_pile.push(deck[i]);}
+		// Collect cards and shuffle deck
+		// Deal cards
+		// Player turn
+		// Dealer's turn
+		// When win/lose give option to play again
+		// If play again == y, recursive call to play()
+		// Else, return
 	}
 		
 	public static void main(String[] args)
-	{
-		int deck_size = 52; 
-		Card[] deck = new Card[deck_size]; //1406
-		int index = 0; //1406
-//		boolean endGame = false; //1406, should change and depend one player win or loss
-
-		create_deck(deck, index);
-		shuffle_deck(deck);
+	{	
+		Deck deck = new Deck();
+		deck.populate_deck();
+		//deck.shuffle_deck();
+		deck.populate_draw_pile();
+		deck.show_deck(42, deck.deck_size);
 		
-		Stack<Card> draw_pile = null; //1406
-		draw_pile = new Stack<Card>();
-		populate_draw_pile(draw_pile, deck, deck_size);
-		
-		System.out.println("deck is: " + Arrays.toString(Arrays.copyOfRange(deck, 42, deck_size)));
-		
-//		while(!draw_pile.isEmpty()){System.out.println("Card is " + draw_pile.pop().toString());}
-//		while(endGame = false){}
-//		for(int i = 0; i < deck_size; ++i){System.out.println("Card " + i + " is " + deck[i]);}
-		
-		Player guest = new Player(null);
-		guest.draw(draw_pile);
-		guest.draw(draw_pile);
+		Player guest = new Player();
+		guest.draw(deck.draw_pile);
+		guest.draw(deck.draw_pile);
 		guest.show_cards();
-		System.out.println("Guest's count is: " + guest.count_cards());
-//		System.out.println("Top of draw pile is: " + draw_pile.peek().toString());
+		guest.show_count();
+		deck.peek_draw_pile();
 		
-		Dealer dealer = new Dealer(null);
-		dealer.draw(draw_pile);
-		dealer.draw(draw_pile);
+		Dealer dealer = new Dealer();
+		dealer.draw(deck.draw_pile);
+		dealer.draw(deck.draw_pile);
 		dealer.show_cards();
-		System.out.println("Dealer's count is: " + dealer.count_cards());
-//		System.out.println("Top of draw pile is: " + draw_pile.peek().toString());
+		dealer.show_count();
+		deck.peek_draw_pile();
 	}
 }

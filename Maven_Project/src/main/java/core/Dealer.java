@@ -1,11 +1,11 @@
 package core;
 
-import java.util.ArrayList;
+// Instead of dealer class I could have a player named "guest" and another "house"
 
 public class Dealer extends Player
 {
-	public Dealer(ArrayList<Card> cards_on_table)
+	public Dealer()
 	{
-		super(cards_on_table);
+		super();
 	}
 }
