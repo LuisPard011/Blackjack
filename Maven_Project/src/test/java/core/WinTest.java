@@ -16,5 +16,15 @@ public class WinTest extends TestCase{
 		guest.draw(deck.draw_pile);
 		assertEquals("HA", deck.draw_pile.peek().toString());
 	}
+	
+	public void testCount()
+	{
+		Player guest = new Player();
+		Card ace_s = new Card("Spades", "Ace");
+		Card ace_d = new Card("Diamonds", "Ace");
+		guest.cards_on_table.add(ace_s);
+		guest.cards_on_table.add(ace_d);
+		assertEquals(12, guest.count_cards());
+	}
 
 }

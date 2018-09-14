@@ -22,7 +22,7 @@ public class Game
 	{	
 		Deck deck = new Deck();
 		deck.populate_deck();
-		//deck.shuffle_deck();
+		deck.shuffle_deck();
 		deck.populate_draw_pile();
 		deck.show_deck(42, deck.deck_size);
 		
