@@ -22,7 +22,25 @@ public class Player
 		int sum = 0;
 		for(int i = 0; i < this.cards_on_table.size(); ++i)
 		{
-			sum += this.cards_on_table.get(i).getRank();
+			if(cards_on_table.get(i).getRank() < 11)
+			{
+				sum += cards_on_table.get(i).getRank();
+			}
+			else
+			{
+				switch(cards_on_table.get(i).getRank())
+				{
+					case 11:
+						sum += 10;
+						break;
+					case 12:
+						sum += 10;
+						break;
+					case 13:
+						sum += 10;
+						break;
+				}
+			}
 		}
 		return sum;
 	}

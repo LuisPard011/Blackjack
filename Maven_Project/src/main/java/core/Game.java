@@ -42,7 +42,7 @@ public class Game
 		int deck_size = 52; 
 		Card[] deck = new Card[deck_size]; //1406
 		int index = 0; //1406
-		boolean endGame = false; //1406, should change and depend one player win or loss
+//		boolean endGame = false; //1406, should change and depend one player win or loss
 
 		create_deck(deck, index);
 		shuffle_deck(deck);

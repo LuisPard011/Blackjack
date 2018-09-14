@@ -61,13 +61,14 @@ public class Card implements Comparable<Card>{
 	 *
 	 * @return the suit of this card (must be a string from Card.SUITS) 
 	 */
-	public String getSuit(){ return this.suit; }
+	public String getSuit(){return this.suit;}
 
-	public int compareTo(Card other){
-		return 0;
-	}
+	public int compareTo(Card other){return 0;}
 
 	@Override
+	/*
+	 * I did alter this toString() function to satisfy 3004's output requirements
+	 */
 	public final String toString(){
 		// outputs a string representation of a card object
 		if(this.rank.equals(RANKS[0])){ 
@@ -75,8 +76,16 @@ public class Card implements Comparable<Card>{
 		}
 
 		int r = getRank();
-		if( r >= 2 && r <= 14 ){
-			return r + getSuit().substring(0,1);
+		if(r >= 2 && r <= 10){return getSuit().substring(0,1) + r;}
+		else if(r >= 11 && r <= 14)
+		{
+			switch(r)
+			{
+				case 11: return getSuit().substring(0,1) + "J";
+				case 12: return getSuit().substring(0,1) + "Q";
+				case 13: return getSuit().substring(0,1) + "K";
+				case 14: return getSuit().substring(0,1) + "A";
+			}
 		}
 		return "no card";
 	}
