@@ -36,11 +36,11 @@ public class WinTest extends TestCase{
 		Player guest = new Player();
 		Card king_s = new Card("Spades", "King");
 		Card king_d = new Card("Diamonds", "King");
-		Card two_s = new Card("Spades", "Two");
+		Card two_s = new Card("Spades", "2");
 		guest.cards_on_table.add(king_s);
 		guest.cards_on_table.add(king_d);
 		guest.cards_on_table.add(two_s);
-		assertEquals(true, guest.bust);
+		assertEquals(true, guest.is_bust());
 	}
 
 }

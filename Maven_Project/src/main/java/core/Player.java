@@ -6,14 +6,10 @@ import java.util.Stack;
 public class Player
 {
 	ArrayList<Card> cards_on_table; //calculate max num of cards a player can have without busting and maybe make this into a simple array
-	boolean blackjack;
-	boolean win;
 	
 	public Player()
 	{
 		this.cards_on_table = new ArrayList<Card>();
-		this.blackjack = false;
-		this.win = false;
 	}
 	
 	public void hit(Stack<Card> draw_pile)
@@ -77,6 +73,13 @@ public class Player
 			}
 		}
 		return sum;
+	}
+	
+	public boolean is_bust()
+	{
+		int card_count = this.count_cards();
+		if(card_count > 21) {return true;}
+		return false;
 	}
 	
 	public void show_cards()
