@@ -67,7 +67,9 @@ public class WinTest extends TestCase{
 	
 	public void testReadInput()
 	{
-		
+		Player guest = new Player();
+		//read input file
+		assertEquals("Spades", guest.cards_on_table.get(0).getSuit());
 	}
 
 }
