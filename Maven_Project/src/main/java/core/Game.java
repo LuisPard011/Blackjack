@@ -29,13 +29,21 @@ public class Game
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck.draw_pile);}
 		dealer.show_one_card();
 		
+		// bust check
+		// hit again option
 		Scanner reader = new Scanner(System.in);
-		hit_or_stand(reader, guest, deck);
+		while(!guest.is_bust() && !guest.stand){hit_or_stand(reader, guest, deck);}
 		
-		//hit again
+		// if bust, the dealer wins and game ends
 		
 		// Dealer's turn
-//		dealer.show_cards();
+		dealer.show_cards();
+		dealer.dealer_hit(deck.draw_pile);
+		dealer.show_cards();
+		
+		// if bust, player wins and game ends
+		// else, player with higher count wins and game ends
+		// this means comparing scores
 		
 		/* 
 		 * Have to use scanner as an argument
@@ -58,6 +66,8 @@ public class Game
 		else if(hit_or_stand.equalsIgnoreCase("s"))
 		{
 			System.out.println("Standing");
+			player.stand = true;
+//			player.stand();
 			return;
 		}
 		else

@@ -41,6 +41,28 @@ public class WinTest extends TestCase{
 		guest.cards_on_table.add(king_d);
 		guest.cards_on_table.add(two_s);
 		assertEquals(true, guest.is_bust());
+		// might have to overwrite the ArrayList add method to include +count when adding cards manually
+	}
+	
+	/*
+	 * Compare scores to determine a winner
+	 */
+	public void testWinner()
+	{
+		Player guest = new Player();
+		Card king_s = new Card("Spades", "King");
+		Card nine_s = new Card("Spades", "9");
+		
+		Dealer dealer = new Dealer();
+		Card king_d = new Card("Diamonds", "King");
+		Card king_c = new Card("Clubs", "King");
+		
+		guest.cards_on_table.add(king_s);
+		guest.cards_on_table.add(nine_s);
+		dealer.cards_on_table.add(king_d);
+		dealer.cards_on_table.add(king_c);
+		
+		assertEquals(false, guest.count_cards() > dealer.count_cards());
 	}
 
 }
