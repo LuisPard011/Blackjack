@@ -53,7 +53,7 @@ public class WinTest extends TestCase{
 		Card king_s = new Card("Spades", "King");
 		Card nine_s = new Card("Spades", "9");
 		
-		Dealer dealer = new Dealer();
+		Player dealer = new Player();
 		Card king_d = new Card("Diamonds", "King");
 		Card king_c = new Card("Clubs", "King");
 		

@@ -13,7 +13,7 @@ public class Game
 	 * If play again == y, recursive call to play()
 	 * Else, return
 	 */
-	public static void play()
+	public static void play_console()
 	{
 		Deck deck = new Deck();
 		deck.populate_deck();
@@ -25,7 +25,7 @@ public class Game
 		for(int i = 0; i < draw_times; ++i) {guest.hit(deck.draw_pile);}
 		guest.show_cards();
 		
-		Dealer dealer = new Dealer();
+		Player dealer = new Player();
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck.draw_pile);}
 		dealer.show_one_card();
 		
@@ -62,6 +62,10 @@ public class Game
 		if(guest.count > dealer.count)
 		{
 			System.out.println("Player wins");
+		}
+		else if(guest.count == dealer.count)
+		{
+			System.out.println("Player pushes");
 		}
 		else
 		{
@@ -105,7 +109,7 @@ public class Game
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = reader.next();
 		
-		if(continue_play.equalsIgnoreCase("y")) {play();}
+		if(continue_play.equalsIgnoreCase("y")) {play_console();}
 		else if(continue_play.equalsIgnoreCase("n"))
 		{
 			System.out.println("Thanks for playing");
@@ -119,9 +123,30 @@ public class Game
 		
 		return;
 	}
+	
+	public static void play_file()
+	{
+		
+	}
+	
+	public static void choose_mode(Scanner reader)
+	{
+		System.out.println("Console or file input? (c/f): ");
+		String mode = reader.next();
+		
+		if(mode.equalsIgnoreCase("c")) {play_console();}
+		else if(mode.equalsIgnoreCase("f")) {play_file();}
+		else
+		{
+			System.out.println("Invalid input");
+			choose_mode(reader);
+		}
+	}
 		
 	public static void main(String[] args)
 	{	
-		play();
+		Scanner reader = new Scanner(System.in);
+		choose_mode(reader);
+		reader.close();
 	}
 }
