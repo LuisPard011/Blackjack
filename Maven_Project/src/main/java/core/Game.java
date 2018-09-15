@@ -35,6 +35,13 @@ public class Game
 		while(!guest.is_bust() && !guest.stand){hit_or_stand(reader, guest, deck);}
 		
 		// if bust, the dealer wins and game ends
+		if(guest.is_bust())
+		{
+			System.out.println("Dealer wins");
+			continue_play(reader);
+			reader.close();
+			return;
+		}
 		
 		// Dealer's turn
 		dealer.show_cards();
@@ -44,6 +51,22 @@ public class Game
 		// if bust, player wins and game ends
 		// else, player with higher count wins and game ends
 		// this means comparing scores
+		if(dealer.is_bust())
+		{
+			System.out.println("Player wins");
+			continue_play(reader);
+			reader.close();
+			return;
+		}
+		
+		if(guest.count > dealer.count)
+		{
+			System.out.println("Player wins");
+		}
+		else
+		{
+			System.out.println("Dealer wins");
+		}
 		
 		/* 
 		 * Have to use scanner as an argument

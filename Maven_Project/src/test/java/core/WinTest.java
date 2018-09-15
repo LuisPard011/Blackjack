@@ -64,5 +64,10 @@ public class WinTest extends TestCase{
 		
 		assertEquals(false, guest.count_cards() > dealer.count_cards());
 	}
+	
+	public void testReadInput()
+	{
+		
+	}
 
 }
