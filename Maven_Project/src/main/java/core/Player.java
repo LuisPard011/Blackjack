@@ -17,7 +17,7 @@ public class Player
 		this.cards_on_table.add(draw_pile.pop());
 	}
 	
-	public int count_cards()
+	public int count_not_ace()
 	{
 		int sum = 0;
 		for(int i = 0; i < this.cards_on_table.size(); ++i)
@@ -40,6 +40,31 @@ public class Player
 						sum += 10;
 						break;
 				}
+			}
+		}
+		return sum;
+	}
+	
+	public int find_aces()
+	{
+		int aces_in_hand = 0;
+		for(int i = 0; i < this.cards_on_table.size(); ++i)
+		{
+			if(this.cards_on_table.get(i).getRank() == 14) {aces_in_hand += 1;}
+		}
+		return aces_in_hand;
+	}
+	
+	public int count_cards()
+	{
+		int sum = count_not_ace();
+		int aces_in_hand = find_aces();
+		if(aces_in_hand > 0)
+		{
+			for(int i = 0; i < aces_in_hand; ++i)
+			{
+				if(sum < 11) {sum += 11;}
+				else {sum += 1;}
 			}
 		}
 		return sum;

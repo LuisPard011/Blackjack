@@ -25,17 +25,16 @@ public class Game
 		deck.shuffle_deck();
 		deck.populate_draw_pile();
 		deck.show_deck(42, deck.deck_size);
+		int num_cards = 3;
 		
 		Player guest = new Player();
-		guest.draw(deck.draw_pile);
-		guest.draw(deck.draw_pile);
+		for(int i = 0; i < num_cards; ++i) {guest.draw(deck.draw_pile);}
 		guest.show_cards();
 		guest.show_count();
 		deck.peek_draw_pile();
 		
 		Dealer dealer = new Dealer();
-		dealer.draw(deck.draw_pile);
-		dealer.draw(deck.draw_pile);
+		for(int i = 0; i < num_cards; ++i) {dealer.draw(deck.draw_pile);}
 		dealer.show_cards();
 		dealer.show_count();
 		deck.peek_draw_pile();
