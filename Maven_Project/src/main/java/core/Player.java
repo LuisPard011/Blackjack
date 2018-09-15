@@ -6,15 +6,24 @@ import java.util.Stack;
 public class Player
 {
 	ArrayList<Card> cards_on_table; //calculate max num of cards a player can have without busting and maybe make this into a simple array
+	boolean blackjack;
+	boolean win;
 	
 	public Player()
 	{
 		this.cards_on_table = new ArrayList<Card>();
+		this.blackjack = false;
+		this.win = false;
 	}
 	
-	public void draw(Stack<Card> draw_pile)
+	public void hit(Stack<Card> draw_pile)
 	{
 		this.cards_on_table.add(draw_pile.pop());
+	}
+	
+	public void stand()
+	{
+		// Must "continue", that is, pass the turn to the dealer
 	}
 	
 	public int count_not_ace()

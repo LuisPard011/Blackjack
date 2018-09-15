@@ -1,6 +1,5 @@
 package core;
 
-import org.junit.Test;
 import junit.framework.TestCase;
 
 public class WinTest extends TestCase{
@@ -13,7 +12,7 @@ public class WinTest extends TestCase{
 		
 		assertEquals("SA", deck.draw_pile.peek().toString());
 		Player guest = new Player();
-		guest.draw(deck.draw_pile);
+		guest.hit(deck.draw_pile);
 		assertEquals("HA", deck.draw_pile.peek().toString());
 	}
 	
@@ -25,6 +24,23 @@ public class WinTest extends TestCase{
 		guest.cards_on_table.add(ace_s);
 		guest.cards_on_table.add(ace_d);
 		assertEquals(12, guest.count_cards());
+		
+		// I can add different tests for multiple counting scenarios
+	}
+	
+	/*
+	 * This test is meant to identify when a player's count goes over 21
+	 */
+	public void testBust()
+	{
+		Player guest = new Player();
+		Card king_s = new Card("Spades", "King");
+		Card king_d = new Card("Diamonds", "King");
+		Card two_s = new Card("Spades", "Two");
+		guest.cards_on_table.add(king_s);
+		guest.cards_on_table.add(king_d);
+		guest.cards_on_table.add(two_s);
+		assertEquals(true, guest.bust);
 	}
 
 }
