@@ -14,8 +14,7 @@ public class Card implements Comparable<Card>{
 	public final static String[] RANKS = { "None", "None", 
 			"2", "3", "4", "5", "6", "7", "8", "9", "10", 
 			"J", "Q", "K", "A"};
-	public final static String[] SUITS = { "D", 
-			"C", "H", "S", "None"};
+	public final static String[] SUITS = { "D", "C", "H", "S", "None"};
 
 	protected String suit;
 	protected String rank;

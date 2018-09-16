@@ -32,7 +32,7 @@ public class WinTest extends TestCase{
 		Player guest = new Player();
 		guest.add(ace_s);
 		guest.add(ace_d);
-		assertEquals(12, guest.count_cards());
+		assertEquals(12, guest.calc_score());
 		
 		// I can add different tests for multiple counting scenarios
 	}
@@ -63,7 +63,7 @@ public class WinTest extends TestCase{
 		dealer.add(king_d);
 		dealer.add(king_c);
 		
-		assertEquals(false, guest.count > dealer.count);
+		assertEquals(false, guest.score > dealer.score);
 	}
 	
 	public void testReadInput()

@@ -7,29 +7,27 @@ import java.util.Stack;
 public class Player
 {
 	ArrayList<Card> hand; 
-	int count;
+	int score;
 	boolean stand;
 	
 	public Player()
 	{
 		this.hand = new ArrayList<Card>();
-		this.count = 0;
+		this.score = 0;
 		this.stand = false;
 	}
 	
-	public void hit(Stack<Card> draw_pile)
-	{
-		this.hand.add(draw_pile.pop());
-		this.count = this.count_cards();
-//		System.out.println("Count is: " + this.count);
-	}
+	/**
+	 * Draw one card from the draw_pile
+	 * @param draw_pile
+	 */
+	public void hit(Stack<Card> draw_pile){this.add(draw_pile.pop());}
 	
-	public void stand()
-	{
-		// Must "continue", that is, pass the turn to the dealer
-		this.stand = true;
-	}
-	
+	/**
+	 * Give player the option to either hit or stand
+	 * @param reader
+	 * @param deck
+	 */
 	public void hit_or_stand(Scanner reader, Deck deck)
 	{
 		System.out.print("Hit or stand? (h/s): ");
@@ -40,13 +38,7 @@ public class Player
 			this.hit(deck.draw_pile);
 			this.show_cards();
 		}
-		else if(hit_or_stand.equalsIgnoreCase("s"))
-		{
-			System.out.println("Standing");
-			this.stand = true;
-//			player.stand();
-			return;
-		}
+		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
 		{
 			System.out.println("Invalid input");
@@ -54,6 +46,10 @@ public class Player
 		}
 	}
 	
+	/**
+	 * Count value of cards in hand, not accounting for aces
+	 * @return the score without taking aces into account
+	 */
 	public int count_not_ace()
 	{
 		int sum = 0;
@@ -82,7 +78,11 @@ public class Player
 		return sum;
 	}
 	
-	public int find_aces()
+	/**
+	 * Count the number of aces in the player's hand
+	 * @return the number of aces in the player's hand
+	 */
+	public int count_aces()
 	{
 		int aces_in_hand = 0;
 		for(int i = 0; i < this.hand.size(); ++i)
@@ -92,10 +92,15 @@ public class Player
 		return aces_in_hand;
 	}
 	
-	public int count_cards()
+	/**
+	 * Use the functions count_not_ace and count_aces 
+	 * Calculate the player's total score
+	 * @return the player's total score, accounting for aces
+	 */
+	public int calc_score()
 	{
 		int sum = count_not_ace();
-		int aces_in_hand = find_aces();
+		int aces_in_hand = count_aces();
 		if(aces_in_hand > 0)
 		{
 			for(int i = 0; i < aces_in_hand; ++i)
@@ -109,7 +114,7 @@ public class Player
 	
 	public boolean is_bust()
 	{
-		int card_count = this.count_cards();
+		int card_count = this.calc_score();
 		if(card_count > 21) {return true;}
 		return false;
 	}
@@ -140,17 +145,17 @@ public class Player
 	 */
 	public void dealer_hit(Stack<Card> draw_pile)
 	{
-		while(this.count_cards() <= 16 || this.count_cards() == 17 && this.find_aces() > 0)
+		while(this.calc_score() <= 16 || this.calc_score() == 17 && this.count_aces() > 0)
 		{
 			this.hit(draw_pile);
 		}
 	}
 	
-	public void show_count() {System.out.println("Count is: " + this.count_cards());}
+	public void show_count() {System.out.println("Count is: " + this.calc_score());}
 	
 	public void add(Card card)
 	{
 		this.hand.add(card);
-		this.count = this.count_cards();
+		this.score = this.calc_score();
 	}
 } 

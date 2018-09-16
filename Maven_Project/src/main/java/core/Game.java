@@ -1,7 +1,6 @@
 package core;
 
 import java.io.BufferedReader;
-//import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,15 +9,6 @@ import java.util.Scanner;
 
 public class Game
 {	
-	/*
-	 * Collect cards and shuffle deck
-	 * Deal cards
-	 * Player turn
-	 * Dealer's turn
-	 * When win/lose give option to play again
-	 * If play again == y, recursive call to play()
-	 * Else, return
-	 */
 	public static void play_console()
 	{
 		Deck deck = new Deck();
@@ -35,12 +25,17 @@ public class Game
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck.draw_pile);}
 		dealer.show_one_card();
 		
-		// bust check
-		// hit again option
+		/*
+		 * Check if player is bust
+		 * If not, give option to hit or stand
+		 */
 		Scanner reader = new Scanner(System.in);
 		while(!guest.is_bust() && !guest.stand){guest.hit_or_stand(reader, deck);}
 		
-		// if bust, the dealer wins and game ends
+		/*
+		 * If bust, the dealer wins and game ends
+		 * Option to play again is offered
+		 */
 		if(guest.is_bust())
 		{
 			System.out.println("Dealer wins");
@@ -49,14 +44,19 @@ public class Game
 			return;
 		}
 		
-		// Dealer's turn
+		/*
+		 * Dealer's turn
+		 */
 		dealer.show_cards();
 		dealer.dealer_hit(deck.draw_pile);
 		dealer.show_cards();
 		
-		// if bust, player wins and game ends
-		// else, player with higher count wins and game ends
-		// this means comparing scores
+		/*
+		 * If dealer busts, player wins and game ends
+		 * Else, scores are compared and player with higher count wins
+		 * Game ends
+		 * Option to play again is offered
+		 */
 		if(dealer.is_bust())
 		{
 			System.out.println("Player wins");
@@ -65,11 +65,11 @@ public class Game
 			return;
 		}
 		
-		if(guest.count > dealer.count)
+		if(guest.score > dealer.score)
 		{
 			System.out.println("Player wins");
 		}
-		else if(guest.count == dealer.count)
+		else if(guest.score == dealer.score)
 		{
 			System.out.println("Player pushes");
 		}
