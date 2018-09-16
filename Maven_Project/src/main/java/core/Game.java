@@ -1,5 +1,11 @@
 package core;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game
@@ -124,12 +130,32 @@ public class Game
 		return;
 	}
 	
-	public static void play_file()
+	public static void play_file() throws FileNotFoundException, IOException
 	{
+		String path = "src\\main\\java\\core\\Input_File_1.txt";
 		
+		ArrayList<String> words = new ArrayList<>();
+		
+		/* I got some of this code to read from file from StackOverflow */
+		try (BufferedReader br = new BufferedReader(new FileReader(path)))
+		{
+			   String line = null;
+			   while ((line = br.readLine()) != null) {words.add(line);}
+		}
+		String[] arr = words.get(0).split(" ");
+//		System.out.println(arr[0].charAt(0));
+		
+		Player player = new Player();
+		Player dealer = new Player();
+		
+		// I need to make meaning of characters like S for stand and H for hit
+		
+		Card first_card = new Card(Character.toString(arr[0].charAt(0)), Character.toString(arr[0].charAt(1)));
+		player.cards_on_table.add(first_card);
+		player.show_cards();
 	}
 	
-	public static void choose_mode(Scanner reader)
+	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
 	{
 		System.out.println("Console or file input? (c/f): ");
 		String mode = reader.next();
@@ -143,7 +169,7 @@ public class Game
 		}
 	}
 		
-	public static void main(String[] args)
+	public static void main(String[] args) throws FileNotFoundException, IOException
 	{	
 		Scanner reader = new Scanner(System.in);
 		choose_mode(reader);

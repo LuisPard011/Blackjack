@@ -14,9 +14,9 @@ public class Card implements Comparable<Card>{
 	/* do NOT change these                 */
 	public final static String[] RANKS = { "None", "None", 
 			"2", "3", "4", "5", "6", "7", "8", "9", "10", 
-			"Jack", "Queen", "King", "Ace"};
-	public final static String[] SUITS = { "Diamonds", 
-			"Clubs", "Hearts", "Spades", "None"};
+			"J", "Q", "K", "A"};
+	public final static String[] SUITS = { "D", 
+			"C", "H", "S", "None"};
 
 	protected String suit;
 	protected String rank;
@@ -69,7 +69,8 @@ public class Card implements Comparable<Card>{
 	/*
 	 * I did alter this toString() function to satisfy 3004's output requirements
 	 */
-	public final String toString(){
+	public final String toString()
+	{
 		// outputs a string representation of a card object
 		if(this.rank.equals(RANKS[0])){ 
 			return "no card"; 
