@@ -9,12 +9,14 @@ public class Player
 	ArrayList<Card> hand; 
 	int score;
 	boolean stand;
+	String type;
 	
-	public Player()
+	public Player(String type_of_player)
 	{
 		this.hand = new ArrayList<Card>();
 		this.score = 0;
 		this.stand = false;
+		this.type = type_of_player;
 	}
 	
 	/**
@@ -24,7 +26,7 @@ public class Player
 	public void hit(Stack<Card> draw_pile)
 	{
 		this.add(draw_pile.pop());
-		this.score = this.score();
+		this.score = this.count_hand();
 	}
 	
 	/**
@@ -34,13 +36,14 @@ public class Player
 	 */
 	public void hit_or_stand(Scanner reader, Deck deck)
 	{
+		this.show_score();
 		System.out.print("Hit or stand? (h/s): ");
 		String hit_or_stand = reader.next();
 		
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
 			this.hit(deck.draw_pile);
-			this.show_hand("Player");
+			this.show_hand();
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
@@ -50,12 +53,29 @@ public class Player
 		}
 	}
 	
+	
 	/**
-	 * Count value of cards in hand, not accounting for aces
-	 * @return the score without taking aces into account
+	 * Count the number of aces in the player's hand
+	 * @return the number of aces in the player's hand
 	 */
-	public int count_not_ace()
+	public int count_aces()
 	{
+		int aces_in_hand = 0;
+		for(int i = 0; i < this.hand.size(); ++i)
+		{
+			if(this.hand.get(i).getRank() == 14) {aces_in_hand += 1;}
+		}
+		return aces_in_hand;
+	}
+	
+	/**
+	 * Use the functions count_not_ace and count_aces 
+	 * Calculate the player's total score
+	 * @return the player's total score, accounting for aces
+	 */
+	public int count_hand()
+	{
+		// Count cards in hand, excluding aces
 		int sum = 0;
 		for(int i = 0; i < this.hand.size(); ++i)
 		{
@@ -79,31 +99,8 @@ public class Player
 				}
 			}
 		}
-		return sum;
-	}
-	
-	/**
-	 * Count the number of aces in the player's hand
-	 * @return the number of aces in the player's hand
-	 */
-	public int count_aces()
-	{
-		int aces_in_hand = 0;
-		for(int i = 0; i < this.hand.size(); ++i)
-		{
-			if(this.hand.get(i).getRank() == 14) {aces_in_hand += 1;}
-		}
-		return aces_in_hand;
-	}
-	
-	/**
-	 * Use the functions count_not_ace and count_aces 
-	 * Calculate the player's total score
-	 * @return the player's total score, accounting for aces
-	 */
-	public int score()
-	{
-		int sum = count_not_ace();
+		
+		// Take aces into account
 		int aces_in_hand = count_aces();
 		if(aces_in_hand > 0)
 		{
@@ -113,6 +110,7 @@ public class Player
 				else {sum += 1;}
 			}
 		}
+		
 		return sum;
 	}
 	
@@ -130,9 +128,9 @@ public class Player
 	 * Show all cards in hand
 	 * @param player_or_dealer
 	 */
-	public void show_hand(String player_or_dealer)
+	public void show_hand()
 	{
-		System.out.print(player_or_dealer + "'s hand is: ");
+		System.out.print(this.type + "'s hand is: ");
 		for(int i = 0; i < this.hand.size(); ++i)
 		{
 			System.out.print(this.hand.get(i).toString() + " ");
@@ -144,9 +142,9 @@ public class Player
 	 * Show score
 	 * @param player_or_dealer
 	 */
-	public void show_count(String player_or_dealer)
+	public void show_score()
 	{
-		System.out.println(player_or_dealer + "'s count is: " + this.score());
+		System.out.println(this.type + "'s count is: " + this.count_hand());
 	}
 	
 	/**
@@ -156,6 +154,25 @@ public class Player
 	public void add(Card card)
 	{
 		this.hand.add(card);
-		this.score = this.score();
+		this.score = this.count_hand();
+	}
+	
+	/**
+	 * Show only one of the dealer's cards
+	 */
+	public void show_one_dealer_card()
+	{
+		System.out.println("One of dealer's cards is: " + this.hand.get(0).toString());
+	}
+	
+	/**
+	 * Dealer must hit while its score is less than 16 or it has a soft 17
+	 */
+	public void dealer_hit(Stack<Card> draw_pile)
+	{
+		while(this.count_hand() <= 16 || this.count_hand() == 17 && this.count_aces() > 0)
+		{
+			this.hit(draw_pile);
+		}
 	}
 } 

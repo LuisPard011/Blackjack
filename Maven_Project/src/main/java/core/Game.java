@@ -17,13 +17,13 @@ public class Game
 		deck.populate_draw_pile();
 		int draw_times = 2;
 		
-		Player guest = new Player();
+		Player guest = new Player("Player");
 		for(int i = 0; i < draw_times; ++i) {guest.hit(deck.draw_pile);}
-		guest.show_hand("Player");
+		guest.show_hand();
 		
-		Dealer dealer = new Dealer();
+		Player dealer = new Player("Dealer");
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck.draw_pile);}
-		dealer.show_one_card();
+		dealer.show_one_dealer_card();
 		
 		/*
 		 * Check if player is bust
@@ -47,9 +47,9 @@ public class Game
 		/*
 		 * Dealer's turn
 		 */
-		dealer.show_hand("Dealer");
+		dealer.show_hand();
 		dealer.dealer_hit(deck.draw_pile);
-		dealer.show_hand("Dealer");
+		dealer.show_hand();
 		
 		/*
 		 * If dealer busts, player wins and game ends
@@ -123,8 +123,8 @@ public class Game
 		String[] arr = words.get(0).split(" ");
 //		System.out.println(arr[0].charAt(0));
 		
-		Player player = new Player();
-		Player dealer = new Player();
+		Player player = new Player("Player");
+		Player dealer = new Player("Dealer");
 		
 		// I need to make meaning of characters like S for stand and H for hit
 		
@@ -133,16 +133,16 @@ public class Game
 			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
 			player.add(input_card);
 		}
-		player.show_hand("Player");
-		player.show_count("Player");
+		player.show_hand();
+		player.show_score();
 		
 		for(int i = 2; i < 4; ++i)
 		{
 			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
 			dealer.add(input_card);
 		}
-		dealer.show_hand("Dealer");
-		dealer.show_count("Dealer");
+		dealer.show_hand();
+		dealer.show_score();
 	}
 	
 	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException

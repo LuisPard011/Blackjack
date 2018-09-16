@@ -22,17 +22,17 @@ public class WinTest extends TestCase{
 		deck.populate_draw_pile();
 		
 		assertEquals("SA", deck.draw_pile.peek().toString());
-		Player guest = new Player();
+		Player guest = new Player("Player");
 		guest.hit(deck.draw_pile);
 		assertEquals("HA", deck.draw_pile.peek().toString());
 	}
 	
 	public void testCount()
 	{
-		Player guest = new Player();
+		Player guest = new Player("Player");
 		guest.add(ace_s);
 		guest.add(ace_d);
-		assertEquals(12, guest.score());
+		assertEquals(12, guest.count_hand());
 		
 		// I can add different tests for multiple counting scenarios
 	}
@@ -42,7 +42,7 @@ public class WinTest extends TestCase{
 	 */
 	public void testBust()
 	{
-		Player guest = new Player();
+		Player guest = new Player("Player");
 		guest.add(king_s);
 		guest.add(king_d);
 		guest.add(two_s);
@@ -55,8 +55,8 @@ public class WinTest extends TestCase{
 	 */
 	public void testWinner()
 	{
-		Player guest = new Player();
-		Player dealer = new Player();
+		Player guest = new Player("Player");
+		Player dealer = new Player("Dealer");
 		
 		guest.add(king_s);
 		guest.add(nine_s);
