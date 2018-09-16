@@ -1,13 +1,16 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 import junit.framework.TestCase;
 
-public class WinTest extends TestCase{
+public class WinTest extends TestCase
+{	
+	/********************
+	 * Variables(Start) * 
+	 ********************/
 	
-	/**
-	 * Variables to be used by multiple tests
-	 */
 	Card ace_d = new Card("D", "A");
 	Card ace_s = new Card("S", "A");
 	Card two_s = new Card("S", "2");
@@ -15,28 +18,29 @@ public class WinTest extends TestCase{
 	Card king_c = new Card("C", "K");
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
-	Deck_Maker deck_maker = new Deck_Maker();
-	Stack<Card> deck = new Stack<>();
 	
-	public void testReadInput()
-	{
-//		Player guest = new Player();
-//		//read input file
-//		assertEquals("S", guest.hand.get(0).getSuit());
-	}
+	Deck_Maker deck_maker = new Deck_Maker();
+	
+	Stack<Card> deck_1 = new Stack<>();
+	Stack<Card> deck_2 = new Stack<>();
+	
+	int deck_size = 52;
+	
+	/******************
+	 * Variables(End) * 
+	 ******************/
 	
 	/**
 	 * Requirement 11
-	 * Check there're 52 cards
+	 * Check there are 52 cards in the deck
 	 */
 	public void test_Cards_In_Deck()
 	{
-		deck_maker.make_deck(deck);
-		int deck_size = deck.size();
+		deck_maker.make_deck(deck_1);
 		int count_pops = 0;
 		for(int i = 0; i < deck_size; ++i)
 		{
-			deck.pop();
+			deck_1.pop();
 			count_pops += 1;
 		}
 		assertEquals(52, count_pops);
@@ -45,10 +49,22 @@ public class WinTest extends TestCase{
 	/**
 	 * Requirement 12
 	 * Test shuffling procedure
+	 * If shuffling is turned off in make_deck(Stack<Card>), test fails
+	 * Else it passes
+	 * I use the rank of cards to compare the order of decks
 	 */
 	public void test_Shuffling()
 	{
-		
+		deck_maker.make_deck(deck_1);
+		deck_maker.make_deck(deck_2);
+		int[] arr_1 = new int[deck_size];
+		int[] arr_2 = new int[deck_size];
+		for(int i = 0; i < deck_size; ++i)
+		{
+			arr_1[i] = deck_1.pop().getRank();
+			arr_2[i] = deck_2.pop().getRank();
+		}
+		assertEquals(false, Arrays.equals(arr_1, arr_2));
 	}
 	
 	public void test_Method_Path()

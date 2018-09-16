@@ -41,3 +41,10 @@
 		
 		assertEquals(false, guest.score > dealer.score);
 	}
+	
+		public void testReadInput()
+	{
+//		Player guest = new Player();
+//		//read input file
+//		assertEquals("S", guest.hand.get(0).getSuit());
+	}
