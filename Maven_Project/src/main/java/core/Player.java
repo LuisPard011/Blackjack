@@ -6,20 +6,20 @@ import java.util.Stack;
 
 public class Player
 {
-	ArrayList<Card> cards_on_table; //calculate max num of cards a player can have without busting and maybe make this into a simple array
+	ArrayList<Card> hand; 
 	int count;
 	boolean stand;
 	
 	public Player()
 	{
-		this.cards_on_table = new ArrayList<Card>();
+		this.hand = new ArrayList<Card>();
 		this.count = 0;
 		this.stand = false;
 	}
 	
 	public void hit(Stack<Card> draw_pile)
 	{
-		this.cards_on_table.add(draw_pile.pop());
+		this.hand.add(draw_pile.pop());
 		this.count = this.count_cards();
 //		System.out.println("Count is: " + this.count);
 	}
@@ -57,15 +57,15 @@ public class Player
 	public int count_not_ace()
 	{
 		int sum = 0;
-		for(int i = 0; i < this.cards_on_table.size(); ++i)
+		for(int i = 0; i < this.hand.size(); ++i)
 		{
-			if(this.cards_on_table.get(i).getRank() < 11)
+			if(this.hand.get(i).getRank() < 11)
 			{
-				sum += this.cards_on_table.get(i).getRank();
+				sum += this.hand.get(i).getRank();
 			}
 			else
 			{
-				switch(this.cards_on_table.get(i).getRank())
+				switch(this.hand.get(i).getRank())
 				{
 					case 11:
 						sum += 10;
@@ -85,9 +85,9 @@ public class Player
 	public int find_aces()
 	{
 		int aces_in_hand = 0;
-		for(int i = 0; i < this.cards_on_table.size(); ++i)
+		for(int i = 0; i < this.hand.size(); ++i)
 		{
-			if(this.cards_on_table.get(i).getRank() == 14) {aces_in_hand += 1;}
+			if(this.hand.get(i).getRank() == 14) {aces_in_hand += 1;}
 		}
 		return aces_in_hand;
 	}
@@ -116,20 +116,20 @@ public class Player
 	
 	public void show_cards()
 	{
-		System.out.print("Cards on table are: ");
-		for(int i = 0; i < this.cards_on_table.size(); ++i)
+		System.out.print("Hand is: ");
+		for(int i = 0; i < this.hand.size(); ++i)
 		{
-			System.out.print(this.cards_on_table.get(i).toString() + " ");
+			System.out.print(this.hand.get(i).toString() + " ");
 		}
 		System.out.println();
 	}
 	
 	public void show_one_card()
 	{
-		System.out.print("Cards on table are: ");
+		System.out.print("One card in hand is: ");
 		for(int i = 0; i < 1; ++i)
 		{
-			System.out.print(this.cards_on_table.get(i).toString() + " ");
+			System.out.print(this.hand.get(i).toString() + " ");
 		}
 		System.out.println();
 	}
@@ -147,4 +147,10 @@ public class Player
 	}
 	
 	public void show_count() {System.out.println("Count is: " + this.count_cards());}
+	
+	public void add(Card card)
+	{
+		this.hand.add(card);
+		this.count = this.count_cards();
+	}
 } 

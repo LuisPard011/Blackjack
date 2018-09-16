@@ -4,6 +4,17 @@ import junit.framework.TestCase;
 
 public class WinTest extends TestCase{
 	
+	/**
+	 * Variables to be used by multiple tests
+	 */
+	Card ace_d = new Card("D", "A");
+	Card ace_s = new Card("S", "A");
+	Card two_s = new Card("S", "2");
+	Card nine_s = new Card("S", "9");
+	Card king_c = new Card("C", "K");
+	Card king_d = new Card("D", "K");
+	Card king_s = new Card("S", "K");
+	
 	public void testDraw()
 	{
 		Deck deck = new Deck();
@@ -19,10 +30,8 @@ public class WinTest extends TestCase{
 	public void testCount()
 	{
 		Player guest = new Player();
-		Card ace_s = new Card("S", "A");
-		Card ace_d = new Card("D", "A");
-		guest.cards_on_table.add(ace_s);
-		guest.cards_on_table.add(ace_d);
+		guest.add(ace_s);
+		guest.add(ace_d);
 		assertEquals(12, guest.count_cards());
 		
 		// I can add different tests for multiple counting scenarios
@@ -34,12 +43,9 @@ public class WinTest extends TestCase{
 	public void testBust()
 	{
 		Player guest = new Player();
-		Card king_s = new Card("S", "K");
-		Card king_d = new Card("D", "K");
-		Card two_s = new Card("S", "2");
-		guest.cards_on_table.add(king_s);
-		guest.cards_on_table.add(king_d);
-		guest.cards_on_table.add(two_s);
+		guest.add(king_s);
+		guest.add(king_d);
+		guest.add(two_s);
 		assertEquals(true, guest.is_bust());
 		// might have to overwrite the ArrayList add method to include +count when adding cards manually
 	}
@@ -50,26 +56,21 @@ public class WinTest extends TestCase{
 	public void testWinner()
 	{
 		Player guest = new Player();
-		Card king_s = new Card("S", "K");
-		Card nine_s = new Card("S", "9");
-		
 		Player dealer = new Player();
-		Card king_d = new Card("D", "K");
-		Card king_c = new Card("C", "K");
 		
-		guest.cards_on_table.add(king_s);
-		guest.cards_on_table.add(nine_s);
-		dealer.cards_on_table.add(king_d);
-		dealer.cards_on_table.add(king_c);
+		guest.add(king_s);
+		guest.add(nine_s);
+		dealer.add(king_d);
+		dealer.add(king_c);
 		
-		assertEquals(false, guest.count_cards() > dealer.count_cards());
+		assertEquals(false, guest.count > dealer.count);
 	}
 	
 	public void testReadInput()
 	{
-		Player guest = new Player();
-		//read input file
-		assertEquals("S", guest.cards_on_table.get(0).getSuit());
+//		Player guest = new Player();
+//		//read input file
+//		assertEquals("S", guest.hand.get(0).getSuit());
 	}
 	
 	public void test()

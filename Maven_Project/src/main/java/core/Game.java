@@ -122,15 +122,25 @@ public class Game
 //		System.out.println(arr[0].charAt(0));
 		
 		Player player = new Player();
-//		Player dealer = new Player();
+		Player dealer = new Player();
 		
 		// I need to make meaning of characters like S for stand and H for hit
 		
-		Card first_card = new Card(Character.toString(arr[0].charAt(0)), Character.toString(arr[0].charAt(1)));
-		player.cards_on_table.add(first_card);
-		player.count = player.count_cards();
+		for(int i = 0; i < 2; ++i)
+		{
+			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
+			player.add(input_card);
+		}
 		player.show_cards();
-		System.out.println("Player's count is: " + player.count);
+		player.show_count();
+		
+		for(int i = 2; i < 4; ++i)
+		{
+			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
+			dealer.add(input_card);
+		}
+		dealer.show_cards();
+		dealer.show_count();
 	}
 	
 	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
