@@ -54,7 +54,7 @@ public class Player
 	 */
 	public void show_score()
 	{
-		System.out.println(this.type + "'s count is: " + this.count_hand());
+		System.out.println(this.type + "'s score is: " + this.count_hand());
 	}
 	
 	/**

@@ -112,7 +112,15 @@ public class Game
 	
 	public static void add_card_from_input(Player player, String[] array, int index)
 	{
-		Card input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
+		Card input_card;
+		if(array[index].charAt(1) != '1')
+		{
+			input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
+		}
+		else
+		{
+			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
+		}
 		player.add(input_card);
 	}
 	
@@ -124,14 +132,15 @@ public class Game
 	public static void play_file() throws FileNotFoundException, IOException
 	{
 		// Path to file
-//		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
+		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
+		String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
 		
 		// ArrayList where line from input file will be stored
 		ArrayList<String> words = new ArrayList<>();
 		
 		// I got some of this code to read from file from StackOverflow
-		try (BufferedReader br = new BufferedReader(new FileReader(path_2)))
+		try (BufferedReader br = new BufferedReader(new FileReader(path_3)))
 		{
 			   String line = null;
 			   while ((line = br.readLine()) != null) {words.add(line);}
@@ -162,28 +171,23 @@ public class Game
 			 * This is the case, until arr[i].charAt(0) == 'S'
 			 * After this point, all cards are added to the dealer
 			 * 
-			 * while !stand add to guest
-			 * if == S continue
-			 * add to dealer
+			 * Hello
 			 */
-			if(arr[i].charAt(0) == 'S')
+			if(arr[i].charAt(0) == 'S' && arr[i].length() == 1)
 			{
 				guest.stand = true;
 				continue;
 			}
+			else if(arr[i].charAt(0) == 'H' && arr[i].length() == 1){continue;}
 			
 			if(!guest.stand){add_card_from_input(guest, arr, i);}
 			else{add_card_from_input(dealer, arr, i);}
 		}
+		
+		guest.show_hand();
+		guest.show_score();
 		dealer.show_hand();
 		dealer.show_score();
-		
-		/* Now, 
-		 * I need to make meaning of characters
-		 * D for split
-		 * H for hit
-		 * S for stand
-		 */
 	}
 	
 	/**
