@@ -11,6 +11,26 @@ import java.util.Stack;
 public class Game
 {	
 	/**
+	 * Choose between console or file input modes
+	 * @param reader
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
+	{
+		System.out.println("Console or file input? (c/f): ");
+		String mode = reader.next();
+		
+		if(mode.equalsIgnoreCase("c")) {play_console();}
+		else if(mode.equalsIgnoreCase("f")) {play_file();}
+		else
+		{
+			System.out.println("Invalid input");
+			choose_mode(reader);
+		}
+	}
+	
+	/**
 	 * Play in console mode
 	 */
 	public static void play_console()
@@ -90,6 +110,82 @@ public class Game
 		reader.close();
 	}
 	
+	public static void add_card_from_input(Player player, String[] array, int index)
+	{
+		Card input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
+		player.add(input_card);
+	}
+	
+	/**
+	 * Play in file input mode
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public static void play_file() throws FileNotFoundException, IOException
+	{
+		// Path to file
+//		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
+		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
+		
+		// ArrayList where line from input file will be stored
+		ArrayList<String> words = new ArrayList<>();
+		
+		// I got some of this code to read from file from StackOverflow
+		try (BufferedReader br = new BufferedReader(new FileReader(path_2)))
+		{
+			   String line = null;
+			   while ((line = br.readLine()) != null) {words.add(line);}
+		}
+		
+		// Line from file is split into individual words and stored in this array
+		String[] arr = words.get(0).split(" ");
+//		System.out.println(arr[0].charAt(0));
+		
+		// Create players
+		Player guest = new Player("Guest");
+		Player dealer = new Player("Dealer");
+		
+		// Guest's first two cards
+		for(int i = 0; i < 2; ++i){add_card_from_input(guest, arr, i);}
+		guest.show_hand();
+		guest.show_score();
+		
+		// Dealer's first two cards
+		for(int i = 2; i < 4; ++i){add_card_from_input(dealer, arr, i);}
+		dealer.show_hand();
+		dealer.show_score();
+		
+		for(int i = 4; i < arr.length; ++i)
+		{
+			/*
+			 * All cards from now on are added to guest
+			 * This is the case, until arr[i].charAt(0) == 'S'
+			 * After this point, all cards are added to the dealer
+			 * 
+			 * while !stand add to guest
+			 * if == S continue
+			 * add to dealer
+			 */
+			if(arr[i].charAt(0) == 'S')
+			{
+				guest.stand = true;
+				continue;
+			}
+			
+			if(!guest.stand){add_card_from_input(guest, arr, i);}
+			else{add_card_from_input(dealer, arr, i);}
+		}
+		dealer.show_hand();
+		dealer.show_score();
+		
+		/* Now, 
+		 * I need to make meaning of characters
+		 * D for split
+		 * H for hit
+		 * S for stand
+		 */
+	}
+	
 	/**
 	 * User menu to decide whether or not to continue playing
 	 * @param reader
@@ -111,72 +207,13 @@ public class Game
 			continue_play(reader);
 		}
 	}
-	
+		
 	/**
-	 * Play in file input mode
+	 * Main function
+	 * @param args
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void play_file() throws FileNotFoundException, IOException
-	{
-		// Path to file
-		String path = "src\\main\\java\\core\\Input_File_1.txt";
-		
-		// Array where cards to be played will be stored
-		ArrayList<String> words = new ArrayList<>();
-		
-		// I got some of this code to read from file from StackOverflow
-		try (BufferedReader br = new BufferedReader(new FileReader(path)))
-		{
-			   String line = null;
-			   while ((line = br.readLine()) != null) {words.add(line);}
-		}
-		String[] arr = words.get(0).split(" ");
-//		System.out.println(arr[0].charAt(0));
-		
-		Player player = new Player("Guest");
-		Player dealer = new Player("Dealer");
-		
-		// Guest's first two cards
-		for(int i = 0; i < 2; ++i)
-		{
-			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
-			player.add(input_card);
-		}
-		player.show_hand();
-		player.show_score();
-		
-		// Dealer's first two cards
-		for(int i = 2; i < 4; ++i)
-		{
-			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
-			dealer.add(input_card);
-		}
-		dealer.show_hand();
-		dealer.show_score();
-		
-		/* Now, 
-		 * I need to make meaning of characters
-		 * D for split
-		 * H for hit
-		 * S for stand
-		 */
-	}
-	
-	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
-	{
-		System.out.println("Console or file input? (c/f): ");
-		String mode = reader.next();
-		
-		if(mode.equalsIgnoreCase("c")) {play_console();}
-		else if(mode.equalsIgnoreCase("f")) {play_file();}
-		else
-		{
-			System.out.println("Invalid input");
-			choose_mode(reader);
-		}
-	}
-		
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{	
 		Scanner reader = new Scanner(System.in);

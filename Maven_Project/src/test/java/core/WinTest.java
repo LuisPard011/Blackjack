@@ -1,5 +1,6 @@
 package core;
 
+//import java.util.Stack;
 import junit.framework.TestCase;
 
 public class WinTest extends TestCase{
@@ -17,14 +18,7 @@ public class WinTest extends TestCase{
 	
 	public void testDraw()
 	{
-//		Deck_Maker deck = new Deck_Maker();
-//		deck.populate_deck();
-//		deck.populate_draw_pile();
-//		
-//		assertEquals("SA", deck.draw_pile.peek().toString());
-//		Player guest = new Player("Guest");
-//		guest.hit(deck.draw_pile);
-//		assertEquals("HA", deck.draw_pile.peek().toString());
+		
 	}
 	
 	public void testCount()

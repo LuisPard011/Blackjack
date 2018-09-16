@@ -10,12 +10,13 @@ import java.util.HashMap;
 
 public class Card implements Comparable<Card>{
 
-	/* Arrays for ranks and suits    */
+	// Arrays for ranks and suits
+	public final static String[] SUITS = { "D", "C", "H", "S", "None"};
 	public final static String[] RANKS = { "None", "None", 
 			"2", "3", "4", "5", "6", "7", "8", "9", "10", 
 			"J", "Q", "K", "A"};
-	public final static String[] SUITS = { "D", "C", "H", "S", "None"};
 
+	// Variables
 	protected String suit;
 	protected String rank;
 	protected HashMap<String, Integer> rankValue;
@@ -34,6 +35,12 @@ public class Card implements Comparable<Card>{
 			this.rankValue.put(RANKS[r], r);
 		}
 	}
+	
+	/** the suit of the current card 
+	 *
+	 * @return the suit of this card (must be a string from Card.SUITS) 
+	 */
+	public String getSuit(){return this.suit;}
 
 	/** the numerical representation of the rank of the current card
 	 *  <p>
@@ -53,19 +60,15 @@ public class Card implements Comparable<Card>{
 	 * @return the string representation of the rank of this card (must be a string from Card.RANKS) 
 	 */
 	public String getRankString(){ return this.rank; }
-
-
-	/** the suit of the current card 
-	 *
-	 * @return the suit of this card (must be a string from Card.SUITS) 
+	
+	/**
+	 * Compare cards
 	 */
-	public String getSuit(){return this.suit;}
-
 	public int compareTo(Card other){return 0;}
 
 	@Override
-	/*
-	 * I did alter this toString() function to satisfy 3004's output requirements
+	/** I did alter this toString() function 
+	 *  to satisfy 3004's output requirements
 	 */
 	public final String toString()
 	{

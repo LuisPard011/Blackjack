@@ -6,11 +6,20 @@ import java.util.Stack;
 
 public class Player
 {
+	/*
+	 * Variables
+	 * Maybe I should make these variables protected 
+	 * then use getters/setters to access them
+	 */
 	ArrayList<Card> hand; 
 	int score;
 	boolean stand;
 	String type;
 	
+	/**
+	 * Constructor
+	 * @param player_type
+	 */
 	public Player(String player_type)
 	{
 		this.hand = new ArrayList<Card>();
@@ -20,42 +29,35 @@ public class Player
 	}
 	
 	/**
-	 * Draw one card from the draw_pile
-	 * @param draw_pile
+	 * Show only one of the player's cards
 	 */
-	public void hit(Stack<Card> draw_pile)
+	public void show_one_card()
 	{
-		this.add(draw_pile.pop());
-		this.score = this.count_hand();
+		System.out.println("One of " + this.type + "'s cards is: " + this.hand.get(0).toString());
 	}
 	
 	/**
-	 * Give player the option to either hit or stand
-	 * @param reader
-	 * @param deck
+	 * Show all cards in hand
 	 */
-	public void hit_or_stand(Scanner reader, Stack<Card> deck)
+	public void show_hand()
 	{
-		this.show_score();
-		System.out.print("Hit or stand? (h/s): ");
-		String hit_or_stand = reader.next();
-		
-		if(hit_or_stand.equalsIgnoreCase("h"))
+		System.out.print(this.type + "'s hand is: ");
+		for(int i = 0; i < this.hand.size(); ++i)
 		{
-			this.hit(deck);
-			this.show_hand();
+			System.out.print(this.hand.get(i).toString() + " ");
 		}
-		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
-		else
-		{
-			System.out.println("Invalid input");
-			hit_or_stand(reader, deck);
-		}
+		System.out.println();
 	}
 	
+	/**
+	 * Show score
+	 */
+	public void show_score()
+	{
+		System.out.println(this.type + "'s count is: " + this.count_hand());
+	}
 	
 	/**
-	 * Count the number of aces in the player's hand
 	 * @return the number of aces in the player's hand
 	 */
 	public int count_aces()
@@ -69,8 +71,6 @@ public class Player
 	}
 	
 	/**
-	 * Use the functions count_not_ace and count_aces 
-	 * Calculate the player's total score
 	 * @return the player's total score, accounting for aces
 	 */
 	public int count_hand()
@@ -115,39 +115,6 @@ public class Player
 	}
 	
 	/**
-	 * Determine if a player is bust
-	 * @return
-	 */
-	public boolean bust()
-	{
-		if(this.score > 21){return true;}
-		return false;
-	}
-	
-	/**
-	 * Show all cards in hand
-	 * @param player_or_dealer
-	 */
-	public void show_hand()
-	{
-		System.out.print(this.type + "'s hand is: ");
-		for(int i = 0; i < this.hand.size(); ++i)
-		{
-			System.out.print(this.hand.get(i).toString() + " ");
-		}
-		System.out.println();
-	}
-	
-	/**
-	 * Show score
-	 * @param player_or_dealer
-	 */
-	public void show_score()
-	{
-		System.out.println(this.type + "'s count is: " + this.count_hand());
-	}
-	
-	/**
 	 * Add a card to hand
 	 * @param card
 	 */
@@ -158,15 +125,42 @@ public class Player
 	}
 	
 	/**
-	 * Show only one of the dealer's cards
+	 * Draw one card from the draw_pile
+	 * @param deck
 	 */
-	public void show_one_card()
+	public void hit(Stack<Card> deck)
 	{
-		System.out.println("One of " + this.type + "'s cards is: " + this.hand.get(0).toString());
+		this.add(deck.pop());
+		this.score = this.count_hand();
+	}
+	
+	/**
+	 * Give player the option to either hit or stand
+	 * @param reader
+	 * @param deck
+	 */
+	public void hit_or_stand(Scanner reader, Stack<Card> deck)
+	{
+		this.show_score();
+		System.out.print("Hit or stand? (h/s): ");
+		String hit_or_stand = reader.next();
+		
+		if(hit_or_stand.equalsIgnoreCase("h"))
+		{
+			this.hit(deck);
+			this.show_hand();
+		}
+		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
+		else
+		{
+			System.out.println("Invalid input");
+			hit_or_stand(reader, deck);
+		}
 	}
 	
 	/**
 	 * Hit while player's score is less than 16 or it has a soft 17
+	 * @param draw_pile
 	 */
 	public void dealer_turn(Stack<Card> draw_pile)
 	{
@@ -178,5 +172,15 @@ public class Player
 			this.show_hand();
 			this.show_score();
 		}
+	}
+	
+	/**
+	 * Determine if a player is bust
+	 * @return
+	 */
+	public boolean bust()
+	{
+		if(this.score > 21){return true;}
+		return false;
 	}
 } 
