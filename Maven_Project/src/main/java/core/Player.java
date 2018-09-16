@@ -21,7 +21,11 @@ public class Player
 	 * Draw one card from the draw_pile
 	 * @param draw_pile
 	 */
-	public void hit(Stack<Card> draw_pile){this.add(draw_pile.pop());}
+	public void hit(Stack<Card> draw_pile)
+	{
+		this.add(draw_pile.pop());
+		this.score = this.score();
+	}
 	
 	/**
 	 * Give player the option to either hit or stand
@@ -36,7 +40,7 @@ public class Player
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
 			this.hit(deck.draw_pile);
-			this.show_cards();
+			this.show_hand("Player");
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
@@ -97,7 +101,7 @@ public class Player
 	 * Calculate the player's total score
 	 * @return the player's total score, accounting for aces
 	 */
-	public int calc_score()
+	public int score()
 	{
 		int sum = count_not_ace();
 		int aces_in_hand = count_aces();
@@ -112,16 +116,23 @@ public class Player
 		return sum;
 	}
 	
+	/**
+	 * Determine if a player is bust
+	 * @return
+	 */
 	public boolean is_bust()
 	{
-		int card_count = this.calc_score();
-		if(card_count > 21) {return true;}
+		if(this.score > 21){return true;}
 		return false;
 	}
 	
-	public void show_cards()
+	/**
+	 * Show all cards in hand
+	 * @param player_or_dealer
+	 */
+	public void show_hand(String player_or_dealer)
 	{
-		System.out.print("Hand is: ");
+		System.out.print(player_or_dealer + "'s hand is: ");
 		for(int i = 0; i < this.hand.size(); ++i)
 		{
 			System.out.print(this.hand.get(i).toString() + " ");
@@ -129,33 +140,22 @@ public class Player
 		System.out.println();
 	}
 	
-	public void show_one_card()
-	{
-		System.out.print("One card in hand is: ");
-		for(int i = 0; i < 1; ++i)
-		{
-			System.out.print(this.hand.get(i).toString() + " ");
-		}
-		System.out.println();
-	}
-	
-	/*
-	 * Dealer must draw while count is <= 16 || soft 17
-	 * Else stand
+	/**
+	 * Show score
+	 * @param player_or_dealer
 	 */
-	public void dealer_hit(Stack<Card> draw_pile)
+	public void show_count(String player_or_dealer)
 	{
-		while(this.calc_score() <= 16 || this.calc_score() == 17 && this.count_aces() > 0)
-		{
-			this.hit(draw_pile);
-		}
+		System.out.println(player_or_dealer + "'s count is: " + this.score());
 	}
 	
-	public void show_count() {System.out.println("Count is: " + this.calc_score());}
-	
+	/**
+	 * Add a card to hand
+	 * @param card
+	 */
 	public void add(Card card)
 	{
 		this.hand.add(card);
-		this.score = this.calc_score();
+		this.score = this.score();
 	}
 } 

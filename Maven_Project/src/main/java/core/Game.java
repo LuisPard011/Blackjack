@@ -19,9 +19,9 @@ public class Game
 		
 		Player guest = new Player();
 		for(int i = 0; i < draw_times; ++i) {guest.hit(deck.draw_pile);}
-		guest.show_cards();
+		guest.show_hand("Player");
 		
-		Player dealer = new Player();
+		Dealer dealer = new Dealer();
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck.draw_pile);}
 		dealer.show_one_card();
 		
@@ -38,7 +38,7 @@ public class Game
 		 */
 		if(guest.is_bust())
 		{
-			System.out.println("Dealer wins");
+			System.out.println("Player busted, dealer wins");
 			continue_play(reader);
 			reader.close();
 			return;
@@ -47,24 +47,26 @@ public class Game
 		/*
 		 * Dealer's turn
 		 */
-		dealer.show_cards();
+		dealer.show_hand("Dealer");
 		dealer.dealer_hit(deck.draw_pile);
-		dealer.show_cards();
+		dealer.show_hand("Dealer");
 		
 		/*
 		 * If dealer busts, player wins and game ends
-		 * Else, scores are compared and player with higher count wins
-		 * Game ends
 		 * Option to play again is offered
 		 */
 		if(dealer.is_bust())
 		{
-			System.out.println("Player wins");
+			System.out.println("Dealer busted, player wins");
 			continue_play(reader);
 			reader.close();
 			return;
 		}
 		
+		/*
+		 * If neither the player nor the dealer busts
+		 * Then, scores are compared to determine winner
+		 */
 		if(guest.score > dealer.score)
 		{
 			System.out.println("Player wins");
@@ -131,16 +133,16 @@ public class Game
 			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
 			player.add(input_card);
 		}
-		player.show_cards();
-		player.show_count();
+		player.show_hand("Player");
+		player.show_count("Player");
 		
 		for(int i = 2; i < 4; ++i)
 		{
 			Card input_card = new Card(Character.toString(arr[i].charAt(0)), Character.toString(arr[i].charAt(1)));
 			dealer.add(input_card);
 		}
-		dealer.show_cards();
-		dealer.show_count();
+		dealer.show_hand("Dealer");
+		dealer.show_count("Dealer");
 	}
 	
 	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException

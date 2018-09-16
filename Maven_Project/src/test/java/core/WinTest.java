@@ -32,7 +32,7 @@ public class WinTest extends TestCase{
 		Player guest = new Player();
 		guest.add(ace_s);
 		guest.add(ace_d);
-		assertEquals(12, guest.calc_score());
+		assertEquals(12, guest.score());
 		
 		// I can add different tests for multiple counting scenarios
 	}
