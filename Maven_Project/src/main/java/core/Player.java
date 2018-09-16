@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class Player
@@ -27,6 +28,30 @@ public class Player
 	{
 		// Must "continue", that is, pass the turn to the dealer
 		this.stand = true;
+	}
+	
+	public void hit_or_stand(Scanner reader, Deck deck)
+	{
+		System.out.print("Hit or stand? (h/s): ");
+		String hit_or_stand = reader.next();
+		
+		if(hit_or_stand.equalsIgnoreCase("h"))
+		{
+			this.hit(deck.draw_pile);
+			this.show_cards();
+		}
+		else if(hit_or_stand.equalsIgnoreCase("s"))
+		{
+			System.out.println("Standing");
+			this.stand = true;
+//			player.stand();
+			return;
+		}
+		else
+		{
+			System.out.println("Invalid input");
+			hit_or_stand(reader, deck);
+		}
 	}
 	
 	public int count_not_ace()

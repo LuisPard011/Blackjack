@@ -71,5 +71,240 @@ public class WinTest extends TestCase{
 		//read input file
 		assertEquals("S", guest.cards_on_table.get(0).getSuit());
 	}
+	
+	public void test()
+	{
+		
+	}
+	
+	public void testMethodPath()
+	{
+		
+	}
+	
+	public void testLoop()
+	{
+		
+	}
+	
+	// Need to write tests for requirements 16-44
+	
+	public void testShuffling()
+	{
+		
+	}
+	
+	public void testConsoleInput()
+	{
+		
+	}
+	
+	/*
+	 * Test if the option to choose between file and console works
+	 */
+	public void testChooseFC()
+	{
+		
+	}
+	
+	/*
+	 * Test if the player's first two cards are visible
+	 */
+	public void testVisibility_0()
+	{
+		
+	}
+	
+	/**
+	 * Test only one of the dealer's cards is visible at the start
+	 */
+	public void testDealerVisibility()
+	{
+		
+	}
+	
+	/**
+	 * Test the player can hit
+	 */
+	public void testPlayerHit()
+	{
+		
+	}
+	
+	/**
+	 * Test player can hit repeatedly
+	 */
+	public void testPlayerMultipleHits()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void testPlayerStand()
+	{
+		
+	}
+	
+	/**
+	 * Hand of the player is displayed at the end of the turn
+	 */
+	public void testDisplayPlayerHandEnd()
+	{
+		
+	}
+	
+	/**
+	 * Player can bust and dealer wins because of it
+	 */
+	public void testPlayerBust()
+	{
+		
+	}
+	
+	/**
+	 * Dealer has <= 16, thus it hits
+	 */
+	public void testDealerHit16()
+	{
+		
+	}
+	
+	/**
+	 * Dealer has soft 17, thus it hits
+	 */
+	public void testDealerSoft17()
+	{
+		
+	}
+	
+	/**
+	 * Dealer can hit repeatedly
+	 */
+	public void testDealerRepeatHit()
+	{
+		
+	}
+	
+	/**
+	 * Dealer's cards are visible at the end of its turn
+	 */
+	public void testDealerVisibleEndTurn()
+	{
+		
+	}
+	
+	/**
+	 * If dealer busts player wins
+	 */
+	public void testDealerBust()
+	{
+		
+	}
+	
+	/**
+	 * Ace counts as 1
+	 */
+	public void testAce1()
+	{
+		
+	}
 
+	/**
+	 * Ace counts as 11
+	 */
+	public void testAce11()
+	{
+		
+	}
+	
+	/**
+	 * Two aces in hand, one counts as 1 and the other as 11
+	 */
+	public void testTwoAces1_11()
+	{
+		
+	}
+	
+	/**
+	 * One ace can count as 11 and then 1
+	 */
+	public void testTwoAces11_1()
+	{
+		
+	}
+	
+	/**
+	 * A hand can count two aces as 1 each
+	 */
+	public void testTwoAces1_1()
+	{
+		
+	}
+	
+	/**
+	 * J, Q and K count as 10
+	 */
+	public void testFaceCardsValues()
+	{
+		
+	}
+	
+	/**
+	 * Player's initial blackjack is detected
+	 */
+	public void testPlayerBlackjack()
+	{
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public void testDealerBlackjack()
+	{
+		
+	}
+	
+	/**
+	 * If player has Blackjack and the dealer doesn't, player wins
+	 */
+	public void testBlackjackWin()
+	{
+		
+	}
+	
+	/**
+	 * If dealer has Blackjack it wins
+	 */
+	public void testBlackjackWin_2()
+	{
+		
+	}
+	
+	/**
+	 * Player's hand score is displayed and it's correct
+	 */
+	public void testPlayerScore()
+	{
+		
+	}
+	
+	/**
+	 * Dealer's hand score is displayed and it's correct
+	 */
+	public void testDealerScore()
+	{
+		
+	}
+	
+	/**
+	 * If dealer doesn't bust, player with highest score wins
+	 */
+	public void testDetermineWinner()
+	{
+		
+	}
+	
 }

@@ -18,6 +18,7 @@ public class Deck
 		this.draw_pile = new Stack<Card>();
 	}
 	
+	//1406
 	public void populate_deck()
 	{
 		int index = 0;
@@ -44,6 +45,7 @@ public class Deck
 		}
 	}
 	
+	//1406
 	public void populate_draw_pile()
 	{
 		for(int i = 0; i < deck_size; ++i){this.draw_pile.push(this.deck[i]);}

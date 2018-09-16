@@ -10,8 +10,7 @@ import java.util.HashMap;
 
 public class Card implements Comparable<Card>{
 
-	/* handy arrays for ranks and suits    */
-	/* do NOT change these                 */
+	/* Arrays for ranks and suits    */
 	public final static String[] RANKS = { "None", "None", 
 			"2", "3", "4", "5", "6", "7", "8", "9", "10", 
 			"J", "Q", "K", "A"};

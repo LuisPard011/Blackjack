@@ -1,7 +1,7 @@
 package core;
 
 import java.io.BufferedReader;
-import java.io.File;
+//import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,7 +38,7 @@ public class Game
 		// bust check
 		// hit again option
 		Scanner reader = new Scanner(System.in);
-		while(!guest.is_bust() && !guest.stand){hit_or_stand(reader, guest, deck);}
+		while(!guest.is_bust() && !guest.stand){guest.hit_or_stand(reader, deck);}
 		
 		// if bust, the dealer wins and game ends
 		if(guest.is_bust())
@@ -86,30 +86,6 @@ public class Game
 		reader.close();
 	}
 	
-	public static void hit_or_stand(Scanner reader, Player player, Deck deck)
-	{
-		System.out.print("Hit or stand? (h/s): ");
-		String hit_or_stand = reader.next();
-		
-		if(hit_or_stand.equalsIgnoreCase("h"))
-		{
-			player.hit(deck.draw_pile);
-			player.show_cards();
-		}
-		else if(hit_or_stand.equalsIgnoreCase("s"))
-		{
-			System.out.println("Standing");
-			player.stand = true;
-//			player.stand();
-			return;
-		}
-		else
-		{
-			System.out.println("Invalid input");
-			hit_or_stand(reader, player, deck);
-		}
-	}
-	
 	public static void continue_play(Scanner reader)
 	{
 		System.out.print("Continue playing? (y/n): ");
@@ -146,13 +122,15 @@ public class Game
 //		System.out.println(arr[0].charAt(0));
 		
 		Player player = new Player();
-		Player dealer = new Player();
+//		Player dealer = new Player();
 		
 		// I need to make meaning of characters like S for stand and H for hit
 		
 		Card first_card = new Card(Character.toString(arr[0].charAt(0)), Character.toString(arr[0].charAt(1)));
 		player.cards_on_table.add(first_card);
+		player.count = player.count_cards();
 		player.show_cards();
+		System.out.println("Player's count is: " + player.count);
 	}
 	
 	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
@@ -174,5 +152,7 @@ public class Game
 		Scanner reader = new Scanner(System.in);
 		choose_mode(reader);
 		reader.close();
+//		Player test = new Player();
+//		test.cards_on_table.add(new Card("S", "K"));
 	}
 }
