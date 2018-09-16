@@ -1,6 +1,6 @@
 package core;
 
-//import java.util.Stack;
+import java.util.Stack;
 import junit.framework.TestCase;
 
 public class WinTest extends TestCase{
@@ -15,50 +15,8 @@ public class WinTest extends TestCase{
 	Card king_c = new Card("C", "K");
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
-	
-	public void testDraw()
-	{
-		
-	}
-	
-	public void testCount()
-	{
-		Player guest = new Player("Guest");
-		guest.add(ace_s);
-		guest.add(ace_d);
-		assertEquals(12, guest.count_hand());
-		
-		// I can add different tests for multiple counting scenarios
-	}
-	
-	/*
-	 * This test is meant to identify when a player's count goes over 21
-	 */
-	public void testBust()
-	{
-		Player guest = new Player("Guest");
-		guest.add(king_s);
-		guest.add(king_d);
-		guest.add(two_s);
-		assertEquals(true, guest.bust());
-		// might have to overwrite the ArrayList add method to include +count when adding cards manually
-	}
-	
-	/*
-	 * Compare scores to determine a winner
-	 */
-	public void testWinner()
-	{
-		Player guest = new Player("Guest");
-		Player dealer = new Player("Dealer");
-		
-		guest.add(king_s);
-		guest.add(nine_s);
-		dealer.add(king_d);
-		dealer.add(king_c);
-		
-		assertEquals(false, guest.score > dealer.score);
-	}
+	Deck_Maker deck_maker = new Deck_Maker();
+	Stack<Card> deck = new Stack<>();
 	
 	public void testReadInput()
 	{
@@ -67,12 +25,33 @@ public class WinTest extends TestCase{
 //		assertEquals("S", guest.hand.get(0).getSuit());
 	}
 	
-	public void test()
+	/**
+	 * Requirement 11
+	 * Check there're 52 cards
+	 */
+	public void test_Cards_In_Deck()
+	{
+		deck_maker.make_deck(deck);
+		int deck_size = deck.size();
+		int count_pops = 0;
+		for(int i = 0; i < deck_size; ++i)
+		{
+			deck.pop();
+			count_pops += 1;
+		}
+		assertEquals(52, count_pops);
+	}
+	
+	/**
+	 * Requirement 12
+	 * Test shuffling procedure
+	 */
+	public void test_Shuffling()
 	{
 		
 	}
 	
-	public void testMethodPath()
+	public void test_Method_Path()
 	{
 		
 	}
