@@ -11,12 +11,12 @@ public class Player
 	boolean stand;
 	String type;
 	
-	public Player(String type_of_player)
+	public Player(String player_type)
 	{
 		this.hand = new ArrayList<Card>();
 		this.score = 0;
 		this.stand = false;
-		this.type = type_of_player;
+		this.type = player_type;
 	}
 	
 	/**
@@ -34,7 +34,7 @@ public class Player
 	 * @param reader
 	 * @param deck
 	 */
-	public void hit_or_stand(Scanner reader, Deck deck)
+	public void hit_or_stand(Scanner reader, Stack<Card> deck)
 	{
 		this.show_score();
 		System.out.print("Hit or stand? (h/s): ");
@@ -42,7 +42,7 @@ public class Player
 		
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
-			this.hit(deck.draw_pile);
+			this.hit(deck);
 			this.show_hand();
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
@@ -118,7 +118,7 @@ public class Player
 	 * Determine if a player is bust
 	 * @return
 	 */
-	public boolean is_bust()
+	public boolean bust()
 	{
 		if(this.score > 21){return true;}
 		return false;
@@ -160,19 +160,23 @@ public class Player
 	/**
 	 * Show only one of the dealer's cards
 	 */
-	public void show_one_dealer_card()
+	public void show_one_card()
 	{
-		System.out.println("One of dealer's cards is: " + this.hand.get(0).toString());
+		System.out.println("One of " + this.type + "'s cards is: " + this.hand.get(0).toString());
 	}
 	
 	/**
-	 * Dealer must hit while its score is less than 16 or it has a soft 17
+	 * Hit while player's score is less than 16 or it has a soft 17
 	 */
-	public void dealer_hit(Stack<Card> draw_pile)
+	public void dealer_turn(Stack<Card> draw_pile)
 	{
+		this.show_hand();
+		this.show_score();
 		while(this.count_hand() <= 16 || this.count_hand() == 17 && this.count_aces() > 0)
 		{
 			this.hit(draw_pile);
+			this.show_hand();
+			this.show_score();
 		}
 	}
 } 
