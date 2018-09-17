@@ -146,11 +146,15 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Test only one of the dealer's cards is visible at the start
+	 * Requirement 20
+	 * Test that only one of the dealer's cards is visible at the start
 	 */
-	public void testDealerVisibility()
+	public void test_see_One_Card()
 	{
-		
+		Player guest = new Player("Dealer");
+		guest.add(ace_d);
+		guest.add(king_c);
+		assertEquals(true, guest.show_cards(1));
 	}
 	
 	/**
