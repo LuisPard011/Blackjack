@@ -1,10 +1,13 @@
 package core;
 
+/*
+ * Much of the code for this class came from code provided by
+ * Professor Michael Jason Hinek for the COMP 1406 class from the summer of 2017 (in which I was enrolled)
+ */
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
-
-// Perhaps I should change the class name from Table to Deck, unless I add players to the class
 
 public class Deck_Maker
 {	

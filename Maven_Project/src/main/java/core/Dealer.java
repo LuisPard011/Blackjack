@@ -13,18 +13,18 @@ public class Dealer extends Player {
 		if(!this.blackjack() && player.blackjack())
 		{
 			player.win = true;
-			System.out.println("Player has a blackjack and wins");
+			System.out.println("Player has blackjack and dealer does not. Player wins");
 			return true;
 		}
 		else if(!player.blackjack() && this.blackjack())
 		{
-			System.out.println("Dealer has a blackjack and wins");
+			System.out.println("Dealer has a blackjack and player does not. Dealer wins");
 			this.win = true;
 			return true;
 		}
 		else if(player.blackjack() && this.blackjack())
 		{
-			System.out.println("Both the player and dealer have a blackjack, dealer wins");
+			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
 			this.win = true;
 			return true;
 		}
