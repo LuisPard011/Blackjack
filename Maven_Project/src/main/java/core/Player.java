@@ -212,4 +212,23 @@ public class Player
 		}
 		return false;
 	}
+	
+	/**
+	 * If neither the player nor the dealer busts
+	 * Then, scores are compared to determine winner
+	 * @param dealer
+	 */
+	public void determine_winner(Player dealer)
+	{
+		if(this.score > dealer.score)
+		{
+			System.out.println(this.name + " wins");
+			this.win = true;
+		}
+		else
+		{
+			System.out.println("Dealer wins");
+			dealer.win = true;
+		}
+	}
 } 

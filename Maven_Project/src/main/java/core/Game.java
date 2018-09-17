@@ -30,28 +30,6 @@ public class Game
 	}
 	
 	/**
-	 * If neither the player nor the dealer busts
-	 * Then, scores are compared to determine winner
-	 * @param guest
-	 * @param dealer
-	 */
-	public void determine_winner(Player guest, Player dealer)
-	{
-		if(guest.score > dealer.score)
-		{
-			System.out.println("Player wins");
-		}
-		else if(guest.score == dealer.score)
-		{
-			System.out.println("Player pushes");
-		}
-		else
-		{
-			System.out.println("Dealer wins");
-		}
-	}
-	
-	/**
 	 * Play in console mode
 	 */
 	public boolean play_console()
@@ -92,7 +70,7 @@ public class Game
 		}
 		
 		// If there are no busts
-		determine_winner(guest, dealer);
+		guest.determine_winner(dealer);
 		continue_play();
 		return true;
 	}

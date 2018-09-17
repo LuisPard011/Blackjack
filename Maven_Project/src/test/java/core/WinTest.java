@@ -364,72 +364,92 @@ public class WinTest extends TestCase
 //		guest.add(king_c);
 //		assertEquals(30, guest.score);
 //	}
-	
-	/**
-	 * R37
-	 * Player's initial blackjack is detected
-	 */
+//	
+//	/**
+//	 * R37
+//	 * Player's initial blackjack is detected
+//	 */
 //	public void test_Player_Blackjack()
 //	{
 //		
 //	}
-	
-	/**
-	 * R38
-	 * Dealer's initial blackjack is detected
-	 */
+//	
+//	/**
+//	 * R38
+//	 * Dealer's initial blackjack is detected
+//	 */
 //	public void test_Dealer_Blackjack()
 //	{
 //		
 //	}
-	
-	/**
-	 * R39
-	 * If player has Blackjack and the dealer doesn't, player wins
-	 */
+//	
+//	/**
+//	 * R39
+//	 * If player has Blackjack and the dealer doesn't, player wins
+//	 */
 //	public void test_Player_Blackjack_Win()
 //	{
 //		
 //	}
-	
-	/**
-	 * R40
-	 * If dealer has Blackjack it wins
-	 */
+//	
+//	/**
+//	 * R40
+//	 * If dealer has Blackjack it wins
+//	 */
 //	public void test_Dealer_Blackjack_Win()
 //	{
 //		
 //	}
-	
-	/**
-	 * R41
-	 * Player's hand score is displayed and it's correct
-	 */
-	public void test_Player_Score()
-	{
-		System.out.println("\nR41\n==================");
-		guest.add(king_c);
-		assertEquals(true, guest.show_score());
-	}
-	
-	/**
-	 * R42
-	 * Dealer's hand score is displayed and it's correct
-	 */
-	public void test_Dealer_Score()
-	{
-		System.out.println("\nR42\n==================");
-		dealer.add(king_c);
-		assertEquals(true, dealer.show_score());
-	}
-	
-	/**
-	 * R43
-	 * If dealer doesn't bust, player with highest score wins
-	 */
-//	public void test_Highest_Score_Winner()
+//	
+//	/**
+//	 * R41
+//	 * Player's hand score is displayed and it's correct
+//	 */
+//	public void test_Player_Score()
 //	{
-//		
+//		System.out.println("\nR41\n==================");
+//		guest.add(king_c);
+//		assertEquals(true, guest.show_score());
+//	}
+//	
+//	/**
+//	 * R42
+//	 * Dealer's hand score is displayed and it's correct
+//	 */
+//	public void test_Dealer_Score()
+//	{
+//		System.out.println("\nR42\n==================");
+//		dealer.add(king_c);
+//		assertEquals(true, dealer.show_score());
+//	}
+//	
+//	/**
+//	 * R44
+//	 * If there are no busts and player's score > dealer's
+//	 * Player wins
+//	 */
+//	public void test_Highest_Score_Guest_Wins()
+//	{
+//		guest.add(jack_c);
+//		guest.add(king_d);
+//		dealer.add(king_c);
+//		dealer.add(six_s);
+//		guest.determine_winner(dealer);
+//		assertEquals(true, guest.win);
+//	}
+//	
+//	/**
+//	 * R45
+//	 * If there are no busts and player's score is not greater than dealer's
+//	 * Dealer wins
+//	 */
+//	public void test_Highest_Score_Guest_Loses()
+//	{
+//		guest.add(two_s);
+//		dealer.add(king_c);
+//		dealer.add(six_s);
+//		guest.determine_winner(dealer);
+//		assertEquals(false, guest.win);
 //	}
 	
 	/**************
