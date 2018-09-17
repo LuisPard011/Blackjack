@@ -14,39 +14,32 @@ public class Player
 	ArrayList<Card> hand; 
 	int score;
 	boolean stand;
-	String type;
+	String name;
 	
 	/**
 	 * Constructor
-	 * @param player_type
+	 * @param player_name
 	 */
-	public Player(String player_type)
+	public Player(String player_name)
 	{
 		this.hand = new ArrayList<Card>();
 		this.score = 0;
 		this.stand = false;
-		this.type = player_type;
-	}
-	
-	/**
-	 * Show only one of the player's cards
-	 */
-	public void show_one_card()
-	{
-		System.out.println("One of " + this.type + "'s cards is: " + this.hand.get(0).toString());
+		this.name = player_name;
 	}
 	
 	/**
 	 * Show all cards in hand
 	 */
-	public void show_hand()
+	public boolean show_cards(int cards)
 	{
-		System.out.print(this.type + "'s hand is: ");
-		for(int i = 0; i < this.hand.size(); ++i)
+		System.out.print(this.name + " has cards: ");
+		for(int i = 0; i < cards; ++i)
 		{
 			System.out.print(this.hand.get(i).toString() + " ");
 		}
 		System.out.println();
+		return true;
 	}
 	
 	/**
@@ -54,7 +47,7 @@ public class Player
 	 */
 	public void show_score()
 	{
-		System.out.println(this.type + "'s score is: " + this.count_hand());
+		System.out.println(this.name + "'s score is: " + this.count_hand());
 	}
 	
 	/**
@@ -148,7 +141,7 @@ public class Player
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
 			this.hit(deck);
-			this.show_hand();
+			this.show_cards(this.hand.size());
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
@@ -164,12 +157,12 @@ public class Player
 	 */
 	public void dealer_turn(Stack<Card> draw_pile)
 	{
-		this.show_hand();
+		this.show_cards(this.hand.size());
 		this.show_score();
 		while(this.count_hand() <= 16 || this.count_hand() == 17 && this.count_aces() > 0)
 		{
 			this.hit(draw_pile);
-			this.show_hand();
+			this.show_cards(this.hand.size());
 			this.show_score();
 		}
 	}

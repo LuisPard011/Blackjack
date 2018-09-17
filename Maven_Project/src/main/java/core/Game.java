@@ -43,12 +43,12 @@ public class Game
 		// Create guest
 		Player guest = new Player("Guest");
 		for(int i = 0; i < draw_times; ++i) {guest.hit(deck);}
-		guest.show_hand();
+		guest.show_cards(2);
 		
 		// Create dealer
 		Player dealer = new Player("Dealer");
 		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck);}
-		dealer.show_one_card();
+		dealer.show_cards(1);
 		
 		/*
 		 * Check if player is bust
@@ -65,7 +65,6 @@ public class Game
 		{
 			System.out.println("Player busted, dealer wins");
 			continue_play(scanner);
-			scanner.close();
 			return true;
 		}
 		
@@ -80,7 +79,6 @@ public class Game
 		{
 			System.out.println("Dealer busted, player wins");
 			continue_play(scanner);
-			scanner.close();
 			return true;
 		}
 		
@@ -106,7 +104,6 @@ public class Game
 		 * Else continue_play function crashes 
 		 */
 		continue_play(scanner);
-		scanner.close();
 		return true;
 	}
 	
@@ -132,12 +129,12 @@ public class Game
 		
 		// Guest's first two cards
 		for(int i = 0; i < 2; ++i){reader.add_card_from_input(guest, commands, i);}
-		guest.show_hand();
+		guest.show_cards(2);
 		guest.show_score();
 		
 		// Dealer's first two cards
 		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i);}
-		dealer.show_hand();
+		dealer.show_cards(2);
 		dealer.show_score();
 		
 		for(int i = 4; i < commands.length; ++i)
@@ -159,9 +156,9 @@ public class Game
 			else{reader.add_card_from_input(dealer, commands, i);}
 		}
 		
-		guest.show_hand();
+		guest.show_cards(guest.hand.size());
 		guest.show_score();
-		dealer.show_hand();
+		dealer.show_cards(dealer.hand.size());
 		dealer.show_score();
 		return true;
 	}
@@ -178,20 +175,17 @@ public class Game
 		if(continue_play.equalsIgnoreCase("y"))
 		{
 			play_console();
-			scanner.close(); //important
 			return true;
 		}
 		else if(continue_play.equalsIgnoreCase("n"))
 		{
 			System.out.println("Thanks for playing");
-			scanner.close(); //important
 			return true;
 		}
 		else
 		{
 			System.out.println("Invalid input");
 			continue_play(scanner);
-			scanner.close(); //important
 			return true;
 		}
 	}

@@ -2,7 +2,6 @@ package core;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Stack;
@@ -111,11 +110,11 @@ public class WinTest extends TestCase
 	 * (e.g. try to draw 300 cards by changing draw_times to 300)
 	 * Then it would not return "true"
 	 */
-//	public void test_Console_Input()
-//	{
-//		Game game = new Game();
-//		assertEquals(true, game.play_console());
-//	}
+	public void test_Console_Input()
+	{
+		Game game = new Game();
+		assertEquals(true, game.play_console());
+	}
 	
 	/**
 	 * Requirement 18
@@ -132,12 +131,18 @@ public class WinTest extends TestCase
 		scanner.close();
 	}
 	
-	/*
+	/**
+	 * Requirement 19
 	 * Test if the player's first two cards are visible
+	 * If I tried to show 3 cards in this test
+	 * Then an IndexOutOfBounds would happen
 	 */
-	public void testVisibility_0()
+	public void test_See_Two_Cards()
 	{
-		
+		Player guest = new Player("Guest");
+		guest.add(ace_d);
+		guest.add(king_c);
+		assertEquals(true, guest.show_cards(2));
 	}
 	
 	/**
