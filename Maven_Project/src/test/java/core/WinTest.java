@@ -1,5 +1,7 @@
 package core;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
@@ -20,15 +22,23 @@ public class WinTest extends TestCase
 	Card king_s = new Card("S", "K");
 	
 	Deck_Maker deck_maker = new Deck_Maker();
-	
+	Reader reader = new Reader();
 	Stack<Card> deck_1 = new Stack<>();
 	Stack<Card> deck_2 = new Stack<>();
 	
 	int deck_size = 52;
+	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
+	String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
+	String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
+	String[] commands;
 	
 	/******************
 	 * Variables(End) * 
 	 ******************/
+	
+	/****************
+	 * Tests(Start) * 
+	 ****************/
 	
 	/**
 	 * Requirement 11
@@ -67,30 +77,31 @@ public class WinTest extends TestCase
 		assertEquals(false, Arrays.equals(arr_1, arr_2));
 	}
 	
-	public void test_Method_Path()
+	/**
+	 * Requirement 16
+	 * Test support for file input
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
+	 */
+	public void test_File_Input() throws FileNotFoundException, IOException
+	{
+		commands = reader.read_file_input(path_3);
+		assertEquals("S10", commands[0]);
+		assertEquals("D2", commands[commands.length-1]);
+	}
+	
+	/**
+	 * Requirement 17
+	 * Test support for console input
+	 */
+	public void test_Console_Input()
 	{
 		
 	}
 	
-	public void testLoop()
-	{
-		
-	}
-	
-	// Need to write tests for requirements 16-44
-	
-	public void testShuffling()
-	{
-		
-	}
-	
-	public void testConsoleInput()
-	{
-		
-	}
-	
-	/*
-	 * Test if the option to choose between file and console works
+	/**
+	 * Requirement 18
+	 * Test option to choose between file and console input
 	 */
 	public void testChooseFC()
 	{
@@ -297,4 +308,7 @@ public class WinTest extends TestCase
 		
 	}
 	
+	/**************
+	 * Tests(End) * 
+	 **************/
 }
