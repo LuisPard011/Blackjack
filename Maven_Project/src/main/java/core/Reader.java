@@ -14,7 +14,7 @@ public class Reader
 		ArrayList<String> words = new ArrayList<>();
 		
 		/*
-		 *  I got this block of code to read from file from StackOverflow
+		 *  I got this try block of code to read from file from StackOverflow
 		 *  https://stackoverflow.com/questions/15695984/java-print-contents-of-text-file-to-screen
 		 *  The comment from user Dariusz is where I got this block
 		 *  I didn't even change some of the variable names
@@ -23,6 +23,11 @@ public class Reader
 		{
 			String line = null;
 			while ((line = br.readLine()) != null) {words.add(line);}
+		}
+		catch(FileNotFoundException e)
+		{
+			System.err.println("* File not found\n* Program has been terminated");
+			System.exit(0);
 		}
 		
 		// Line from file is split into individual words and stored in this array
