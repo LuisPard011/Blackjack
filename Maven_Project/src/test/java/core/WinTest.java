@@ -16,6 +16,7 @@ public class WinTest extends TestCase
 	Card ace_d = new Card("D", "A");
 	Card ace_s = new Card("S", "A");
 	Card two_s = new Card("S", "2");
+	Card six_s = new Card("S", "6");
 	Card nine_s = new Card("S", "9");
 	Card king_c = new Card("C", "K");
 	Card king_d = new Card("D", "K");
@@ -230,23 +231,33 @@ public class WinTest extends TestCase
 		assertEquals(true, dealer.win);
 	}
 	
-//	
-//	/**
-//	 * Dealer has <= 16, thus it hits
-//	 */
-//	public void testDealerHit16()
-//	{
-//		
-//	}
-//	
-//	/**
-//	 * Dealer has soft 17, thus it hits
-//	 */
-//	public void testDealerSoft17()
-//	{
-//		
-//	}
-//	
+	
+	/**
+	 * R26
+	 * Dealer has <= 16, thus it hits
+	 */
+	public void test_Dealer_16()
+	{
+		System.out.println("\nR26\n==================");
+		dealer.add(ace_d);
+		dealer.add(two_s);
+		deck_maker.make_deck(deck_1);
+		assertEquals(true, dealer.dealer_turn(deck_1, guest));
+	}
+	
+	/**
+	 * R27
+	 * Dealer has soft 17, thus it hits
+	 */
+	public void test_Dealer_Soft_17()
+	{
+		System.out.println("\nR27\n==================");
+		dealer.add(ace_d);
+		dealer.add(six_s);
+		deck_maker.make_deck(deck_1);
+		assertEquals(true, dealer.dealer_turn(deck_1, guest));
+	}
+	
 //	/**
 //	 * Dealer can hit repeatedly
 //	 */

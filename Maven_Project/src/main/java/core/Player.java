@@ -175,7 +175,7 @@ public class Player
 	 * Hit while player's score is less than 16 or it has a soft 17
 	 * @param deck
 	 */
-	public void dealer_turn(Stack<Card> deck, Player player)
+	public boolean dealer_turn(Stack<Card> deck, Player player)
 	{
 		this.show_cards(this.hand.size());
 		this.show_score();
@@ -186,6 +186,7 @@ public class Player
 			this.show_score();
 		}
 		this.bust(player);
+		return true;
 	}
 	
 	/**
