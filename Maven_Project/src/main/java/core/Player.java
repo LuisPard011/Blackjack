@@ -112,6 +112,11 @@ public class Player
 			}
 		}
 		
+		if(sum > 21 && aces_in_hand > 1)
+		{
+			while(sum > 21) {sum -= 10;}
+		}
+		
 		return sum;
 	}
 	
