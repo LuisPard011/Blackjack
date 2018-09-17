@@ -212,4 +212,29 @@ public class Player
 			dealer.win = true;
 		}
 	}
+	
+	public boolean blackjack()
+	{
+		if(this.hand.get(0).getRank() == 14 || this.hand.get(1).getRank() == 14)
+		{
+			if(this.hand.get(0).getRank() == 10 || 
+					this.hand.get(0).getRank() == 11 ||
+					this.hand.get(0).getRank() == 12 ||
+					this.hand.get(0).getRank() == 13 ||
+					this.hand.get(1).getRank() == 10 ||
+					this.hand.get(1).getRank() == 11 ||
+					this.hand.get(1).getRank() == 12 ||
+					this.hand.get(1).getRank() == 13)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void blackjack_Win(Dealer dealer)
+	{
+		if(this.blackjack() && !dealer.blackjack()){this.win = true;}
+		else {dealer.win = true;}
+	}
 } 
