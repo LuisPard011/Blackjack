@@ -36,7 +36,8 @@ public class WinTest extends TestCase
 	String[] commands;
 	int[] arr_1;
 	int[] arr_2;
-	Card temp_card;
+	Card temp_card_1;
+	Card temp_card_2;
 	
 	int counter = 0;
 	int deck_size = 52;
@@ -168,20 +169,31 @@ public class WinTest extends TestCase
 	public void test_Player_Hit()
 	{
 		deck_maker.make_deck(deck_1);
-		temp_card = deck_1.peek();
+		temp_card_1 = deck_1.peek();
 		guest.hit(deck_1);
-		assertEquals(temp_card.getRank(), guest.hand.get(0).getRank());
-		assertEquals(temp_card.getSuit(), guest.hand.get(0).getSuit());
+		assertEquals(temp_card_1.getRank(), guest.hand.get(0).getRank());
+		assertEquals(temp_card_1.getSuit(), guest.hand.get(0).getSuit());
 	}
 	
-//	/**
-//	 * Test player can hit repeatedly
-//	 */
-//	public void testPlayerMultipleHits()
-//	{
-//		
-//	}
-//	
+	/**
+	 * Requirement 22
+	 * Test player can hit repeatedly
+	 */
+	public void testPlayerMultipleHits()
+	{
+		deck_maker.make_deck(deck_1);
+		
+		temp_card_1 = deck_1.peek();
+		guest.hit(deck_1);
+		temp_card_2 = deck_1.peek();
+		guest.hit(deck_1);
+		
+		assertEquals(temp_card_1.getRank(), guest.hand.get(0).getRank());
+		assertEquals(temp_card_1.getSuit(), guest.hand.get(0).getSuit());
+		assertEquals(temp_card_2.getRank(), guest.hand.get(1).getRank());
+		assertEquals(temp_card_2.getSuit(), guest.hand.get(1).getSuit());
+	}
+	
 //	/**
 //	 * 
 //	 */
