@@ -258,30 +258,38 @@ public class WinTest extends TestCase
 		assertEquals(true, dealer.dealer_turn(deck_1, guest));
 	}
 	
-//	/**
-//	 * Dealer can hit repeatedly
-//	 */
-//	public void testDealerRepeatHit()
+	/**
+	 * R28
+	 * Dealer can hit repeatedly
+	 */
+	public void test_Dealer_Repeat_Hit()
+	{
+		System.out.println("\nR28\n==================");
+		deck_maker.make_deck(deck_1);
+		assertEquals(true, dealer.dealer_turn(deck_1, guest));
+	}
+	
+	/**
+	 * R29 
+	 * Dealer's cards are visible at the end of its turn
+	 */
+//	public void test_Display_Player_Hand_End()
 //	{
 //		
 //	}
-//	
-//	/**
-//	 * Dealer's cards are visible at the end of its turn
-//	 */
-//	public void testDealerVisibleEndTurn()
-//	{
-//		
-//	}
-//	
-//	/**
-//	 * If dealer busts player wins
-//	 */
-//	public void testDealerBust()
-//	{
-//		
-//	}
-//	
+	
+	/**
+	 * R30
+	 * If dealer busts player wins
+	 */
+	public void test_Dealer_Bust()
+	{
+		dealer.score = 22;
+		dealer.bust(guest);
+		assertEquals(true, dealer.bust);
+		assertEquals(true, guest.win);
+	}
+	
 //	/**
 //	 * Ace counts as 1
 //	 */
