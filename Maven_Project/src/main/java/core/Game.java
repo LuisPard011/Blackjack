@@ -136,52 +136,41 @@ public class Game
 		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 		String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
 		
-		// ArrayList where line from input file will be stored
-		ArrayList<String> words = new ArrayList<>();
-		
-		// I got some of this code to read from file from StackOverflow
-		try (BufferedReader br = new BufferedReader(new FileReader(path_3)))
-		{
-			   String line = null;
-			   while ((line = br.readLine()) != null) {words.add(line);}
-		}
-		
-		// Line from file is split into individual words and stored in this array
-		String[] arr = words.get(0).split(" ");
-//		System.out.println(arr[0].charAt(0));
+		// Read file input
+		Reader reader = new Reader();
+		String[] commands = reader.read_file_input(path_3);
 		
 		// Create players
 		Player guest = new Player("Guest");
 		Player dealer = new Player("Dealer");
 		
 		// Guest's first two cards
-		for(int i = 0; i < 2; ++i){add_card_from_input(guest, arr, i);}
+		for(int i = 0; i < 2; ++i){add_card_from_input(guest, commands, i);}
 		guest.show_hand();
 		guest.show_score();
 		
 		// Dealer's first two cards
-		for(int i = 2; i < 4; ++i){add_card_from_input(dealer, arr, i);}
+		for(int i = 2; i < 4; ++i){add_card_from_input(dealer, commands, i);}
 		dealer.show_hand();
 		dealer.show_score();
 		
-		for(int i = 4; i < arr.length; ++i)
+		for(int i = 4; i < commands.length; ++i)
 		{
 			/*
 			 * All cards from now on are added to guest
-			 * This is the case, until arr[i].charAt(0) == 'S'
+			 * This is the case, until arr[i].charAt(0) == 'S' 
+			 * And the same string is of length 1
 			 * After this point, all cards are added to the dealer
-			 * 
-			 * Hello
 			 */
-			if(arr[i].charAt(0) == 'S' && arr[i].length() == 1)
+			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1)
 			{
 				guest.stand = true;
 				continue;
 			}
-			else if(arr[i].charAt(0) == 'H' && arr[i].length() == 1){continue;}
+			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-			if(!guest.stand){add_card_from_input(guest, arr, i);}
-			else{add_card_from_input(dealer, arr, i);}
+			if(!guest.stand){add_card_from_input(guest, commands, i);}
+			else{add_card_from_input(dealer, commands, i);}
 		}
 		
 		guest.show_hand();
