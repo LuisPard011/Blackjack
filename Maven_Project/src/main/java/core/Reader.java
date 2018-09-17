@@ -30,4 +30,18 @@ public class Reader
 		
 		return commands;
 	}
+	
+	public void add_card_from_input(Player player, String[] array, int index)
+	{
+		Card input_card;
+		if(array[index].charAt(1) != '1')
+		{
+			input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
+		}
+		else
+		{
+			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
+		}
+		player.add(input_card);
+	}
 }

@@ -1,10 +1,7 @@
 package core;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -16,7 +13,7 @@ public class Game
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void choose_mode(Scanner reader) throws FileNotFoundException, IOException
+	public void choose_mode(Scanner reader) throws FileNotFoundException, IOException
 	{
 		System.out.println("Console or file input? (c/f): ");
 		String mode = reader.next();
@@ -33,7 +30,7 @@ public class Game
 	/**
 	 * Play in console mode
 	 */
-	public static void play_console()
+	public boolean play_console()
 	{	
 		// Create deck
 		Deck_Maker deck_maker = new Deck_Maker();
@@ -67,7 +64,7 @@ public class Game
 			System.out.println("Player busted, dealer wins");
 			continue_play(reader);
 			reader.close();
-			return;
+			return true;
 		}
 		
 		// Dealer's turn
@@ -82,7 +79,7 @@ public class Game
 			System.out.println("Dealer busted, player wins");
 			continue_play(reader);
 			reader.close();
-			return;
+			return true;
 		}
 		
 		/*
@@ -108,20 +105,7 @@ public class Game
 		 */
 		continue_play(reader);
 		reader.close();
-	}
-	
-	public static void add_card_from_input(Player player, String[] array, int index)
-	{
-		Card input_card;
-		if(array[index].charAt(1) != '1')
-		{
-			input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
-		}
-		else
-		{
-			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
-		}
-		player.add(input_card);
+		return true;
 	}
 	
 	/**
@@ -129,7 +113,7 @@ public class Game
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public static void play_file() throws FileNotFoundException, IOException
+	public boolean play_file() throws FileNotFoundException, IOException
 	{
 		// Path to file
 		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
@@ -145,12 +129,12 @@ public class Game
 		Player dealer = new Player("Dealer");
 		
 		// Guest's first two cards
-		for(int i = 0; i < 2; ++i){add_card_from_input(guest, commands, i);}
+		for(int i = 0; i < 2; ++i){reader.add_card_from_input(guest, commands, i);}
 		guest.show_hand();
 		guest.show_score();
 		
 		// Dealer's first two cards
-		for(int i = 2; i < 4; ++i){add_card_from_input(dealer, commands, i);}
+		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i);}
 		dealer.show_hand();
 		dealer.show_score();
 		
@@ -169,21 +153,22 @@ public class Game
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-			if(!guest.stand){add_card_from_input(guest, commands, i);}
-			else{add_card_from_input(dealer, commands, i);}
+			if(!guest.stand){reader.add_card_from_input(guest, commands, i);}
+			else{reader.add_card_from_input(dealer, commands, i);}
 		}
 		
 		guest.show_hand();
 		guest.show_score();
 		dealer.show_hand();
 		dealer.show_score();
+		return true;
 	}
 	
 	/**
 	 * User menu to decide whether or not to continue playing
 	 * @param reader
 	 */
-	public static void continue_play(Scanner reader)
+	public void continue_play(Scanner reader)
 	{
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = reader.next();
@@ -199,18 +184,5 @@ public class Game
 			System.out.println("Invalid input");
 			continue_play(reader);
 		}
-	}
-		
-	/**
-	 * Main function
-	 * @param args
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws FileNotFoundException, IOException
-	{	
-		Scanner reader = new Scanner(System.in);
-		choose_mode(reader);
-		reader.close();
 	}
 }

@@ -25,6 +25,7 @@ public class WinTest extends TestCase
 	Reader reader = new Reader();
 	Stack<Card> deck_1 = new Stack<>();
 	Stack<Card> deck_2 = new Stack<>();
+	Game game = new Game();
 	
 	int deck_size = 52;
 	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
@@ -88,15 +89,19 @@ public class WinTest extends TestCase
 		commands = reader.read_file_input(path_3);
 		assertEquals("S10", commands[0]);
 		assertEquals("D2", commands[commands.length-1]);
+		assertEquals(true, game.play_file());
 	}
 	
 	/**
 	 * Requirement 17
 	 * Test support for console input
+	 * If play_console() did not work
+	 * (e.g. try to draw 300 cards by changing draw_times to 300)
+	 * Then it would not return "true"
 	 */
 	public void test_Console_Input()
 	{
-		
+		assertEquals(true, game.play_console());
 	}
 	
 	/**
