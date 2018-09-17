@@ -2,8 +2,8 @@ package core;
 
 /*
  * I didn't write this code
- * It was provided by Michael Jason Hinek for COMP 1406 during the summer of 2017
- * This class was used for the 1406 team project
+ * It was provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017
+ * This Card class was used for the 1406 team project
  */
 
 import java.util.HashMap;

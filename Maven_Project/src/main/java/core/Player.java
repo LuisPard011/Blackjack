@@ -12,13 +12,11 @@ public class Player
 	 * then use getters/setters to access them
 	 */
 	ArrayList<Card> hand; 
-	int score;
-	boolean stand;
-	String name;
-	
-	// Experimental
 	boolean bust;
+	boolean stand;
 	boolean win;
+	int score;
+	String name;
 	
 	/**
 	 * Constructor
@@ -27,17 +25,16 @@ public class Player
 	public Player(String player_name)
 	{
 		this.hand = new ArrayList<Card>();
-		this.score = 0;
-		this.stand = false;
-		this.name = player_name;
-		
-		// Experimental
 		this.bust = false;
+		this.stand = false;
 		this.win = false;
+		this.score = 0;
+		this.name = player_name;
 	}
 	
 	/**
 	 * Show all cards in hand
+	 * @param cards
 	 */
 	public boolean show_cards(int cards)
 	{
@@ -122,7 +119,7 @@ public class Player
 	}
 	
 	/**
-	 * Add a card to hand
+	 * Add a card to hand and update score
 	 * @param card
 	 */
 	public void add(Card card)
@@ -132,7 +129,7 @@ public class Player
 	}
 	
 	/**
-	 * Draw one card from the draw_pile
+	 * Draw x number of cards
 	 * @param deck
 	 * @param draw_times
 	 */
@@ -168,28 +165,29 @@ public class Player
 	}
 	
 	/**
-	 * Check if guest is bust
+	 * Check if player is bust
 	 * If not, give option to hit or stand
 	 * @param deck
+	 * @param dealer
 	 */
-	public void player_turn(Stack<Card> deck, Player player)
+	public void player_turn(Stack<Card> deck, Dealer dealer)
 	{
-		while(!this.bust(player) && !this.stand){this.hit_or_stand(deck);}
+		while(!this.bust(dealer) && !this.stand){this.hit_or_stand(deck);}
 	}
 	
 	/**
-	 * Determine if a player is bust
+	 * Determine if player/dealer is bust
 	 * If yes, the other wins the game
-	 * @param player
+	 * @param player_or_dealer
 	 * @return
 	 */
-	public boolean bust(Player player)
+	public boolean bust(Player player_or_dealer)
 	{
 		if(this.score > 21)
 		{
-			System.out.println(this.name + " busts, " + player.name + " wins");
+			System.out.println(this.name + " busts, " + player_or_dealer.name + " wins");
 			this.bust = true;
-			player.win = true;
+			player_or_dealer.win = true;
 			return true;
 		}
 		return false;
@@ -200,8 +198,9 @@ public class Player
 	 * Then, scores are compared to determine winner
 	 * @param dealer
 	 */
-	public void determine_winner(Player dealer)
+	public void determine_winner(Dealer dealer)
 	{
+		// If player's score is greater than dealer's
 		if(this.score > dealer.score)
 		{
 			System.out.println(this.name + " wins");
