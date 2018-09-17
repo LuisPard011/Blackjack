@@ -126,9 +126,7 @@ public class WinTest extends TestCase
 	{
 		Scanner scanner = new Scanner(System.in);
 		Game game = new Game();
-		
 		assertEquals(true, game.choose_mode(scanner));
-		scanner.close();
 	}
 	
 	/**
@@ -158,9 +156,10 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Test the player can hit
+	 * Requirement 21
+	 * Test if the player can hit
 	 */
-	public void testPlayerHit()
+	public void test_Player_Hit()
 	{
 		
 	}
