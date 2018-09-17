@@ -215,26 +215,23 @@ public class Player
 	
 	public boolean blackjack()
 	{
-		if(this.hand.get(0).getRank() == 14 || this.hand.get(1).getRank() == 14)
+		boolean has_ace = false;
+		boolean has_ten_value = false;
+		
+		for(int i = 0; i < this.hand.size(); ++i)
 		{
-			if(this.hand.get(0).getRank() == 10 || 
-					this.hand.get(0).getRank() == 11 ||
-					this.hand.get(0).getRank() == 12 ||
-					this.hand.get(0).getRank() == 13 ||
-					this.hand.get(1).getRank() == 10 ||
-					this.hand.get(1).getRank() == 11 ||
-					this.hand.get(1).getRank() == 12 ||
-					this.hand.get(1).getRank() == 13)
-			{
-				return true;
-			}
+			if(this.hand.get(i).getRank() == 14) {has_ace = true;}
+			
+			if(this.hand.get(i).getRank() == 10 || 
+					this.hand.get(i).getRank() == 11 ||
+					this.hand.get(i).getRank() == 12 ||
+					this.hand.get(i).getRank() == 13)
+			{has_ten_value = true;}
 		}
+		
+		if(has_ace == true && has_ten_value == true) {return true;}
+		
 		return false;
 	}
-	
-	public void blackjack_Win(Dealer dealer)
-	{
-		if(this.blackjack() && !dealer.blackjack()){this.win = true;}
-		else {dealer.win = true;}
-	}
+
 } 

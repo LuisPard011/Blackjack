@@ -62,7 +62,11 @@ public class Game
 		}
 		
 		// Dealer's turn
-		dealer.dealer_turn(deck, player);
+		if(dealer.dealer_turn(deck, player))
+		{
+			continue_play();
+			return true;
+		}
 		if(dealer.bust)
 		{
 			continue_play();
