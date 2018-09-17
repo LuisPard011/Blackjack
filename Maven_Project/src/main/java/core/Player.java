@@ -13,9 +13,12 @@ public class Player
 	 */
 	ArrayList<Card> hand; 
 	int score;
-	boolean bust;
 	boolean stand;
 	String name;
+	
+	// Experimental
+	boolean bust;
+	boolean win;
 	
 	/**
 	 * Constructor
@@ -27,6 +30,10 @@ public class Player
 		this.score = 0;
 		this.stand = false;
 		this.name = player_name;
+		
+		// Experimental
+		this.bust = false;
+		this.win = false;
 	}
 	
 	/**
@@ -159,16 +166,16 @@ public class Player
 	 * If not, give option to hit or stand
 	 * @param deck
 	 */
-	public void guest_turn(Stack<Card> deck)
+	public void guest_turn(Stack<Card> deck, Player player)
 	{
-		while(!this.bust() && !this.stand){this.hit_or_stand(deck);}
+		while(!this.bust(player) && !this.stand){this.hit_or_stand(deck);}
 	}
 	
 	/**
 	 * Hit while player's score is less than 16 or it has a soft 17
 	 * @param deck
 	 */
-	public void dealer_turn(Stack<Card> deck)
+	public void dealer_turn(Stack<Card> deck, Player player)
 	{
 		this.show_cards(this.hand.size());
 		this.show_score();
@@ -178,15 +185,24 @@ public class Player
 			this.show_cards(this.hand.size());
 			this.show_score();
 		}
+		this.bust(player);
 	}
 	
 	/**
 	 * Determine if a player is bust
+	 * If yes, the other wins the game
+	 * @param player
 	 * @return
 	 */
-	public boolean bust()
+	public boolean bust(Player player)
 	{
-		if(this.score > 21){return true;}
+		if(this.score > 21)
+		{
+			System.out.println(this.name + " busts, " + player.name + " wins");
+			this.bust = true;
+			player.win = true;
+			return true;
+		}
 		return false;
 	}
 } 

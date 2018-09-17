@@ -76,29 +76,17 @@ public class Game
 		dealer.show_cards(1);
 		
 		// Guest's turn
-		guest.guest_turn(deck);
-		
-		/*
-		 * If bust, the dealer wins and game ends
-		 * Option to play again is offered
-		 */
-		if(guest.bust())
+		guest.guest_turn(deck, dealer);
+		if(guest.bust)
 		{
-			System.out.println("Guest busted, dealer wins");
 			continue_play();
 			return true;
 		}
 		
 		// Dealer's turn
-		dealer.dealer_turn(deck);
-		
-		/*
-		 * If dealer busts, player wins and game ends
-		 * Option to play again is offered
-		 */
-		if(dealer.bust())
+		dealer.dealer_turn(deck, guest);
+		if(dealer.bust)
 		{
-			System.out.println("Dealer busted, player wins");
 			continue_play();
 			return true;
 		}

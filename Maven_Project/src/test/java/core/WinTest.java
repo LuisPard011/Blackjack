@@ -213,18 +213,23 @@ public class WinTest extends TestCase
 	 * R24
 	 * Hand of the player is displayed at the end of the turn
 	 */
-	public void test_Display_Player_Hand_End()
-	{
-		
-	}
-	
-//	/**
-//	 * Player can bust and dealer wins because of it
-//	 */
-//	public void testPlayerBust()
+//	public void test_Display_Player_Hand_End()
 //	{
 //		
 //	}
+	
+	/**
+	 * R25
+	 * Player can bust and dealer wins because of it
+	 */
+	public void test_Player_Bust()
+	{
+		guest.score = 22;
+		guest.bust(dealer);
+		assertEquals(true, guest.bust);
+		assertEquals(true, dealer.win);
+	}
+	
 //	
 //	/**
 //	 * Dealer has <= 16, thus it hits
