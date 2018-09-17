@@ -215,10 +215,14 @@ public class WinTest extends TestCase
 //	 * R24
 //	 * Hand of the player is displayed at the end of the turn
 //	 */
-////	public void test_Display_Player_Hand_End()
-////	{
-////		
-////	}
+	public void test_Display_Player_Hand_End()
+	{
+		System.out.println("\nR24\n==================");
+		guest.add(ace_d);
+		guest.add(two_s);
+		guest.add(six_s);
+		assertEquals(true, guest.show_cards(guest.hand.size()));
+	}
 //	
 //	/**
 //	 * R25
@@ -271,14 +275,18 @@ public class WinTest extends TestCase
 //		assertEquals(true, dealer.dealer_turn(deck_1, guest));
 //	}
 //	
-//	/**
-//	 * R29 
-//	 * Dealer's cards are visible at the end of its turn
-//	 */
-////	public void test_Display_Player_Hand_End()
-////	{
-////		
-////	}
+	/**
+	 * R29 
+	 * Dealer's cards are visible at the end of its turn
+	 */
+	public void test_Display_Dealer_Hand_End()
+	{
+		System.out.println("\nR29\n==================");
+		dealer.add(ace_d);
+		dealer.add(two_s);
+		dealer.add(six_s);
+		assertEquals(true, dealer.show_cards(dealer.hand.size()));
+	}
 //	
 //	/**
 //	 * R30
