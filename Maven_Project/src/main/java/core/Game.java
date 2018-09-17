@@ -30,32 +30,53 @@ public class Game
 	}
 	
 	/**
+	 * If neither the player nor the dealer busts
+	 * Then, scores are compared to determine winner
+	 * @param guest
+	 * @param dealer
+	 */
+	public void determine_winner(Player guest, Player dealer)
+	{
+		if(guest.score > dealer.score)
+		{
+			System.out.println("Player wins");
+		}
+		else if(guest.score == dealer.score)
+		{
+			System.out.println("Player pushes");
+		}
+		else
+		{
+			System.out.println("Dealer wins");
+		}
+	}
+	
+	/**
 	 * Play in console mode
 	 */
 	public boolean play_console()
 	{	
+		// Variables
+		int draw_times = 2;
+		Scanner scanner = new Scanner(System.in);
+		
 		// Create deck
 		Deck_Maker deck_maker = new Deck_Maker();
 		Stack<Card> deck = new Stack<Card>();
 		deck_maker.make_deck(deck);
-		int draw_times = 2;
 		
 		// Create guest
 		Player guest = new Player("Guest");
-		for(int i = 0; i < draw_times; ++i) {guest.hit(deck);}
+		guest.hit(deck, draw_times);
 		guest.show_cards(2);
 		
 		// Create dealer
 		Player dealer = new Player("Dealer");
-		for(int i = 0; i < draw_times; ++i) {dealer.hit(deck);}
+		dealer.hit(deck, draw_times);
 		dealer.show_cards(1);
 		
-		/*
-		 * Check if player is bust
-		 * If not, give option to hit or stand
-		 */
-		Scanner scanner = new Scanner(System.in);
-		while(!guest.bust() && !guest.stand){guest.hit_or_stand(scanner, deck);}
+		// Guest's turn
+		guest.guest_turn(deck);
 		
 		/*
 		 * If bust, the dealer wins and game ends
@@ -63,8 +84,8 @@ public class Game
 		 */
 		if(guest.bust())
 		{
-			System.out.println("Player busted, dealer wins");
-			continue_play(scanner);
+			System.out.println("Guest busted, dealer wins");
+			continue_play();
 			return true;
 		}
 		
@@ -78,32 +99,13 @@ public class Game
 		if(dealer.bust())
 		{
 			System.out.println("Dealer busted, player wins");
-			continue_play(scanner);
+			continue_play();
 			return true;
 		}
 		
-		/*
-		 * If neither the player nor the dealer busts
-		 * Then, scores are compared to determine winner
-		 */
-		if(guest.score > dealer.score)
-		{
-			System.out.println("Player wins");
-		}
-		else if(guest.score == dealer.score)
-		{
-			System.out.println("Player pushes");
-		}
-		else
-		{
-			System.out.println("Dealer wins");
-		}
-		
-		/* 
-		 * Have to use scanner as an argument
-		 * Else continue_play function crashes 
-		 */
-		continue_play(scanner);
+		// If there are no busts
+		determine_winner(guest, dealer);
+		continue_play();
 		return true;
 	}
 	
@@ -167,8 +169,9 @@ public class Game
 	 * User menu to decide whether or not to continue playing
 	 * @param scanner
 	 */
-	public boolean continue_play(Scanner scanner)
+	public boolean continue_play()
 	{
+		Scanner scanner = new Scanner(System.in);
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = scanner.next();
 		
@@ -185,7 +188,7 @@ public class Game
 		else
 		{
 			System.out.println("Invalid input");
-			continue_play(scanner);
+			continue_play();
 			return true;
 		}
 	}

@@ -13,6 +13,7 @@ public class Player
 	 */
 	ArrayList<Card> hand; 
 	int score;
+	boolean bust;
 	boolean stand;
 	String name;
 	
@@ -120,48 +121,60 @@ public class Player
 	/**
 	 * Draw one card from the draw_pile
 	 * @param deck
+	 * @param draw_times
 	 */
-	public void hit(Stack<Card> deck)
+	public void hit(Stack<Card> deck, int draw_times)
 	{
-		this.add(deck.pop());
+		for(int i = 0; i < draw_times; ++i){this.add(deck.pop());}
 		this.score = this.count_hand();
 	}
 	
 	/**
 	 * Give player the option to either hit or stand
-	 * @param reader
 	 * @param deck
 	 */
-	public void hit_or_stand(Scanner reader, Stack<Card> deck)
+	public void hit_or_stand(Stack<Card> deck)
 	{
+		Scanner scanner = new Scanner(System.in);
+		
 		this.show_score();
 		System.out.print("Hit or stand? (h/s): ");
-		String hit_or_stand = reader.next();
+		String hit_or_stand = scanner.next();
 		
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
-			this.hit(deck);
+			this.hit(deck, 1);
 			this.show_cards(this.hand.size());
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
 		{
 			System.out.println("Invalid input");
-			hit_or_stand(reader, deck);
+			hit_or_stand(deck);
 		}
 	}
 	
 	/**
-	 * Hit while player's score is less than 16 or it has a soft 17
-	 * @param draw_pile
+	 * Check if guest is bust
+	 * If not, give option to hit or stand
+	 * @param deck
 	 */
-	public void dealer_turn(Stack<Card> draw_pile)
+	public void guest_turn(Stack<Card> deck)
+	{
+		while(!this.bust() && !this.stand){this.hit_or_stand(deck);}
+	}
+	
+	/**
+	 * Hit while player's score is less than 16 or it has a soft 17
+	 * @param deck
+	 */
+	public void dealer_turn(Stack<Card> deck)
 	{
 		this.show_cards(this.hand.size());
 		this.show_score();
 		while(this.count_hand() <= 16 || this.count_hand() == 17 && this.count_aces() > 0)
 		{
-			this.hit(draw_pile);
+			this.hit(deck, 1);
 			this.show_cards(this.hand.size());
 			this.show_score();
 		}

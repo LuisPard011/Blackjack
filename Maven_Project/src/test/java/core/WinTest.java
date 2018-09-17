@@ -170,7 +170,7 @@ public class WinTest extends TestCase
 	{
 		deck_maker.make_deck(deck_1);
 		temp_card_1 = deck_1.peek();
-		guest.hit(deck_1);
+		guest.hit(deck_1, 1);
 		assertEquals(temp_card_1.getRank(), guest.hand.get(0).getRank());
 		assertEquals(temp_card_1.getSuit(), guest.hand.get(0).getSuit());
 	}
@@ -184,9 +184,9 @@ public class WinTest extends TestCase
 		deck_maker.make_deck(deck_1);
 		
 		temp_card_1 = deck_1.peek();
-		guest.hit(deck_1);
+		guest.hit(deck_1, 1);
 		temp_card_2 = deck_1.peek();
-		guest.hit(deck_1);
+		guest.hit(deck_1, 1);
 		
 		assertEquals(temp_card_1.getRank(), guest.hand.get(0).getRank());
 		assertEquals(temp_card_1.getSuit(), guest.hand.get(0).getSuit());
@@ -205,18 +205,19 @@ public class WinTest extends TestCase
 		System.out.println("\nR23");
 		System.out.println("Choose 's' or test will fail");
 		System.out.println("==================");
-		guest.hit_or_stand(scanner, deck_1);
+		guest.hit_or_stand(deck_1);
 		assertEquals(true, guest.stand);
 	}
 	
 	/**
-//	 * Hand of the player is displayed at the end of the turn
-//	 */
-//	public void testDisplayPlayerHandEnd()
-//	{
-//		
-//	}
-//	
+	 * R24
+	 * Hand of the player is displayed at the end of the turn
+	 */
+	public void test_Display_Player_Hand_End()
+	{
+		
+	}
+	
 //	/**
 //	 * Player can bust and dealer wins because of it
 //	 */
