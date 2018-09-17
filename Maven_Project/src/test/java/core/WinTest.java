@@ -18,10 +18,11 @@ public class WinTest extends TestCase
 	Card two_s = new Card("S", "2");
 	Card six_s = new Card("S", "6");
 	Card nine_s = new Card("S", "9");
+	Card jack_c = new Card("C", "J");
+	Card queen_c = new Card("C", "Q");
 	Card king_c = new Card("C", "K");
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
-
 	
 	Player guest = new Player("Guest");
 	Player dealer = new Player("Dealer");
@@ -314,52 +315,55 @@ public class WinTest extends TestCase
 //		guest.add(ace_s);
 //		assertEquals(13, guest.score);
 //	}
-	
-	/**
-	 * R33
-	 * Two aces in hand, one counts as 1 and the other as 11
-	 */
-	public void test_Aces_1_11()
-	{
-		guest.add(ace_d);
-		guest.add(ace_s);
-		assertEquals(12, guest.score);
-	}
-	
-	/**
-	 * R34
-	 * One ace can count as 11 and then 1
-	 */
-	public void test_Aces_11_1()
-	{
-		guest.add(ace_d);
-		guest.add(two_s);
-		assertEquals(13, guest.score);
-		guest.add(king_c);
-		guest.add(six_s);
-		assertEquals(19, guest.score);
-	}
-	
-	/**
-	 * R35
-	 * A hand can count two aces as 1 each
-	 */
-	public void test_Aces_1_1()
-	{
-		guest.add(ace_d);
-		guest.add(ace_s);
-		guest.add(king_d);
-		assertEquals(12, guest.score);
-	}
+//	
+//	/**
+//	 * R33
+//	 * Two aces in hand, one counts as 1 and the other as 11
+//	 */
+//	public void test_Aces_1_11()
+//	{
+//		guest.add(ace_d);
+//		guest.add(ace_s);
+//		assertEquals(12, guest.score);
+//	}
+//	
+//	/**
+//	 * R34
+//	 * One ace can count as 11 and then 1
+//	 */
+//	public void test_Aces_11_1()
+//	{
+//		guest.add(ace_d);
+//		guest.add(two_s);
+//		assertEquals(13, guest.score);
+//		guest.add(king_c);
+//		guest.add(six_s);
+//		assertEquals(19, guest.score);
+//	}
+//	
+//	/**
+//	 * R35
+//	 * A hand can count two aces as 1 each
+//	 */
+//	public void test_Aces_1_1()
+//	{
+//		guest.add(ace_d);
+//		guest.add(ace_s);
+//		guest.add(king_d);
+//		assertEquals(12, guest.score);
+//	}
 	
 	/**
 	 * R36
 	 * J, Q and K count as 10
 	 */
-//	public void test_Face_Cards_Values()
-//	{
-//		
-//	}
+	public void test_Face_Cards_Values()
+	{
+		guest.add(jack_c);
+		guest.add(queen_c);
+		guest.add(king_c);
+		assertEquals(30, guest.score);
+	}
 	
 	/**
 	 * R37
