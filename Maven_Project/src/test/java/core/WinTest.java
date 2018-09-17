@@ -319,28 +319,38 @@ public class WinTest extends TestCase
 	 * R33
 	 * Two aces in hand, one counts as 1 and the other as 11
 	 */
-//	public void test_Aces_1_11()
-//	{
-//		
-//	}
+	public void test_Aces_1_11()
+	{
+		guest.add(ace_d);
+		guest.add(ace_s);
+		assertEquals(12, guest.score);
+	}
 	
 	/**
 	 * R34
 	 * One ace can count as 11 and then 1
 	 */
-//	public void test_Aces_11_1()
-//	{
-//		
-//	}
+	public void test_Aces_11_1()
+	{
+		guest.add(ace_d);
+		guest.add(two_s);
+		assertEquals(13, guest.score);
+		guest.add(king_c);
+		guest.add(six_s);
+		assertEquals(19, guest.score);
+	}
 	
 	/**
 	 * R35
 	 * A hand can count two aces as 1 each
 	 */
-//	public void test_Aces_1_1()
-//	{
-//		
-//	}
+	public void test_Aces_1_1()
+	{
+		guest.add(ace_d);
+		guest.add(ace_s);
+		guest.add(king_d);
+		assertEquals(12, guest.score);
+	}
 	
 	/**
 	 * R36
