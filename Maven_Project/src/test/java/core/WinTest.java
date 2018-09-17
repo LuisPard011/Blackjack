@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.Stack;
 import junit.framework.TestCase;
 
@@ -21,17 +22,11 @@ public class WinTest extends TestCase
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
 	
-	Deck_Maker deck_maker = new Deck_Maker();
-	Reader reader = new Reader();
-	Stack<Card> deck_1 = new Stack<>();
-	Stack<Card> deck_2 = new Stack<>();
-	Game game = new Game();
-	
 	int deck_size = 52;
 	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 	String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 	String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
-	String[] commands;
+	
 	
 	/******************
 	 * Variables(End) * 
@@ -47,13 +42,18 @@ public class WinTest extends TestCase
 	 */
 	public void test_Cards_In_Deck()
 	{
-		deck_maker.make_deck(deck_1);
+		Stack<Card> deck = new Stack<>();
+		Deck_Maker deck_maker = new Deck_Maker();
+		
+		deck_maker.make_deck(deck);
 		int count_pops = 0;
+		
 		for(int i = 0; i < deck_size; ++i)
 		{
-			deck_1.pop();
+			deck.pop();
 			count_pops += 1;
 		}
+		
 		assertEquals(52, count_pops);
 	}
 	
@@ -66,15 +66,22 @@ public class WinTest extends TestCase
 	 */
 	public void test_Shuffling()
 	{
+		Stack<Card> deck_1 = new Stack<>();
+		Stack<Card> deck_2 = new Stack<>();
+		Deck_Maker deck_maker = new Deck_Maker();
+		
 		deck_maker.make_deck(deck_1);
 		deck_maker.make_deck(deck_2);
+		
 		int[] arr_1 = new int[deck_size];
 		int[] arr_2 = new int[deck_size];
+		
 		for(int i = 0; i < deck_size; ++i)
 		{
 			arr_1[i] = deck_1.pop().getRank();
 			arr_2[i] = deck_2.pop().getRank();
 		}
+		
 		assertEquals(false, Arrays.equals(arr_1, arr_2));
 	}
 	
@@ -86,7 +93,12 @@ public class WinTest extends TestCase
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException
 	{
+		Game game = new Game();
+		Reader reader = new Reader();
+		
+		String[] commands;
 		commands = reader.read_file_input(path_3);
+		
 		assertEquals("S10", commands[0]);
 		assertEquals("D2", commands[commands.length-1]);
 		assertEquals(true, game.play_file());
@@ -99,18 +111,25 @@ public class WinTest extends TestCase
 	 * (e.g. try to draw 300 cards by changing draw_times to 300)
 	 * Then it would not return "true"
 	 */
-	public void test_Console_Input()
-	{
-		assertEquals(true, game.play_console());
-	}
+//	public void test_Console_Input()
+//	{
+//		Game game = new Game();
+//		assertEquals(true, game.play_console());
+//	}
 	
 	/**
 	 * Requirement 18
 	 * Test option to choose between file and console input
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public void testChooseFC()
+	public void test_Choose_FC() throws FileNotFoundException, IOException
 	{
+		Scanner scanner = new Scanner(System.in);
+		Game game = new Game();
 		
+		assertEquals(true, game.choose_mode(scanner));
+		scanner.close();
 	}
 	
 	/*

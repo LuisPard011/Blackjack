@@ -14,9 +14,9 @@ public class Main
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException
 	{	
-		Scanner reader = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		Game game = new Game();
-		game.choose_mode(reader);
-		reader.close();
+		game.choose_mode(scanner);
+		scanner.close();
 	}
 }

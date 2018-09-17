@@ -9,22 +9,24 @@ public class Game
 {	
 	/**
 	 * Choose between console or file input modes
-	 * @param reader
+	 * @param scanner
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void choose_mode(Scanner reader) throws FileNotFoundException, IOException
+	public boolean choose_mode(Scanner scanner) throws FileNotFoundException, IOException
 	{
 		System.out.println("Console or file input? (c/f): ");
-		String mode = reader.next();
+		String mode = scanner.next();
 		
 		if(mode.equalsIgnoreCase("c")) {play_console();}
 		else if(mode.equalsIgnoreCase("f")) {play_file();}
 		else
 		{
 			System.out.println("Invalid input");
-			choose_mode(reader);
+			choose_mode(scanner);
 		}
+		
+		return true;
 	}
 	
 	/**
@@ -52,8 +54,8 @@ public class Game
 		 * Check if player is bust
 		 * If not, give option to hit or stand
 		 */
-		Scanner reader = new Scanner(System.in);
-		while(!guest.bust() && !guest.stand){guest.hit_or_stand(reader, deck);}
+		Scanner scanner = new Scanner(System.in);
+		while(!guest.bust() && !guest.stand){guest.hit_or_stand(scanner, deck);}
 		
 		/*
 		 * If bust, the dealer wins and game ends
@@ -62,8 +64,8 @@ public class Game
 		if(guest.bust())
 		{
 			System.out.println("Player busted, dealer wins");
-			continue_play(reader);
-			reader.close();
+			continue_play(scanner);
+			scanner.close();
 			return true;
 		}
 		
@@ -77,8 +79,8 @@ public class Game
 		if(dealer.bust())
 		{
 			System.out.println("Dealer busted, player wins");
-			continue_play(reader);
-			reader.close();
+			continue_play(scanner);
+			scanner.close();
 			return true;
 		}
 		
@@ -103,8 +105,8 @@ public class Game
 		 * Have to use scanner as an argument
 		 * Else continue_play function crashes 
 		 */
-		continue_play(reader);
-		reader.close();
+		continue_play(scanner);
+		scanner.close();
 		return true;
 	}
 	
@@ -166,23 +168,31 @@ public class Game
 	
 	/**
 	 * User menu to decide whether or not to continue playing
-	 * @param reader
+	 * @param scanner
 	 */
-	public void continue_play(Scanner reader)
+	public boolean continue_play(Scanner scanner)
 	{
 		System.out.print("Continue playing? (y/n): ");
-		String continue_play = reader.next();
+		String continue_play = scanner.next();
 		
-		if(continue_play.equalsIgnoreCase("y")) {play_console();}
+		if(continue_play.equalsIgnoreCase("y"))
+		{
+			play_console();
+			scanner.close(); //important
+			return true;
+		}
 		else if(continue_play.equalsIgnoreCase("n"))
 		{
 			System.out.println("Thanks for playing");
-			return;
+			scanner.close(); //important
+			return true;
 		}
 		else
 		{
 			System.out.println("Invalid input");
-			continue_play(reader);
+			continue_play(scanner);
+			scanner.close(); //important
+			return true;
 		}
 	}
 }
