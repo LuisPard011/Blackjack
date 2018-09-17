@@ -20,12 +20,30 @@ public class WinTest extends TestCase
 	Card king_c = new Card("C", "K");
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
+
 	
+	Player guest = new Player("Guest");
+	Player dealer = new Player("Dealer");
+	
+	Deck_Maker deck_maker = new Deck_Maker();
+	Scanner scanner = new Scanner(System.in);
+	Game game = new Game();
+	Reader reader = new Reader();
+	
+	Stack<Card> deck_1 = new Stack<Card>();
+	Stack<Card> deck_2 = new Stack<Card>();
+	
+	String[] commands;
+	int[] arr_1;
+	int[] arr_2;
+	Card temp_card;
+	
+	int counter = 0;
 	int deck_size = 52;
+	
 	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 	String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 	String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
-	
 	
 	/******************
 	 * Variables(End) * 
@@ -40,20 +58,16 @@ public class WinTest extends TestCase
 	 * Check there are 52 cards in the deck
 	 */
 	public void test_Cards_In_Deck()
-	{
-		Stack<Card> deck = new Stack<>();
-		Deck_Maker deck_maker = new Deck_Maker();
-		
-		deck_maker.make_deck(deck);
-		int count_pops = 0;
+	{	
+		deck_maker.make_deck(deck_1);
 		
 		for(int i = 0; i < deck_size; ++i)
 		{
-			deck.pop();
-			count_pops += 1;
+			deck_1.pop();
+			counter += 1;
 		}
 		
-		assertEquals(52, count_pops);
+		assertEquals(52, counter);
 	}
 	
 	/**
@@ -64,16 +78,12 @@ public class WinTest extends TestCase
 	 * I use the rank of cards to compare the order of decks
 	 */
 	public void test_Shuffling()
-	{
-		Stack<Card> deck_1 = new Stack<>();
-		Stack<Card> deck_2 = new Stack<>();
-		Deck_Maker deck_maker = new Deck_Maker();
-		
+	{	
 		deck_maker.make_deck(deck_1);
 		deck_maker.make_deck(deck_2);
 		
-		int[] arr_1 = new int[deck_size];
-		int[] arr_2 = new int[deck_size];
+		arr_1 = new int[deck_size];
+		arr_2 = new int[deck_size];
 		
 		for(int i = 0; i < deck_size; ++i)
 		{
@@ -92,10 +102,7 @@ public class WinTest extends TestCase
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException
 	{
-		Game game = new Game();
-		Reader reader = new Reader();
-		
-		String[] commands;
+		System.out.println("\nRequirement 16\n==================");
 		commands = reader.read_file_input(path_3);
 		
 		assertEquals("S10", commands[0]);
@@ -112,7 +119,7 @@ public class WinTest extends TestCase
 	 */
 	public void test_Console_Input()
 	{
-		Game game = new Game();
+		System.out.println("\nRequirement 17\n==================");
 		assertEquals(true, game.play_console());
 	}
 	
@@ -124,8 +131,7 @@ public class WinTest extends TestCase
 	 */
 	public void test_Choose_FC() throws FileNotFoundException, IOException
 	{
-		Scanner scanner = new Scanner(System.in);
-		Game game = new Game();
+		System.out.println("\nRequirement 18\n==================");
 		assertEquals(true, game.choose_mode(scanner));
 	}
 	
@@ -137,7 +143,7 @@ public class WinTest extends TestCase
 	 */
 	public void test_See_Two_Cards()
 	{
-		Player guest = new Player("Guest");
+		System.out.println("\nRequirement 19\n==================");
 		guest.add(ace_d);
 		guest.add(king_c);
 		assertEquals(true, guest.show_cards(2));
@@ -149,10 +155,10 @@ public class WinTest extends TestCase
 	 */
 	public void test_see_One_Card()
 	{
-		Player guest = new Player("Dealer");
-		guest.add(ace_d);
-		guest.add(king_c);
-		assertEquals(true, guest.show_cards(1));
+		System.out.println("\nRequirement 20\n==================");
+		dealer.add(two_s);
+		dealer.add(nine_s);
+		assertEquals(true, dealer.show_cards(1));
 	}
 	
 	/**
@@ -161,184 +167,188 @@ public class WinTest extends TestCase
 	 */
 	public void test_Player_Hit()
 	{
-		
+		deck_maker.make_deck(deck_1);
+		temp_card = deck_1.peek();
+		guest.hit(deck_1);
+		assertEquals(temp_card.getRank(), guest.hand.get(0).getRank());
+		assertEquals(temp_card.getSuit(), guest.hand.get(0).getSuit());
 	}
 	
-	/**
-	 * Test player can hit repeatedly
-	 */
-	public void testPlayerMultipleHits()
-	{
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void testPlayerStand()
-	{
-		
-	}
-	
-	/**
-	 * Hand of the player is displayed at the end of the turn
-	 */
-	public void testDisplayPlayerHandEnd()
-	{
-		
-	}
-	
-	/**
-	 * Player can bust and dealer wins because of it
-	 */
-	public void testPlayerBust()
-	{
-		
-	}
-	
-	/**
-	 * Dealer has <= 16, thus it hits
-	 */
-	public void testDealerHit16()
-	{
-		
-	}
-	
-	/**
-	 * Dealer has soft 17, thus it hits
-	 */
-	public void testDealerSoft17()
-	{
-		
-	}
-	
-	/**
-	 * Dealer can hit repeatedly
-	 */
-	public void testDealerRepeatHit()
-	{
-		
-	}
-	
-	/**
-	 * Dealer's cards are visible at the end of its turn
-	 */
-	public void testDealerVisibleEndTurn()
-	{
-		
-	}
-	
-	/**
-	 * If dealer busts player wins
-	 */
-	public void testDealerBust()
-	{
-		
-	}
-	
-	/**
-	 * Ace counts as 1
-	 */
-	public void testAce1()
-	{
-		
-	}
-
-	/**
-	 * Ace counts as 11
-	 */
-	public void testAce11()
-	{
-		
-	}
-	
-	/**
-	 * Two aces in hand, one counts as 1 and the other as 11
-	 */
-	public void testTwoAces1_11()
-	{
-		
-	}
-	
-	/**
-	 * One ace can count as 11 and then 1
-	 */
-	public void testTwoAces11_1()
-	{
-		
-	}
-	
-	/**
-	 * A hand can count two aces as 1 each
-	 */
-	public void testTwoAces1_1()
-	{
-		
-	}
-	
-	/**
-	 * J, Q and K count as 10
-	 */
-	public void testFaceCardsValues()
-	{
-		
-	}
-	
-	/**
-	 * Player's initial blackjack is detected
-	 */
-	public void testPlayerBlackjack()
-	{
-		
-	}
-	
-	/**
-	 * 
-	 */
-	public void testDealerBlackjack()
-	{
-		
-	}
-	
-	/**
-	 * If player has Blackjack and the dealer doesn't, player wins
-	 */
-	public void testBlackjackWin()
-	{
-		
-	}
-	
-	/**
-	 * If dealer has Blackjack it wins
-	 */
-	public void testBlackjackWin_2()
-	{
-		
-	}
-	
-	/**
-	 * Player's hand score is displayed and it's correct
-	 */
-	public void testPlayerScore()
-	{
-		
-	}
-	
-	/**
-	 * Dealer's hand score is displayed and it's correct
-	 */
-	public void testDealerScore()
-	{
-		
-	}
-	
-	/**
-	 * If dealer doesn't bust, player with highest score wins
-	 */
-	public void testDetermineWinner()
-	{
-		
-	}
+//	/**
+//	 * Test player can hit repeatedly
+//	 */
+//	public void testPlayerMultipleHits()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * 
+//	 */
+//	public void testPlayerStand()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Hand of the player is displayed at the end of the turn
+//	 */
+//	public void testDisplayPlayerHandEnd()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Player can bust and dealer wins because of it
+//	 */
+//	public void testPlayerBust()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Dealer has <= 16, thus it hits
+//	 */
+//	public void testDealerHit16()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Dealer has soft 17, thus it hits
+//	 */
+//	public void testDealerSoft17()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Dealer can hit repeatedly
+//	 */
+//	public void testDealerRepeatHit()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Dealer's cards are visible at the end of its turn
+//	 */
+//	public void testDealerVisibleEndTurn()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * If dealer busts player wins
+//	 */
+//	public void testDealerBust()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Ace counts as 1
+//	 */
+//	public void testAce1()
+//	{
+//		
+//	}
+//
+//	/**
+//	 * Ace counts as 11
+//	 */
+//	public void testAce11()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Two aces in hand, one counts as 1 and the other as 11
+//	 */
+//	public void testTwoAces1_11()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * One ace can count as 11 and then 1
+//	 */
+//	public void testTwoAces11_1()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * A hand can count two aces as 1 each
+//	 */
+//	public void testTwoAces1_1()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * J, Q and K count as 10
+//	 */
+//	public void testFaceCardsValues()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Player's initial blackjack is detected
+//	 */
+//	public void testPlayerBlackjack()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * 
+//	 */
+//	public void testDealerBlackjack()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * If player has Blackjack and the dealer doesn't, player wins
+//	 */
+//	public void testBlackjackWin()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * If dealer has Blackjack it wins
+//	 */
+//	public void testBlackjackWin_2()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Player's hand score is displayed and it's correct
+//	 */
+//	public void testPlayerScore()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * Dealer's hand score is displayed and it's correct
+//	 */
+//	public void testDealerScore()
+//	{
+//		
+//	}
+//	
+//	/**
+//	 * If dealer doesn't bust, player with highest score wins
+//	 */
+//	public void testDetermineWinner()
+//	{
+//		
+//	}
 	
 	/**************
 	 * Tests(End) * 
