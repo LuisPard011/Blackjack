@@ -43,26 +43,26 @@ public class Game
 		Stack<Card> deck = new Stack<Card>();
 		deck_maker.make_deck(deck);
 		
-		// Create guest
-		Player guest = new Player("Guest");
-		guest.hit(deck, draw_times);
-		guest.show_cards(2);
+		// Create player
+		Player player = new Player("Player");
+		player.hit(deck, draw_times);
+		player.show_cards(2);
 		
 		// Create dealer
-		Player dealer = new Player("Dealer");
+		Dealer dealer = new Dealer("Dealer");
 		dealer.hit(deck, draw_times);
 		dealer.show_cards(1);
 		
-		// Guest's turn
-		guest.guest_turn(deck, dealer);
-		if(guest.bust)
+		// Player's turn
+		player.player_turn(deck, dealer);
+		if(player.bust)
 		{
 			continue_play();
 			return true;
 		}
 		
 		// Dealer's turn
-		dealer.dealer_turn(deck, guest);
+		dealer.dealer_turn(deck, player);
 		if(dealer.bust)
 		{
 			continue_play();
@@ -70,7 +70,7 @@ public class Game
 		}
 		
 		// If there are no busts
-		guest.determine_winner(dealer);
+		player.determine_winner(dealer);
 		continue_play();
 		return true;
 	}
@@ -92,13 +92,13 @@ public class Game
 		String[] commands = reader.read_file_input(path_3);
 		
 		// Create players
-		Player guest = new Player("Guest");
-		Player dealer = new Player("Dealer");
+		Player player = new Player("Player");
+		Dealer dealer = new Dealer("Dealer");
 		
-		// Guest's first two cards
-		for(int i = 0; i < 2; ++i){reader.add_card_from_input(guest, commands, i);}
-		guest.show_cards(2);
-		guest.show_score();
+		// Player's first two cards
+		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i);}
+		player.show_cards(2);
+		player.show_score();
 		
 		// Dealer's first two cards
 		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i);}
@@ -108,24 +108,24 @@ public class Game
 		for(int i = 4; i < commands.length; ++i)
 		{
 			/*
-			 * All cards from now on are added to guest
+			 * All cards from now on are added to player
 			 * This is the case, until arr[i].charAt(0) == 'S' 
 			 * And the same string is of length 1
 			 * After this point, all cards are added to the dealer
 			 */
 			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1)
 			{
-				guest.stand = true;
+				player.stand = true;
 				continue;
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-			if(!guest.stand){reader.add_card_from_input(guest, commands, i);}
+			if(!player.stand){reader.add_card_from_input(player, commands, i);}
 			else{reader.add_card_from_input(dealer, commands, i);}
 		}
 		
-		guest.show_cards(guest.hand.size());
-		guest.show_score();
+		player.show_cards(player.hand.size());
+		player.show_score();
 		dealer.show_cards(dealer.hand.size());
 		dealer.show_score();
 		return true;
