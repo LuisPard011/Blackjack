@@ -55,7 +55,7 @@ public class WinTest extends TestCase
 	 ****************/
 	
 	/**
-	 * Requirement 11
+	 * R11
 	 * Check there are 52 cards in the deck
 	 */
 	public void test_Cards_In_Deck()
@@ -72,7 +72,7 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Requirement 12
+	 * R12
 	 * Test shuffling procedure
 	 * If shuffling is turned off in make_deck(Stack<Card>), test fails
 	 * Else it passes
@@ -96,14 +96,14 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Requirement 16
+	 * R16
 	 * Test support for file input
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException
 	{
-		System.out.println("\nRequirement 16\n==================");
+		System.out.println("\nR16\n==================");
 		commands = reader.read_file_input(path_3);
 		
 		assertEquals("S10", commands[0]);
@@ -112,7 +112,7 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Requirement 17
+	 * R17
 	 * Test support for console input
 	 * If play_console() did not work
 	 * (e.g. try to draw 300 cards by changing draw_times to 300)
@@ -120,50 +120,50 @@ public class WinTest extends TestCase
 	 */
 	public void test_Console_Input()
 	{
-		System.out.println("\nRequirement 17\n==================");
+		System.out.println("\nR17\n==================");
 		assertEquals(true, game.play_console());
 	}
 	
 	/**
-	 * Requirement 18
+	 * R18
 	 * Test option to choose between file and console input
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
 	public void test_Choose_FC() throws FileNotFoundException, IOException
 	{
-		System.out.println("\nRequirement 18\n==================");
+		System.out.println("\nR18\n==================");
 		assertEquals(true, game.choose_mode(scanner));
 	}
 	
 	/**
-	 * Requirement 19
+	 * R19
 	 * Test if the player's first two cards are visible
 	 * If I tried to show 3 cards in this test
 	 * Then an IndexOutOfBounds would happen
 	 */
 	public void test_See_Two_Cards()
 	{
-		System.out.println("\nRequirement 19\n==================");
+		System.out.println("\nR19\n==================");
 		guest.add(ace_d);
 		guest.add(king_c);
 		assertEquals(true, guest.show_cards(2));
 	}
 	
 	/**
-	 * Requirement 20
+	 * R20
 	 * Test that only one of the dealer's cards is visible at the start
 	 */
 	public void test_see_One_Card()
 	{
-		System.out.println("\nRequirement 20\n==================");
+		System.out.println("\nR20\n==================");
 		dealer.add(two_s);
 		dealer.add(nine_s);
 		assertEquals(true, dealer.show_cards(1));
 	}
 	
 	/**
-	 * Requirement 21
+	 * R21
 	 * Test if the player can hit
 	 */
 	public void test_Player_Hit()
@@ -176,10 +176,10 @@ public class WinTest extends TestCase
 	}
 	
 	/**
-	 * Requirement 22
+	 * R22
 	 * Test player can hit repeatedly
 	 */
-	public void testPlayerMultipleHits()
+	public void test_Player_Multi_Hits()
 	{
 		deck_maker.make_deck(deck_1);
 		
@@ -194,15 +194,22 @@ public class WinTest extends TestCase
 		assertEquals(temp_card_2.getSuit(), guest.hand.get(1).getSuit());
 	}
 	
-//	/**
-//	 * 
-//	 */
-//	public void testPlayerStand()
-//	{
-//		
-//	}
-//	
-//	/**
+	/**
+	 * R23
+	 * Test player can stand
+	 * If 's' is not chosen
+	 * Then test fails
+	 */
+	public void test_Player_Stand()
+	{
+		System.out.println("\nR23");
+		System.out.println("Choose 's' or test will fail");
+		System.out.println("==================");
+		guest.hit_or_stand(scanner, deck_1);
+		assertEquals(true, guest.stand);
+	}
+	
+	/**
 //	 * Hand of the player is displayed at the end of the turn
 //	 */
 //	public void testDisplayPlayerHandEnd()
