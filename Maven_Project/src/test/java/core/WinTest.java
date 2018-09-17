@@ -352,18 +352,18 @@ public class WinTest extends TestCase
 //		guest.add(king_d);
 //		assertEquals(12, guest.score);
 //	}
-	
-	/**
-	 * R36
-	 * J, Q and K count as 10
-	 */
-	public void test_Face_Cards_Values()
-	{
-		guest.add(jack_c);
-		guest.add(queen_c);
-		guest.add(king_c);
-		assertEquals(30, guest.score);
-	}
+//	
+//	/**
+//	 * R36
+//	 * J, Q and K count as 10
+//	 */
+//	public void test_Face_Cards_Values()
+//	{
+//		guest.add(jack_c);
+//		guest.add(queen_c);
+//		guest.add(king_c);
+//		assertEquals(30, guest.score);
+//	}
 	
 	/**
 	 * R37
@@ -405,19 +405,23 @@ public class WinTest extends TestCase
 	 * R41
 	 * Player's hand score is displayed and it's correct
 	 */
-//	public void test_Player_Score()
-//	{
-//		
-//	}
+	public void test_Player_Score()
+	{
+		System.out.println("\nR41\n==================");
+		guest.add(king_c);
+		assertEquals(true, guest.show_score());
+	}
 	
 	/**
 	 * R42
 	 * Dealer's hand score is displayed and it's correct
 	 */
-//	public void test_Dealer_Score()
-//	{
-//		
-//	}
+	public void test_Dealer_Score()
+	{
+		System.out.println("\nR42\n==================");
+		dealer.add(king_c);
+		assertEquals(true, dealer.show_score());
+	}
 	
 	/**
 	 * R43

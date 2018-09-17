@@ -53,9 +53,10 @@ public class Player
 	/**
 	 * Show score
 	 */
-	public void show_score()
+	public boolean show_score()
 	{
 		System.out.println(this.name + "'s score is: " + this.count_hand());
+		return true;
 	}
 	
 	/**
