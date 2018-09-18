@@ -99,6 +99,20 @@ public class Player
 			}
 		}
 		
+		/*
+		 * The count and the number of aces matter
+		 * 
+		 * If I have more than two aces, only one of them, at most can count as 11
+		 * 
+		 * If I have one ace the score is more than 21, the ace's value becomes 1
+		 * 
+		 * If I have more than one ace, and the score value is more than 21, of one the ace's value becomes 1,
+		 * if after turning the value to 1 the score still is greater than 21, repeat the process
+		 * 
+		 * 
+		 */
+		
+		
 		// Take aces into account
 		int aces_in_hand = count_aces();
 		if(aces_in_hand > 0)
