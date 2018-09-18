@@ -8,21 +8,21 @@ public class Dealer extends Player {
 		super(name);
 	}
 	
-	public boolean blackjack_Win(Player player)
+	public boolean blackjack_Win(Player player, Hand player_hand, Hand dealer_hand)
 	{
-		if(!this.blackjack() && player.blackjack())
+		if(player.blackjack(player_hand) && !this.blackjack(dealer_hand))
 		{
 			player.win = true;
 			System.out.println("Player has blackjack and dealer does not. Player wins");
 			return true;
 		}
-		else if(!player.blackjack() && this.blackjack())
+		else if(!player.blackjack(player_hand) && this.blackjack(dealer_hand))
 		{
-			System.out.println("Dealer has a blackjack and player does not. Dealer wins");
+			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
 			this.win = true;
 			return true;
 		}
-		else if(player.blackjack() && this.blackjack())
+		else if(player.blackjack(player_hand) && this.blackjack(dealer_hand))
 		{
 			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
 			this.win = true;
@@ -36,18 +36,18 @@ public class Dealer extends Player {
 	 * @param deck
 	 * @param player
 	 */
-	public boolean dealer_turn(Stack<Card> deck, Player player)
+	public boolean dealer_turn(Stack<Card> deck, Player player, Hand player_hand, Hand dealer_hand)
 	{
-		this.show_cards(this.hand.size());
-		this.show_score();
-		if(this.blackjack_Win(player)) {return true;}
-		while(this.count_hand() <= 16 || this.count_hand() == 17 && this.count_aces() > 0)
+		this.show_cards(dealer_hand.cards.size(), dealer_hand);
+		this.show_score(dealer_hand);
+		if(this.blackjack_Win(player, player_hand, dealer_hand)) {return true;}
+		while(this.count_hand(dealer_hand) <= 16 || this.count_hand(dealer_hand) == 17 && this.count_aces(dealer_hand) > 0)
 		{
-			this.hit(deck, 1);
-			this.show_cards(this.hand.size());
-			this.show_score();
+			this.hit(deck, 1, dealer_hand);
+			this.show_cards(dealer_hand.cards.size(), dealer_hand);
+			this.show_score(dealer_hand);
 		}
-		this.bust(player);
+		this.bust(player, dealer_hand);
 		return false;
 	}
 

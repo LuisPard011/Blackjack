@@ -36,7 +36,7 @@ public class Reader
 		return commands;
 	}
 	
-	public void add_card_from_input(Player player, String[] array, int index)
+	public void add_card_from_input(Player player, String[] array, int index, Hand hand)
 	{
 		Card input_card;
 		if(array[index].charAt(1) != '1')
@@ -47,6 +47,6 @@ public class Reader
 		{
 			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
 		}
-		player.add(input_card);
+		player.add(input_card, hand);
 	}
 }

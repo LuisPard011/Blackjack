@@ -627,8 +627,8 @@ public class WinTest extends TestCase
 	 */
 	public void test_Player_Split()
 	{
-		player_0.add(nine_s);
-		player_0.add(nine_s);
+//		player_0.add(nine_s);
+//		player_0.add(nine_s);
 	}
 	/**************
 	 * Tests(End) * 

@@ -11,11 +11,13 @@ public class Player
 	 * Maybe I should make these variables protected 
 	 * then use getters/setters to access them
 	 */
-	ArrayList<Card> hand; 
+	Hand default_hand;
+	Hand split_hand_1;
+	Hand split_hand_2;
+	
 	boolean bust;
 	boolean stand;
 	boolean win;
-	int score;
 	String name;
 	
 	/**
@@ -24,11 +26,12 @@ public class Player
 	 */
 	public Player(String player_name)
 	{
-		this.hand = new ArrayList<Card>();
+		this.default_hand = new Hand();
+		this.split_hand_1 = new Hand();
+		this.split_hand_2 = new Hand();
 		this.bust = false;
 		this.stand = false;
 		this.win = false;
-		this.score = 0;
 		this.name = player_name;
 	}
 	
@@ -36,12 +39,12 @@ public class Player
 	 * Show all cards in hand
 	 * @param cards
 	 */
-	public boolean show_cards(int cards)
+	public boolean show_cards(int cards, Hand hand)
 	{
 		System.out.print(this.name + " has cards: ");
 		for(int i = 0; i < cards; ++i)
 		{
-			System.out.print(this.hand.get(i).toString() + " ");
+			System.out.print(hand.cards.get(i).toString() + " ");
 		}
 		System.out.println();
 		return true;
@@ -50,21 +53,21 @@ public class Player
 	/**
 	 * Show score
 	 */
-	public boolean show_score()
+	public boolean show_score(Hand hand)
 	{
-		System.out.println(this.name + "'s score is: " + this.count_hand());
+		System.out.println(this.name + "'s score is: " + this.count_hand(hand));
 		return true;
 	}
 	
 	/**
 	 * @return the number of aces in the player's hand
 	 */
-	public int count_aces()
+	public int count_aces(Hand hand)
 	{
 		int aces_in_hand = 0;
-		for(int i = 0; i < this.hand.size(); ++i)
+		for(int i = 0; i < hand.cards.size(); ++i)
 		{
-			if(this.hand.get(i).getRank() == 14) {aces_in_hand += 1;}
+			if(hand.cards.get(i).getRank() == 14) {aces_in_hand += 1;}
 		}
 		return aces_in_hand;
 	}
@@ -72,19 +75,19 @@ public class Player
 	/**
 	 * @return the player's total score, accounting for aces
 	 */
-	public int count_hand()
+	public int count_hand(Hand hand)
 	{
 		// Count cards in hand, excluding aces
 		int sum = 0;
-		for(int i = 0; i < this.hand.size(); ++i)
+		for(int i = 0; i < hand.cards.size(); ++i)
 		{
-			if(this.hand.get(i).getRank() < 11)
+			if(hand.cards.get(i).getRank() < 11)
 			{
-				sum += this.hand.get(i).getRank();
+				sum += hand.cards.get(i).getRank();
 			}
 			else
 			{
-				switch(this.hand.get(i).getRank())
+				switch(hand.cards.get(i).getRank())
 				{
 					case 11:
 						sum += 10;
@@ -114,7 +117,7 @@ public class Player
 		
 		
 		// Take aces into account
-		int aces_in_hand = count_aces();
+		int aces_in_hand = count_aces(hand);
 		if(aces_in_hand > 0)
 		{
 			for(int i = 0; i < aces_in_hand; ++i)
@@ -136,10 +139,10 @@ public class Player
 	 * Add a card to hand and update score
 	 * @param card
 	 */
-	public void add(Card card)
+	public void add(Card card, Hand hand)
 	{
-		this.hand.add(card);
-		this.score = this.count_hand();
+		hand.cards.add(card);
+		hand.score = this.count_hand(hand);
 	}
 	
 	/**
@@ -147,34 +150,34 @@ public class Player
 	 * @param deck
 	 * @param draw_times
 	 */
-	public void hit(Stack<Card> deck, int draw_times)
+	public void hit(Stack<Card> deck, int draw_times, Hand hand)
 	{
-		for(int i = 0; i < draw_times; ++i){this.add(deck.pop());}
-		this.score = this.count_hand();
+		for(int i = 0; i < draw_times; ++i){this.add(deck.pop(), hand);}
+		hand.score = this.count_hand(hand);
 	}
 	
 	/**
 	 * Give player the option to either hit or stand
 	 * @param deck
 	 */
-	public void hit_or_stand(Stack<Card> deck)
+	public void hit_or_stand(Stack<Card> deck, Hand hand)
 	{
 		Scanner scanner = new Scanner(System.in);
 		
-		this.show_score();
+		this.show_score(hand);
 		System.out.print("Hit or stand? (h/s): ");
 		String hit_or_stand = scanner.next();
 		
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
-			this.hit(deck, 1);
-			this.show_cards(this.hand.size());
+			this.hit(deck, 1, hand);
+			this.show_cards(hand.cards.size(), hand);
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
 		{
 			System.out.println("Invalid input");
-			hit_or_stand(deck);
+			hit_or_stand(deck, hand);
 		}
 	}
 	
@@ -184,9 +187,9 @@ public class Player
 	 * @param deck
 	 * @param dealer
 	 */
-	public void player_turn(Stack<Card> deck, Dealer dealer)
+	public void player_turn(Stack<Card> deck, Dealer dealer, Hand hand)
 	{
-		while(!this.bust(dealer) && !this.stand){this.hit_or_stand(deck);}
+		while(!this.bust(dealer, hand) && !this.stand){this.hit_or_stand(deck, hand);}
 	}
 	
 	/**
@@ -195,9 +198,9 @@ public class Player
 	 * @param player_or_dealer
 	 * @return
 	 */
-	public boolean bust(Player player_or_dealer)
+	public boolean bust(Player player_or_dealer, Hand hand)
 	{
-		if(this.score > 21)
+		if(hand.score > 21)
 		{
 			System.out.println(this.name + " busts, " + player_or_dealer.name + " wins");
 			this.bust = true;
@@ -211,11 +214,13 @@ public class Player
 	 * If neither the player nor the dealer busts
 	 * Then, scores are compared to determine winner
 	 * @param dealer
+	 * @param player_hand
+	 * @param dealer_hand
 	 */
-	public void determine_winner(Dealer dealer)
+	public void determine_winner(Dealer dealer, Hand player_hand, Hand dealer_hand)
 	{
 		// If player's score is greater than dealer's
-		if(this.score > dealer.score)
+		if(player_hand.score > dealer_hand.score)
 		{
 			System.out.println(this.name + " wins");
 			this.win = true;
@@ -227,19 +232,19 @@ public class Player
 		}
 	}
 	
-	public boolean blackjack()
+	public boolean blackjack(Hand hand)
 	{
 		boolean has_ace = false;
 		boolean has_ten_value = false;
 		
-		for(int i = 0; i < this.hand.size(); ++i)
+		for(int i = 0; i < hand.cards.size(); ++i)
 		{
-			if(this.hand.get(i).getRank() == 14) {has_ace = true;}
+			if(hand.cards.get(i).getRank() == 14) {has_ace = true;}
 			
-			if(this.hand.get(i).getRank() == 10 || 
-					this.hand.get(i).getRank() == 11 ||
-					this.hand.get(i).getRank() == 12 ||
-					this.hand.get(i).getRank() == 13)
+			if(hand.cards.get(i).getRank() == 10 || 
+					hand.cards.get(i).getRank() == 11 ||
+					hand.cards.get(i).getRank() == 12 ||
+					hand.cards.get(i).getRank() == 13)
 			{has_ten_value = true;}
 		}
 		
@@ -248,9 +253,17 @@ public class Player
 		return false;
 	}
 	
-	public void split()
+	public void split(Hand hand)
 	{
-		
+		if(hand.cards.get(0).getRank() == hand.cards.get(1).getRank())
+		{
+			/*
+			 * Create two new hands
+			 * Make a Hand class?
+			 * Hand has score
+			 */
+			return;
+		}
 	}
 
 } 

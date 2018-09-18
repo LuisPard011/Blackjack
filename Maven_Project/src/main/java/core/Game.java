@@ -45,16 +45,16 @@ public class Game
 		
 		// Create player
 		Player player = new Player("Player");
-		player.hit(deck, draw_times);
-		player.show_cards(2);
+		player.hit(deck, draw_times, player.default_hand);
+		player.show_cards(2, player.default_hand);
 		
 		// Create dealer
 		Dealer dealer = new Dealer("Dealer");
-		dealer.hit(deck, draw_times);
-		dealer.show_cards(1);
+		dealer.hit(deck, draw_times, dealer.default_hand);
+		dealer.show_cards(1, dealer.default_hand);
 		
 		// Player's turn
-		player.player_turn(deck, dealer);
+		player.player_turn(deck, dealer, player.default_hand);
 		if(player.bust)
 		{
 			continue_play();
@@ -62,7 +62,7 @@ public class Game
 		}
 		
 		// Dealer's turn
-		if(dealer.dealer_turn(deck, player))
+		if(dealer.dealer_turn(deck, player, player.default_hand, dealer.default_hand))
 		{
 			continue_play();
 			return true;
@@ -74,7 +74,7 @@ public class Game
 		}
 		
 		// If there are no busts
-		player.determine_winner(dealer);
+		player.determine_winner(dealer, player.default_hand, dealer.default_hand);
 		continue_play();
 		return true;
 	}
@@ -100,14 +100,14 @@ public class Game
 		Dealer dealer = new Dealer("Dealer");
 		
 		// Player's first two cards
-		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i);}
-		player.show_cards(2);
-		player.show_score();
+		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i, player.default_hand);}
+		player.show_cards(2, player.default_hand);
+		player.show_score(player.default_hand);
 		
 		// Dealer's first two cards
-		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i);}
-		dealer.show_cards(2);
-		dealer.show_score();
+		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
+		dealer.show_cards(2, dealer.default_hand);
+		dealer.show_score(dealer.default_hand);
 		
 		for(int i = 4; i < commands.length; ++i)
 		{
@@ -124,14 +124,14 @@ public class Game
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-			if(!player.stand){reader.add_card_from_input(player, commands, i);}
-			else{reader.add_card_from_input(dealer, commands, i);}
+			if(!player.stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
+			else{reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
 		}
 		
-		player.show_cards(player.hand.size());
-		player.show_score();
-		dealer.show_cards(dealer.hand.size());
-		dealer.show_score();
+		player.show_cards(player.default_hand.cards.size(), player.default_hand);
+		player.show_score(player.default_hand);
+		dealer.show_cards(dealer.default_hand.cards.size(), dealer.default_hand);
+		dealer.show_score(dealer.default_hand);
 		return true;
 	}
 	
