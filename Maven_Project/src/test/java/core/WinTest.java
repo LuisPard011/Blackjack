@@ -15,7 +15,12 @@ public class WinTest extends TestCase
 	Card ace_d = new Card("D", "A");
 	Card ace_s = new Card("S", "A");
 	Card two_s = new Card("S", "2");
+	Card three_s = new Card("S", "3");
+	Card four_h = new Card("H", "4");
+	Card five_d = new Card("D", "5");
 	Card six_s = new Card("S", "6");
+	Card seven_c = new Card("C", "7");
+	Card eight_c = new Card("C", "8");
 	Card nine_s = new Card("S", "9");
 	Card ten_h = new Card("H", "10");
 	Card jack_c = new Card("C", "J");
@@ -368,17 +373,36 @@ public class WinTest extends TestCase
 //		assertEquals(13, player_0.score);
 //	}
 //
-//	/**
-//	 * R32
-//	 * Ace can count as 11
-//	 */
-//	public void test_Ace_11()
-//	{
+	/**
+	 * R32
+	 * Ace can count as 11
+	 */
+	public void test_Ace_11()
+	{
 //		player_0.add(two_s);
 //		player_0.add(ace_s);
 //		
 //		assertEquals(13, player_0.score);
-//	}
+		
+		player_1.default_hand.add(seven_c);
+		player_1.default_hand.add(five_d);
+		player_1.default_hand.add(four_h);
+		player_1.default_hand.add(ace_d);
+		player_1.default_hand.add(six_s);
+		
+		assertEquals(23, player_1.default_hand.score);
+		
+		dealer_1.default_hand.add(ace_d);
+		dealer_1.default_hand.add(two_s);
+		dealer_1.default_hand.add(three_s);
+		dealer_1.default_hand.add(six_s);
+		dealer_1.default_hand.add(ace_d);
+		dealer_1.default_hand.add(ten_h);
+		dealer_1.default_hand.add(jack_c);
+		dealer_1.default_hand.add(eight_c);
+		
+		assertEquals(41, dealer_1.default_hand.score);
+	}
 //	
 //	/**
 //	 * R33
@@ -407,10 +431,10 @@ public class WinTest extends TestCase
 //		assertEquals(19, player_0.score);
 //	}
 //	
-//	/**
-//	 * R35
-//	 * A hand can count two aces as 1 each
-//	 */
+	/**
+	 * R35
+	 * A hand can count two aces as 1 each
+	 */
 	public void test_Aces_1_1()
 	{
 		player_0.default_hand.add(ace_d);
@@ -422,7 +446,7 @@ public class WinTest extends TestCase
 //		player_0.default_hand.add(ace_d);
 //		player_0.default_hand.add(ace_s);
 		
-		assertEquals(18, player_0.default_hand.score);
+		assertEquals(27, player_0.default_hand.score);
 	}
 //	
 //	/**
@@ -517,12 +541,14 @@ public class WinTest extends TestCase
 //		System.out.println("\nR39 - If player has Blackjack and the dealer doesn't, player wins");
 //		divider();
 //		
-//		player_0.add(ace_d);
-//		player_0.add(two_s);
-//		player_0.add(ten_h);
-//		dealer_0.add(six_s);
-//		dealer_0.add(nine_s);
-//		dealer_0.blackjack_Win(player_0);
+//		player_0.default_hand.add(ace_d);
+//		player_0.default_hand.add(two_s);
+//		player_0.default_hand.add(ten_h);
+//		
+//		dealer_0.default_hand.add(six_s);
+//		dealer_0.default_hand.add(nine_s);
+//		
+//		dealer_0.blackjack_Win(player_0, player_0.default_hand, dealer_0.default_hand);
 //		
 //		assertEquals(true, player_0.win);
 //		assertEquals(false, dealer_0.win);
@@ -623,6 +649,7 @@ public class WinTest extends TestCase
 	
 	/**
 	 * R47
+	 * 
 	 * Test support for player splitting
 	 */
 	public void test_Player_Split()

@@ -7,7 +7,7 @@ public class Hand
 	// Variables
 	int score;
 	ArrayList<Card> cards;
-	// maybe, aces_in_hand variable can be in this class
+	boolean splitable;
 	
 	/*
 	 * All functions four counting the score of a hand should be in the Hand class
@@ -20,6 +20,7 @@ public class Hand
 	{
 		this.score = 0;
 		this.cards = new ArrayList<Card>();
+		this.splitable = false;
 	}
 	
 	/**
@@ -30,51 +31,7 @@ public class Hand
 	public void add(Card card)
 	{
 		this.cards.add(card);
-		this.score = this.count_hand();
-	}
-	
-
-	
-	/**
-	 * @return the number of aces in the player's hand
-	 */
-	public int count_aces()
-	{
-		int aces_in_hand = 0;
-		for(int i = 0; i < this.cards.size(); ++i)
-		{
-			if(this.cards.get(i).getRank() == 14) {aces_in_hand += 1;}
-		}
-		return aces_in_hand;
-	}
-	
-	public int count_not_aces()
-	{
-		int sum = 0;
-		// Count cards in hand, excluding aces
-		for(int i = 0; i < this.cards.size(); ++i)
-		{
-			if(this.cards.get(i).getRank() < 11)
-			{
-				sum += this.cards.get(i).getRank();
-			}
-			else
-			{
-				switch(this.cards.get(i).getRank())
-				{
-					case 11:
-						sum += 10;
-						break;
-					case 12:
-						sum += 10;
-						break;
-					case 13:
-						sum += 10;
-						break;
-				}
-			}
-		}
-		return sum;
+		this.count_score();
 	}
 	
 	/**
@@ -82,39 +39,54 @@ public class Hand
 	 */
 	public boolean show_score()
 	{
-		System.out.println("Score is: " + this.count_hand());
+		System.out.println("Score is: " + this.score);
 		return true;
 	}
 	
 	/**
 	 * @return the player's total score, accounting for aces
 	 */
-	public int count_hand()
-	{
-		int sum = this.count_not_aces();
+	public void count_score()
+	{	
+		int new_score = 0;
+		int aces = 0;
 		
-		// Take aces into account
-		int counter = 0;
-		int aces_in_hand = this.count_aces();
-		if(aces_in_hand > 0)
+		for(int i = 0; i < this.cards.size(); ++i)
 		{
-			for(int i = 0; i < aces_in_hand; ++i)
+			if(this.cards.get(i).getRank() < 11)
 			{
-				if(sum < 11) {sum += 11;}
-				else {sum += 1;}
+				new_score += this.cards.get(i).getRank();
 			}
-			
-			if(sum > 21)
+			else
 			{
-				while(counter < aces_in_hand)
+				switch(this.cards.get(i).getRank())
 				{
-					sum -= 10;
-					++counter;
+					case 11:
+						new_score += 10;
+						break;
+					case 12:
+						new_score += 10;
+						break;
+					case 13:
+						new_score += 10;
+						break;
+					case 14:
+						new_score += 11;
+						aces += 1;
+						break;
 				}
 			}
 		}
 		
-		return sum;
+		if(score > 11)
+		{
+			for(int i = 0; i < aces; ++i)
+			{
+				new_score -= 10;
+			}
+		}
+		
+		this.score = new_score;
 	}
 	
 	/**
@@ -130,5 +102,44 @@ public class Hand
 		}
 		System.out.println();
 		return true;
+	}
+	
+	/**
+	 * Determine if hand is splitable
+	 */
+	public boolean splitable()
+	{
+		if(this.cards.get(0).getRank() == this.cards.get(1).getRank())
+		{
+			this.splitable = true;
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean blackjack()
+	{
+		boolean has_ace = false;
+		boolean has_ten_value = false;
+		
+		// Iterate through hand to find either aces, tens and face cards
+		for(int i = 0; i < this.cards.size(); ++i)
+		{
+			if(this.cards.get(i).getRank() == 10 || 
+					this.cards.get(i).getRank() == 11 ||
+					this.cards.get(i).getRank() == 12 ||
+					this.cards.get(i).getRank() == 13)
+			{
+				has_ten_value = true;
+			}
+			else if(this.cards.get(i).getRank() == 14)
+			{
+				has_ace = true;
+			}
+		}
+		
+		if(has_ace == true && has_ten_value == true) {return true;}
+		
+		return false;
 	}
 }

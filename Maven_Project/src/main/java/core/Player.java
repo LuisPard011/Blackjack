@@ -73,17 +73,6 @@ public class Player
 	}
 	
 	/**
-	 * Check if player is bust
-	 * If not, give option to hit or stand
-	 * @param deck
-	 * @param dealer
-	 */
-	public void player_turn(Stack<Card> deck, Dealer dealer, Hand hand)
-	{
-		while(!this.bust(dealer, hand) && !this.stand){this.hit_or_stand(deck, hand);}
-	}
-	
-	/**
 	 * Determine if player/dealer is bust
 	 * If yes, the other wins the game
 	 * @param player_or_dealer
@@ -123,37 +112,16 @@ public class Player
 		}
 	}
 	
-	public boolean blackjack(Hand hand)
-	{
-		boolean has_ace = false;
-		boolean has_ten_value = false;
-		
-		for(int i = 0; i < hand.cards.size(); ++i)
-		{
-			if(hand.cards.get(i).getRank() == 14) {has_ace = true;}
-			
-			if(hand.cards.get(i).getRank() == 10 || 
-					hand.cards.get(i).getRank() == 11 ||
-					hand.cards.get(i).getRank() == 12 ||
-					hand.cards.get(i).getRank() == 13)
-			{has_ten_value = true;}
-		}
-		
-		if(has_ace == true && has_ten_value == true) {return true;}
-		
-		return false;
-	}
-	
 	/**
 	 * Split hand
 	 * @param hand
 	 */
-	public void split(Hand hand)
+	public void split()
 	{
-		if(hand.cards.get(0).getRank() == hand.cards.get(1).getRank())
+		if(this.default_hand.splitable())
 		{
-			this.split_hand_1.add(hand.cards.get(0));
-			this.split_hand_1.add(hand.cards.get(1));
+			this.split_hand_1.add(default_hand.cards.get(0));
+			this.split_hand_2.add(default_hand.cards.get(1));
 		}
 	}
 

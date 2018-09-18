@@ -54,7 +54,10 @@ public class Game
 		dealer.default_hand.show_cards(1);
 		
 		// Player's turn
-		player.player_turn(deck, dealer, player.default_hand);
+		while(!player.bust(dealer, player.default_hand) && !player.stand)
+		{
+			player.hit_or_stand(deck, player.default_hand);
+		}
 		if(player.bust)
 		{
 			continue_play();
