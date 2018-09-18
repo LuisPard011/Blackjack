@@ -1,6 +1,5 @@
 package core;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -36,124 +35,16 @@ public class Player
 	}
 	
 	/**
-	 * Show all cards in hand
-	 * @param cards
-	 */
-	public boolean show_cards(int cards, Hand hand)
-	{
-		System.out.print(this.name + " has cards: ");
-		for(int i = 0; i < cards; ++i)
-		{
-			System.out.print(hand.cards.get(i).toString() + " ");
-		}
-		System.out.println();
-		return true;
-	}
-	
-	/**
-	 * Show score
-	 */
-	public boolean show_score(Hand hand)
-	{
-		System.out.println(this.name + "'s score is: " + this.count_hand(hand));
-		return true;
-	}
-	
-	/**
-	 * @return the number of aces in the player's hand
-	 */
-	public int count_aces(Hand hand)
-	{
-		int aces_in_hand = 0;
-		for(int i = 0; i < hand.cards.size(); ++i)
-		{
-			if(hand.cards.get(i).getRank() == 14) {aces_in_hand += 1;}
-		}
-		return aces_in_hand;
-	}
-	
-	/**
-	 * @return the player's total score, accounting for aces
-	 */
-	public int count_hand(Hand hand)
-	{
-		// Count cards in hand, excluding aces
-		int sum = 0;
-		for(int i = 0; i < hand.cards.size(); ++i)
-		{
-			if(hand.cards.get(i).getRank() < 11)
-			{
-				sum += hand.cards.get(i).getRank();
-			}
-			else
-			{
-				switch(hand.cards.get(i).getRank())
-				{
-					case 11:
-						sum += 10;
-						break;
-					case 12:
-						sum += 10;
-						break;
-					case 13:
-						sum += 10;
-						break;
-				}
-			}
-		}
-		
-		/*
-		 * The count and the number of aces matter
-		 * 
-		 * If I have more than two aces, only one of them, at most can count as 11
-		 * 
-		 * If I have one ace the score is more than 21, the ace's value becomes 1
-		 * 
-		 * If I have more than one ace, and the score value is more than 21, of one the ace's value becomes 1,
-		 * if after turning the value to 1 the score still is greater than 21, repeat the process
-		 * 
-		 * 
-		 */
-		
-		
-		// Take aces into account
-		int aces_in_hand = count_aces(hand);
-		if(aces_in_hand > 0)
-		{
-			for(int i = 0; i < aces_in_hand; ++i)
-			{
-				if(sum < 11) {sum += 11;}
-				else {sum += 1;}
-			}
-		}
-		
-		if(sum > 21 && aces_in_hand > 1)
-		{
-			while(sum > 21) {sum -= 10;}
-		}
-		
-		return sum;
-	}
-	
-	/**
-	 * Add a card to hand and update score
-	 * @param card
-	 */
-	public void add(Card card, Hand hand)
-	{
-		hand.cards.add(card);
-		hand.score = this.count_hand(hand);
-	}
-	
-	/**
 	 * Draw x number of cards
 	 * @param deck
 	 * @param draw_times
 	 */
 	public void hit(Stack<Card> deck, int draw_times, Hand hand)
 	{
-		for(int i = 0; i < draw_times; ++i){this.add(deck.pop(), hand);}
-		hand.score = this.count_hand(hand);
+		for(int i = 0; i < draw_times; ++i)
+		{
+			hand.add(deck.pop());
+		}
 	}
 	
 	/**
@@ -164,14 +55,14 @@ public class Player
 	{
 		Scanner scanner = new Scanner(System.in);
 		
-		this.show_score(hand);
+		hand.show_score();
 		System.out.print("Hit or stand? (h/s): ");
 		String hit_or_stand = scanner.next();
 		
 		if(hit_or_stand.equalsIgnoreCase("h"))
 		{
 			this.hit(deck, 1, hand);
-			this.show_cards(hand.cards.size(), hand);
+			hand.show_cards(hand.cards.size());
 		}
 		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
 		else
@@ -222,7 +113,7 @@ public class Player
 		// If player's score is greater than dealer's
 		if(player_hand.score > dealer_hand.score)
 		{
-			System.out.println(this.name + " wins");
+			System.out.println("Player wins");
 			this.win = true;
 		}
 		else
@@ -253,16 +144,16 @@ public class Player
 		return false;
 	}
 	
+	/**
+	 * Split hand
+	 * @param hand
+	 */
 	public void split(Hand hand)
 	{
 		if(hand.cards.get(0).getRank() == hand.cards.get(1).getRank())
 		{
-			/*
-			 * Create two new hands
-			 * Make a Hand class?
-			 * Hand has score
-			 */
-			return;
+			this.split_hand_1.add(hand.cards.get(0));
+			this.split_hand_1.add(hand.cards.get(1));
 		}
 	}
 

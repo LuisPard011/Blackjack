@@ -47,6 +47,6 @@ public class Reader
 		{
 			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
 		}
-		player.add(input_card, hand);
+		hand.add(input_card);
 	}
 }

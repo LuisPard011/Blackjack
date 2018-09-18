@@ -38,14 +38,14 @@ public class Dealer extends Player {
 	 */
 	public boolean dealer_turn(Stack<Card> deck, Player player, Hand player_hand, Hand dealer_hand)
 	{
-		this.show_cards(dealer_hand.cards.size(), dealer_hand);
-		this.show_score(dealer_hand);
+		dealer_hand.show_cards(dealer_hand.cards.size());
+		dealer_hand.show_score();
 		if(this.blackjack_Win(player, player_hand, dealer_hand)) {return true;}
-		while(this.count_hand(dealer_hand) <= 16 || this.count_hand(dealer_hand) == 17 && this.count_aces(dealer_hand) > 0)
+		while(dealer_hand.count_hand() <= 16 || dealer_hand.count_hand() == 17 && dealer_hand.count_aces() > 0)
 		{
 			this.hit(deck, 1, dealer_hand);
-			this.show_cards(dealer_hand.cards.size(), dealer_hand);
-			this.show_score(dealer_hand);
+			dealer_hand.show_cards(dealer_hand.cards.size());
+			dealer_hand.show_score();
 		}
 		this.bust(player, dealer_hand);
 		return false;

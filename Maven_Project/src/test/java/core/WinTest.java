@@ -411,19 +411,19 @@ public class WinTest extends TestCase
 //	 * R35
 //	 * A hand can count two aces as 1 each
 //	 */
-//	public void test_Aces_1_1()
-//	{
-//		player_0.add(ace_d);
-////		player_0.add(ace_s);
-////		player_0.add(king_d);
-//		player_0.add(six_s);
-////		player_0.add(jack_c);
-////		player_0.add(nine_s);
-////		player_0.add(ace_d);
-//		player_0.add(ace_s);
-//		
-//		assertEquals(18, player_0.score);
-//	}
+	public void test_Aces_1_1()
+	{
+		player_0.default_hand.add(ace_d);
+		player_0.default_hand.add(ace_s);
+		player_0.default_hand.add(king_d);
+		player_0.default_hand.add(six_s);
+//		player_0.default_hand.add(jack_c);
+		player_0.default_hand.add(nine_s);
+//		player_0.default_hand.add(ace_d);
+//		player_0.default_hand.add(ace_s);
+		
+		assertEquals(18, player_0.default_hand.score);
+	}
 //	
 //	/**
 //	 * R36
@@ -627,8 +627,11 @@ public class WinTest extends TestCase
 	 */
 	public void test_Player_Split()
 	{
-//		player_0.add(nine_s);
-//		player_0.add(nine_s);
+		player_0.default_hand.add(nine_s);
+		player_0.default_hand.add(nine_s);
+		assertEquals(18, player_0.default_hand.score);
+		
+		
 	}
 	/**************
 	 * Tests(End) * 

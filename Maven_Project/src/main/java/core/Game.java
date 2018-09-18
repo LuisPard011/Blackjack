@@ -46,12 +46,12 @@ public class Game
 		// Create player
 		Player player = new Player("Player");
 		player.hit(deck, draw_times, player.default_hand);
-		player.show_cards(2, player.default_hand);
+		player.default_hand.show_cards(2);
 		
 		// Create dealer
 		Dealer dealer = new Dealer("Dealer");
 		dealer.hit(deck, draw_times, dealer.default_hand);
-		dealer.show_cards(1, dealer.default_hand);
+		dealer.default_hand.show_cards(1);
 		
 		// Player's turn
 		player.player_turn(deck, dealer, player.default_hand);
@@ -101,13 +101,13 @@ public class Game
 		
 		// Player's first two cards
 		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i, player.default_hand);}
-		player.show_cards(2, player.default_hand);
-		player.show_score(player.default_hand);
+		player.default_hand.show_cards(2);
+		player.default_hand.show_score();
 		
 		// Dealer's first two cards
 		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
-		dealer.show_cards(2, dealer.default_hand);
-		dealer.show_score(dealer.default_hand);
+		dealer.default_hand.show_cards(2);
+		dealer.default_hand.show_score();
 		
 		for(int i = 4; i < commands.length; ++i)
 		{
@@ -128,10 +128,10 @@ public class Game
 			else{reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
 		}
 		
-		player.show_cards(player.default_hand.cards.size(), player.default_hand);
-		player.show_score(player.default_hand);
-		dealer.show_cards(dealer.default_hand.cards.size(), dealer.default_hand);
-		dealer.show_score(dealer.default_hand);
+		player.default_hand.show_cards(player.default_hand.cards.size());
+		player.default_hand.show_score();
+		dealer.default_hand.show_cards(dealer.default_hand.cards.size());
+		dealer.default_hand.show_score();
 		return true;
 	}
 	
