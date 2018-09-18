@@ -78,9 +78,9 @@ public class Hand
 			}
 		}
 		
-		if(score > 11)
+		for(int i = 0; i < aces; ++i)
 		{
-			for(int i = 0; i < aces; ++i)
+			if(new_score >= 21)
 			{
 				new_score -= 10;
 			}
