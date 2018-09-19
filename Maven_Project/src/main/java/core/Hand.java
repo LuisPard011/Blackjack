@@ -127,4 +127,10 @@ public class Hand
 		
 		return false;
 	}
+	
+	public boolean bust()
+	{
+		if(this.score > 21) {return true;}
+		else {return false;}
+	}
 }

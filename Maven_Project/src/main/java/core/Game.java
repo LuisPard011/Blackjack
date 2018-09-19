@@ -52,34 +52,45 @@ public class Game
 		dealer.hit(deck, draw_times, dealer.default_hand);
 		dealer.default_hand.show_cards(1);
 		
-		
-		
 		/////////////////////////////////////////////////////////////////
 		
-		
-		
-		// Player's turn
-		player.player_turn(dealer, deck, player.default_hand);
-		if(player.bust)
+		/*
+		 * Player's turn
+		 * Maybe make a function with this, and replace "player" with "this"
+		 */
+		if(player.can_split())
 		{
-			continue_play();
-			return true;
+			if(player.choose_split())
+			{
+				player.split_hand();
+				player.split_turn(deck);
+			}
+			else
+			{
+				player.hit_or_stand(deck, player.default_hand);
+			}
+		}
+		else
+		{
+			player.hit_or_stand(deck, player.default_hand);
 		}
 		
-		// Dealer's turn
-		if(dealer.dealer_turn(deck, player, player.default_hand, dealer.default_hand))
+		/*
+		 * Dealer's turn
+		 */
+		if(dealer.can_split())
 		{
-			continue_play();
-			return true;
+			if(dealer.choose_split())
+			{
+				dealer.split_hand();
+				dealer.dealer_turn(deck, player, player.default_hand, dealer.split_hand_1);
+				dealer.dealer_turn(deck, player, player.default_hand, dealer.split_hand_2);
+			}
+			else
+			{
+				dealer.dealer_turn(deck, player, player.default_hand, dealer.default_hand);
+			}
 		}
-		if(dealer.bust)
-		{
-			continue_play();
-			return true;
-		}
-		
-		
-		
 		
 		
 		
@@ -89,8 +100,6 @@ public class Game
 		
 		
 		
-		// If there are no busts
-		player.determine_winner(dealer, player.default_hand, dealer.default_hand);
 		continue_play();
 		return true;
 	}
@@ -135,12 +144,12 @@ public class Game
 			 */
 			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1)
 			{
-				player.stand = true;
+//				player.stand = true;
 				continue;
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-			if(!player.stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
+//			if(!player.stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
 			else{reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
 		}
 		

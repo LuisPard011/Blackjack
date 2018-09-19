@@ -14,9 +14,8 @@ public class Player
 	Hand split_hand_1;
 	Hand split_hand_2;
 	
-	boolean bust;
-	boolean stand;
 	boolean win;
+	boolean lose;
 	String name;
 	
 	/**
@@ -28,9 +27,8 @@ public class Player
 		this.default_hand = new Hand();
 		this.split_hand_1 = new Hand();
 		this.split_hand_2 = new Hand();
-		this.bust = false;
-		this.stand = false;
 		this.win = false;
+		this.lose = false;
 		this.name = player_name;
 	}
 	
@@ -54,40 +52,30 @@ public class Player
 	public void hit_or_stand(Stack<Card> deck, Hand hand)
 	{
 		Scanner scanner = new Scanner(System.in);
+		boolean stand = false;
 		
-		hand.show_score();
-		System.out.print("Hit or stand? (h/s): ");
-		String hit_or_stand = scanner.next();
-		
-		if(hit_or_stand.equalsIgnoreCase("h"))
+		while(!hand.bust() && !stand)
 		{
-			this.hit(deck, 1, hand);
 			hand.show_cards(hand.cards.size());
+			hand.show_score();
+			System.out.print("Hit or stand? (h/s): ");
+			String hit_or_stand = scanner.next();
+			
+			if(hit_or_stand.equalsIgnoreCase("h"))
+			{
+				this.hit(deck, 1, hand);
+				hand.show_cards(hand.cards.size());
+			}
+			else if(hit_or_stand.equalsIgnoreCase("s"))
+			{
+				stand = true;	
+			}
+			else
+			{
+				System.out.println("Invalid input");
+				hit_or_stand(deck, hand);
+			}
 		}
-		else if(hit_or_stand.equalsIgnoreCase("s")){this.stand = true;}
-		else
-		{
-			System.out.println("Invalid input");
-			hit_or_stand(deck, hand);
-		}
-	}
-	
-	/**
-	 * Determine if player/dealer is bust
-	 * If yes, the other wins the game
-	 * @param player_or_dealer
-	 * @return
-	 */
-	public boolean bust(Player player_or_dealer, Hand hand)
-	{
-		if(hand.score > 21)
-		{
-			System.out.println(this.name + " busts, " + player_or_dealer.name + " wins");
-			this.bust = true;
-			player_or_dealer.win = true;
-			return true;
-		}
-		return false;
 	}
 	
 	/**
@@ -116,30 +104,31 @@ public class Player
 	 * Split hand
 	 * @param deck
 	 */
-	public void split_check(Dealer dealer, Stack<Card> deck)
+	public boolean choose_split()
 	{
 		Scanner scanner = new Scanner(System.in);
 		String choose_split;
 		
+		System.out.println("Would you like to split? (y/n): ");
+		choose_split = scanner.next();
+		
+		if(choose_split.equalsIgnoreCase("y")) {return true;}
+		else {return false;}
+	}
+	
+	public void split_hand()
+	{
+		this.split_hand_1.add(this.default_hand.cards.get(0));
+		this.split_hand_2.add(this.default_hand.cards.get(1));
+	}
+	
+	public boolean can_split()
+	{
 		if(this.default_hand.cards.get(0).getRank() == this.default_hand.cards.get(1).getRank())
 		{
-			System.out.println("Would you like to split? (y/n): ");
-			choose_split = scanner.next();
-			
-			if(choose_split.equalsIgnoreCase("y"))
-			{
-				this.split_hand_1.add(this.default_hand.cards.get(0));
-				this.split_hand_2.add(this.default_hand.cards.get(1));
-				
-				this.hit(deck, 1, this.split_hand_1);
-				this.split_hand_1.show_cards(split_hand_1.cards.size());
-				this.player_turn(dealer, deck, split_hand_1);
-				
-				this.hit(deck, 1, this.split_hand_2);
-				this.split_hand_2.show_cards(split_hand_2.cards.size());
-				this.player_turn(dealer, deck, split_hand_2);
-			}
+			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -148,16 +137,21 @@ public class Player
 	 * @param deck
 	 * @param hand
 	 */
-	public boolean player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand, Hand dealer_hand)
+	public void player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand, Hand dealer_hand)
 	{
-		if(this.blackjack_Win(dealer, player_hand, dealer_hand)) {return true;}
-		while(!this.bust(dealer, player_hand) && !this.stand)
-		{
-			this.hit_or_stand(deck, player_hand);
-		}
-		return false;
+		if(this.blackjack_Win(dealer, player_hand, dealer_hand)) {return;}
+		this.hit_or_stand(deck, player_hand);
 	}
 
+
+	/**
+	 * Look for blackjacks in all of player and dealer's hands
+	 * Get rid of hand parameters and maybe dealer too
+	 * @param dealer
+	 * @param player_hand
+	 * @param dealer_hand
+	 * @return
+	 */
 	public boolean blackjack_Win(Dealer dealer, Hand player_hand, Hand dealer_hand)
 	{
 		if(player_hand.blackjack() && !dealer_hand.blackjack())
@@ -179,5 +173,32 @@ public class Player
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean bust()
+	{
+		if(!this.can_split() && this.default_hand.bust())
+		{
+			this.lose = true;
+			return true;
+		}
+		else if(this.can_split() && this.split_hand_1.bust() && this.split_hand_2.bust())
+		{
+			this.lose = true;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public void split_turn(Stack<Card> deck)
+	{
+		this.hit(deck, 1, this.split_hand_1);
+		this.hit_or_stand(deck, this.split_hand_1);
+		
+		this.hit(deck, 1, this.split_hand_2);
+		this.hit_or_stand(deck, this.split_hand_2);
 	}
 } 
