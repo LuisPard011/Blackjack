@@ -8,13 +8,7 @@ public class Hand
 	int score;
 	ArrayList<Card> cards;
 	
-	/*
-	 * All functions four counting the score of a hand should be in the Hand class
-	 */
-	
-	/**
-	 * Constructor
-	 */
+	// Constructor
 	public Hand()
 	{
 		this.score = 0;
@@ -22,8 +16,7 @@ public class Hand
 	}
 	
 	/**
-	 * Add one card to hand
-	 * Update score
+	 * Add one card to hand and update score
 	 * @param card
 	 */
 	public void add(Card card)
@@ -33,7 +26,7 @@ public class Hand
 	}
 	
 	/**
-	 * Show score
+	 * Interface output to show hand's score
 	 */
 	public boolean show_score()
 	{
@@ -46,9 +39,11 @@ public class Hand
 	 */
 	public void count_score()
 	{	
+		// Variables
 		int new_score = 0;
 		int aces = 0;
 		
+		// Count cards in hand
 		for(int i = 0; i < this.cards.size(); ++i)
 		{
 			if(this.cards.get(i).getRank() < 11)

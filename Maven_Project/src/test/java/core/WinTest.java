@@ -146,8 +146,10 @@ public class WinTest extends TestCase
 	 * If play_console() did not work
 	 * (e.g. try to draw 300 cards by changing draw_times to 300)
 	 * Then it would not return "true"
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public void test_Console_Input()
+	public void test_Console_Input() throws FileNotFoundException, IOException
 	{
 		System.out.println("\nR17 - Test support for console input");
 		divider();

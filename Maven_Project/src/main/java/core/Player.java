@@ -5,19 +5,13 @@ import java.util.Stack;
 
 public class Player
 {
-	/*
-	 * Variables
-	 * Maybe I should make these variables protected 
-	 * then use getters/setters to access them
-	 */
+	// Variables
 	Hand default_hand;
 	Hand split_hand_1;
 	Hand split_hand_2;
 	boolean has_blackjack;
 	
-	/**
-	 * Constructor
-	 */
+	// Constructor
 	public Player()
 	{
 		this.default_hand = new Hand();
@@ -27,7 +21,7 @@ public class Player
 	}
 	
 	/**
-	 * Draw x number of cards
+	 * draw_times cards from deck and put them into hand
 	 * @param deck
 	 * @param draw_times
 	 * @param hand
@@ -44,22 +38,28 @@ public class Player
 	 * Give player the option to either hit or stand
 	 * @param deck
 	 * @param hand
+	 * @return true if stand is chosen
 	 */
 	public boolean hit_or_stand(Stack<Card> deck, Hand hand)
 	{
+		// Local variables
 		Scanner scanner = new Scanner(System.in);
 		boolean stand = false;
 		
 		while(!hand.bust() && !stand)
 		{
+			// Interface output
 			hand.show_cards(hand.cards.size());
 			hand.show_score();
 			System.out.print("Hit or stand? (h/s): ");
 			String hit_or_stand = scanner.next();
 			
+			// If-Else control structure for hit or stand
 			if(hit_or_stand.equalsIgnoreCase("h"))
 			{
 				this.hit(deck, 1, hand);
+				
+				// Interface output
 				hand.show_cards(hand.cards.size());
 				hand.show_score();
 			}
@@ -69,7 +69,7 @@ public class Player
 			}
 			else
 			{
-				System.out.println("Invalid input");
+				System.out.println("Invalid input"); 
 				hit_or_stand(deck, hand);
 			}
 		}
@@ -77,17 +77,17 @@ public class Player
 	}
 	
 	
-	
 	/**
-	 * If neither the player nor the dealer busts
-	 * Then, scores are compared to determine winner
+	 * If neither the player nor the dealer busts, scores are compared to determine winner
 	 * @param dealer
 	 */
 	public void determine_winner(Dealer dealer)
 	{	
+		// Variables
 		int player_highest_score = 0;
 		int dealer_highest_score = 0;
 		
+		// Check if player is bust and find its hand with the highest score under 22
 		if(!this.default_hand.bust())
 		{
 			player_highest_score = this.default_hand.score;
@@ -101,6 +101,7 @@ public class Player
 			player_highest_score = this.split_hand_2.score;
 		}
 		
+		// Check if dealer is bust and find its hand with the highest score under 22
 		if(!dealer.default_hand.bust())
 		{
 			dealer_highest_score = dealer.default_hand.score;
@@ -114,11 +115,20 @@ public class Player
 			dealer_highest_score = dealer.split_hand_2.score;
 		}
 		
+		// Interface output
 		if(player_highest_score > dealer_highest_score)
 		{
 			System.out.println("Player has " + player_highest_score 
 					+ " and dealer has " + dealer_highest_score + 
 					". Player wins");
+		}
+		else if(player_highest_score == 0)
+		{
+			System.out.println("Player busted. Dealer wins with " + dealer_highest_score + " points");
+		}
+		else if(dealer_highest_score == 0)
+		{
+			System.out.println("Dealer busted. Player wins with " + player_highest_score + " points");
 		}
 		else
 		{
@@ -129,8 +139,8 @@ public class Player
 	}
 	
 	/**
-	 * Split hand
-	 * @param deck
+	 * Give player the option to split hand
+	 * @return true if split has been chosen
 	 */
 	public boolean choose_split()
 	{
@@ -144,12 +154,18 @@ public class Player
 		else {return false;}
 	}
 	
+	/**
+	 * Split hand
+	 */
 	public void split_hand()
 	{
 		this.split_hand_1.add(this.default_hand.cards.get(0));
 		this.split_hand_2.add(this.default_hand.cards.get(1));
 	}
 	
+	/**
+	 * @return true if initial hand can be split
+	 */
 	public boolean can_split()
 	{
 		if(this.default_hand.cards.get(0).getRank() == this.default_hand.cards.get(1).getRank())
@@ -158,25 +174,12 @@ public class Player
 		}
 		return false;
 	}
-	
-	/**
-	 * I should make this into a boolean function that returns true if the player has a blackjack
-	 * @param dealer
-	 * @param deck
-	 * @param hand
-	 */
-	public void player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand)
-	{
-		if(this.blackjack_Win(dealer)) {return;}
-		this.hit_or_stand(deck, player_hand);
-	}
-
 
 	/**
-	 * Look for blackjacks in all of player and dealer's hands
+	 * Look for blackjacks in all of player's and dealer's hands
 	 * Get rid of hand parameters and maybe dealer too
 	 * @param dealer
-	 * @return
+	 * @return true if anyone has a blackjack
 	 */
 	public boolean blackjack_Win(Dealer dealer)
 	{
@@ -208,6 +211,9 @@ public class Player
 		return false;
 	}
 	
+	/**
+	 * @return true if player's default hand or both split hands have busted
+	 */
 	public boolean bust()
 	{
 		if(!this.can_split() && this.default_hand.bust())
@@ -226,6 +232,10 @@ public class Player
 		}
 	}
 	
+	/**
+	 * routine for a turn after splitting initial hand
+	 * @param deck
+	 */
 	public void split_turn(Stack<Card> deck)
 	{
 		this.hit(deck, 1, this.split_hand_1);

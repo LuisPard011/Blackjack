@@ -15,11 +15,18 @@ public class Game
 	 */
 	public boolean choose_mode(Scanner scanner) throws FileNotFoundException, IOException
 	{
+		// Interface output
 		System.out.println("Console or file input? (c/f): ");
 		String mode = scanner.next();
 		
-		if(mode.equalsIgnoreCase("c")) {play_console();}
-		else if(mode.equalsIgnoreCase("f")) {play_file();}
+		if(mode.equalsIgnoreCase("c"))
+		{
+			play_console();
+		}
+		else if(mode.equalsIgnoreCase("f"))
+		{
+			play_file();
+		}
 		else
 		{
 			System.out.println("Invalid input");
@@ -31,8 +38,10 @@ public class Game
 	
 	/**
 	 * Play in console mode
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public boolean play_console()
+	public boolean play_console() throws FileNotFoundException, IOException
 	{	
 		// Variables
 		int draw_times = 2;
@@ -52,12 +61,7 @@ public class Game
 		dealer.hit(deck, draw_times, dealer.default_hand);
 		dealer.default_hand.show_cards(1);
 		
-		/////////////////////////////////////////////////////////////////
-		
-		/*
-		 * Player's turn
-		 * Maybe make a function with this, and replace "player" with "this"
-		 */
+		// Player's turn
 		if(player.can_split())
 		{
 			if(player.choose_split())
@@ -75,9 +79,7 @@ public class Game
 			player.hit_or_stand(deck, player.default_hand);
 		}
 		
-		/*
-		 * Dealer's turn
-		 */
+		// Dealer's turn
 		if(dealer.can_split())
 		{
 			if(dealer.choose_split())
@@ -86,19 +88,17 @@ public class Game
 				dealer.dealer_turn(deck, player, dealer.split_hand_1);
 				dealer.dealer_turn(deck, player, dealer.split_hand_2);
 			}
+			else
+			{
+				dealer.dealer_turn(deck, player, dealer.default_hand);
+			}
 		}
 		else
 		{
 			dealer.dealer_turn(deck, player, dealer.default_hand);
 		}
 		
-		
-		
-		
-		///////////////////////////////////////////////////////
-		
-		
-		
+		// End game
 		player.determine_winner(dealer);
 		continue_play();
 		return true;
@@ -111,36 +111,49 @@ public class Game
 	 */
 	public boolean play_file() throws FileNotFoundException, IOException
 	{
-		// Path to file
+		// Variables
+		boolean stand = false;
+		
+		// Paths to files
 		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 		String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
+		String path_4 = "src\\main\\java\\core\\Input_File_4.txt";
+		String path_5 = "src\\main\\java\\core\\Input_File_5.txt";
 		
 		// Read file input
 		Reader reader = new Reader();
-		String[] commands = reader.read_file_input(path_3);
+		String[] commands = reader.read_file_input(path_1);
 		
 		// Create players
 		Player player = new Player();
 		Dealer dealer = new Dealer();
 		
-		// Player's first two cards
-		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i, player.default_hand);}
+		// Draw player's first two cards
+		for(int i = 0; i < 2; ++i)
+		{
+			reader.add_card_from_input(player, commands, i, player.default_hand);
+		}
+		
+		// Interface output
 		player.default_hand.show_cards(2);
 		player.default_hand.show_score();
 		
-		// Dealer's first two cards
-		for(int i = 2; i < 4; ++i){reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
+		// Draw dealer's first two cards
+		for(int i = 2; i < 4; ++i)
+		{
+			reader.add_card_from_input(dealer, commands, i, dealer.default_hand);
+		}
+		
+		// Interface output
 		dealer.default_hand.show_cards(2);
 		dealer.default_hand.show_score();
 		
-		boolean stand = false;
-		
+		// Go through the rest of the input
 		for(int i = 4; i < commands.length; ++i)
 		{
 			/*
-			 * All cards from now on are added to player
-			 * This is the case, until arr[i].charAt(0) == 'S' and the same string is of length 1
+			 * Add cards to player's default hand until arr[i].charAt(0) == 'S' and the same string is of length 1
 			 * After this point, all cards are added to the dealer
 			 */
 			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1)
@@ -149,23 +162,40 @@ public class Game
 				continue;
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
+			else if(commands[i].charAt(0) == 'D' && commands[i].length() == 1)
+			{
+				// will have to add not to default hand
+				// maybe continue might come in handy
+			}
 			
-			if(!stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
-			else{reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
+			if(!stand)
+			{
+				reader.add_card_from_input(player, commands, i, player.default_hand);
+			}
+			else
+			{
+				reader.add_card_from_input(dealer, commands, i, dealer.default_hand);	
+			}
 		}
 		
+		// Interface output
 		player.default_hand.show_cards(player.default_hand.cards.size());
 		player.default_hand.show_score();
 		dealer.default_hand.show_cards(dealer.default_hand.cards.size());
 		dealer.default_hand.show_score();
+		
+		// End game
+		player.determine_winner(dealer);
+		continue_play();
 		return true;
 	}
 	
 	/**
 	 * User menu to decide whether or not to continue playing
-	 * @param scanner
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	public boolean continue_play()
+	public boolean continue_play() throws FileNotFoundException, IOException
 	{
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Continue playing? (y/n): ");
@@ -173,7 +203,7 @@ public class Game
 		
 		if(continue_play.equalsIgnoreCase("y"))
 		{
-			play_console();
+			choose_mode(scanner);
 			return true;
 		}
 		else if(continue_play.equalsIgnoreCase("n"))
