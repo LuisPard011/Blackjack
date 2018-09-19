@@ -114,15 +114,70 @@ public class Player
 	
 	/**
 	 * Split hand
-	 * @param hand
+	 * @param deck
 	 */
-	public void split()
+	public void split_check(Dealer dealer, Stack<Card> deck)
 	{
-		if(this.default_hand.splitable())
+		Scanner scanner = new Scanner(System.in);
+		String choose_split;
+		
+		if(this.default_hand.cards.get(0).getRank() == this.default_hand.cards.get(1).getRank())
 		{
-			this.split_hand_1.add(default_hand.cards.get(0));
-			this.split_hand_2.add(default_hand.cards.get(1));
+			System.out.println("Would you like to split? (y/n): ");
+			choose_split = scanner.next();
+			
+			if(choose_split.equalsIgnoreCase("y"))
+			{
+				this.split_hand_1.add(this.default_hand.cards.get(0));
+				this.split_hand_2.add(this.default_hand.cards.get(1));
+				
+				this.hit(deck, 1, this.split_hand_1);
+				this.split_hand_1.show_cards(split_hand_1.cards.size());
+				this.player_turn(dealer, deck, split_hand_1);
+				
+				this.hit(deck, 1, this.split_hand_2);
+				this.split_hand_2.show_cards(split_hand_2.cards.size());
+				this.player_turn(dealer, deck, split_hand_2);
+			}
 		}
 	}
+	
+	/**
+	 * I should make this into a boolean function that returns true if the player has a blackjack
+	 * @param dealer
+	 * @param deck
+	 * @param hand
+	 */
+	public boolean player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand, Hand dealer_hand)
+	{
+		if(this.blackjack_Win(dealer, player_hand, dealer_hand)) {return true;}
+		while(!this.bust(dealer, player_hand) && !this.stand)
+		{
+			this.hit_or_stand(deck, player_hand);
+		}
+		return false;
+	}
 
+	public boolean blackjack_Win(Dealer dealer, Hand player_hand, Hand dealer_hand)
+	{
+		if(player_hand.blackjack() && !dealer_hand.blackjack())
+		{
+			this.win = true;
+			System.out.println("Player has blackjack and dealer does not. Player wins");
+			return true;
+		}
+		else if(!player_hand.blackjack() && dealer_hand.blackjack())
+		{
+			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
+			dealer.win = true;
+			return true;
+		}
+		else if(player_hand.blackjack() && dealer_hand.blackjack())
+		{
+			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
+			dealer.win = true;
+			return true;
+		}
+		return false;
+	}
 } 

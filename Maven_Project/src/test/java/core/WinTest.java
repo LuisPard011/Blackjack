@@ -22,6 +22,7 @@ public class WinTest extends TestCase
 	Card seven_c = new Card("C", "7");
 	Card eight_c = new Card("C", "8");
 	Card nine_s = new Card("S", "9");
+	Card nine_c = new Card("C", "9");
 	Card ten_h = new Card("H", "10");
 	Card jack_c = new Card("C", "J");
 	Card queen_c = new Card("C", "Q");
@@ -359,99 +360,99 @@ public class WinTest extends TestCase
 //		assertEquals(true, dealer_0.bust);
 //		assertEquals(true, player_0.win);
 //	}
-	
-	/**
-	 * R31
-	 * Ace can count as 1
-	 */
-	public void test_Ace_1()
-	{
-		player_0.default_hand.add(two_s);
-		player_0.default_hand.add(king_c);
-		player_0.default_hand.add(ace_s);
-		
-		assertEquals(13, player_0.default_hand.score);
-		
-		player_1.default_hand.add(seven_c);
-		player_1.default_hand.add(five_d);
-		player_1.default_hand.add(four_h);
-		player_1.default_hand.add(ace_d);
-		player_1.default_hand.add(six_s);
-		
-		assertEquals(23, player_1.default_hand.score);
-		
-		dealer_1.default_hand.add(ace_d);
-		dealer_1.default_hand.add(two_s);
-		dealer_1.default_hand.add(three_s);
-		dealer_1.default_hand.add(six_s);
-		dealer_1.default_hand.add(ace_d);
-		dealer_1.default_hand.add(ten_h);
-		dealer_1.default_hand.add(jack_c);
-		dealer_1.default_hand.add(eight_c);
-		
-		assertEquals(41, dealer_1.default_hand.score);
-	}
-
-	/**
-	 * R32
-	 * Ace can count as 11
-	 */
-	public void test_Ace_11()
-	{
-		player_0.default_hand.add(two_s);
-		player_0.default_hand.add(ace_s);
-		
-		assertEquals(13, player_0.default_hand.score);
-	}
-	
-	/**
-	 * R33
-	 * Two aces in hand, one counts as 1 and the other as 11
-	 */
-	public void test_Aces_1_11()
-	{
-		player_0.default_hand.add(ace_s);
-//		player_0.default_hand.add(four_h);
-		player_0.default_hand.add(ace_s);
+//	
+//	/**
+//	 * R31
+//	 * Ace can count as 1
+//	 */
+//	public void test_Ace_1()
+//	{
+//		player_0.default_hand.add(two_s);
+//		player_0.default_hand.add(king_c);
 //		player_0.default_hand.add(ace_s);
+//		
+//		assertEquals(13, player_0.default_hand.score);
+//		
+//		player_1.default_hand.add(seven_c);
+//		player_1.default_hand.add(five_d);
+//		player_1.default_hand.add(four_h);
+//		player_1.default_hand.add(ace_d);
+//		player_1.default_hand.add(six_s);
+//		
+//		assertEquals(23, player_1.default_hand.score);
+//		
+//		dealer_1.default_hand.add(ace_d);
+//		dealer_1.default_hand.add(two_s);
+//		dealer_1.default_hand.add(three_s);
+//		dealer_1.default_hand.add(six_s);
+//		dealer_1.default_hand.add(ace_d);
+//		dealer_1.default_hand.add(ten_h);
+//		dealer_1.default_hand.add(jack_c);
+//		dealer_1.default_hand.add(eight_c);
+//		
+//		assertEquals(41, dealer_1.default_hand.score);
+//	}
+//
+//	/**
+//	 * R32
+//	 * Ace can count as 11
+//	 */
+//	public void test_Ace_11()
+//	{
+//		player_0.default_hand.add(two_s);
 //		player_0.default_hand.add(ace_s);
-		
-		assertEquals(12, player_0.default_hand.score);
-	}
-	
-	/**
-	 * R34
-	 * One ace can count as 11 and then 1
-	 */
-	public void test_Aces_11_1()
-	{
-		player_0.default_hand.add(ace_d);
-		player_0.default_hand.add(two_s);
-		assertEquals(13, player_0.default_hand.score);
-		
-		player_0.default_hand.add(king_c);
-		player_0.default_hand.add(six_s);
-		assertEquals(19, player_0.default_hand.score);
-	}
-	
-	/**
-	 * R35
-	 * A hand can count two aces as 1 each
-	 */
-	public void test_Aces_1_1()
-	{
-		player_0.default_hand.add(ace_d);
-		player_0.default_hand.add(ace_s);
-		player_0.default_hand.add(king_d);
-		player_0.default_hand.add(six_s);
-//		player_0.default_hand.add(jack_c);
-		player_0.default_hand.add(nine_s);
+//		
+//		assertEquals(13, player_0.default_hand.score);
+//	}
+//	
+//	/**
+//	 * R33
+//	 * Two aces in hand, one counts as 1 and the other as 11
+//	 */
+//	public void test_Aces_1_11()
+//	{
+//		player_0.default_hand.add(ace_s);
+////		player_0.default_hand.add(four_h);
+//		player_0.default_hand.add(ace_s);
+////		player_0.default_hand.add(ace_s);
+////		player_0.default_hand.add(ace_s);
+//		
+//		assertEquals(12, player_0.default_hand.score);
+//	}
+//	
+//	/**
+//	 * R34
+//	 * One ace can count as 11 and then 1
+//	 */
+//	public void test_Aces_11_1()
+//	{
+//		player_0.default_hand.add(ace_d);
+//		player_0.default_hand.add(two_s);
+//		assertEquals(13, player_0.default_hand.score);
+//		
+//		player_0.default_hand.add(king_c);
+//		player_0.default_hand.add(six_s);
+//		assertEquals(19, player_0.default_hand.score);
+//	}
+//	
+//	/**
+//	 * R35
+//	 * A hand can count two aces as 1 each
+//	 */
+//	public void test_Aces_1_1()
+//	{
 //		player_0.default_hand.add(ace_d);
 //		player_0.default_hand.add(ace_s);
-		
-		assertEquals(27, player_0.default_hand.score);
-	}
-	
+//		player_0.default_hand.add(king_d);
+//		player_0.default_hand.add(six_s);
+////		player_0.default_hand.add(jack_c);
+//		player_0.default_hand.add(nine_s);
+////		player_0.default_hand.add(ace_d);
+////		player_0.default_hand.add(ace_s);
+//		
+//		assertEquals(27, player_0.default_hand.score);
+//	}
+//	
 //	/**
 //	 * R36
 //	 * J, Q and K count as 10
@@ -464,131 +465,134 @@ public class WinTest extends TestCase
 //		
 //		assertEquals(30, player_0.score);
 //	}
-//	
-//	/**
-//	 * R37
-//	 * Player's initial blackjack is detected
-//	 */
-//	public void test_Player_Blackjack()
-//	{
-//		player_0.add(ace_d);
-//		player_0.add(jack_c);
-//		assertEquals(true, player_0.blackjack());
-//		
-//		player_1.add(jack_c);
-//		player_1.add(ace_s);
-//		assertEquals(true, player_1.blackjack());
-//		
-//		player_2.add(ace_s);
-//		player_2.add(queen_c);
-//		assertEquals(true, player_2.blackjack());
-//		
-//		player_3.add(queen_c);
-//		player_3.add(ace_d);
-//		assertEquals(true, player_3.blackjack());
-//		
-//		player_4.add(ace_s);
-//		player_4.add(king_c);
-//		assertEquals(true, player_4.blackjack());
-//		
-//		player_5.add(king_d);
-//		player_5.add(ace_d);
-//		assertEquals(true, player_5.blackjack());
-//		
-//		player_6.add(ace_s);
-//		player_6.add(ten_h);
-//		assertEquals(true, player_6.blackjack());
-//	}
-//	
-//	/**
-//	 * R38
-//	 * Dealer's initial blackjack is detected
-//	 */
-//	public void test_Dealer_Blackjack()
-//	{
-//		dealer_0.add(ace_d);
-//		dealer_0.add(jack_c);
-//		assertEquals(true, dealer_0.blackjack());
-//		
-//		dealer_1.add(jack_c);
-//		dealer_1.add(ace_s);
-//		assertEquals(true, dealer_1.blackjack());
-//		
-//		dealer_2.add(ace_s);
-//		dealer_2.add(queen_c);
-//		assertEquals(true, dealer_2.blackjack());
-//		
-//		dealer_3.add(queen_c);
-//		dealer_3.add(ace_d);
-//		assertEquals(true, dealer_3.blackjack());
-//		
-//		dealer_4.add(ace_s);
-//		dealer_4.add(king_c);
-//		assertEquals(true, dealer_4.blackjack());
-//		
-//		dealer_5.add(king_d);
-//		dealer_5.add(ace_d);
-//		assertEquals(true, dealer_5.blackjack());
-//		
-//		dealer_6.add(ace_s);
-//		dealer_6.add(ten_h);
-//		assertEquals(true, dealer_6.blackjack());
-//	}
-//	
-//	/**
-//	 * R39
-//	 * If player has Blackjack and the dealer doesn't, player wins
-//	 */
-//	public void test_Player_Blackjack_Win()
-//	{
-//		System.out.println("\nR39 - If player has Blackjack and the dealer doesn't, player wins");
-//		divider();
-//		
-//		player_0.default_hand.add(ace_d);
-//		player_0.default_hand.add(two_s);
-//		player_0.default_hand.add(ten_h);
-//		
-//		dealer_0.default_hand.add(six_s);
-//		dealer_0.default_hand.add(nine_s);
-//		
-//		dealer_0.blackjack_Win(player_0, player_0.default_hand, dealer_0.default_hand);
-//		
-//		assertEquals(true, player_0.win);
-//		assertEquals(false, dealer_0.win);
-//	}
-//	
-//	/**
-//	 * R40
-//	 * If dealer has Blackjack it wins
-//	 */
-//	public void test_Dealer_Blackjack_Win()
-//	{
-//		System.out.println("\nR40 - If dealer has Blackjack it wins");
-//		divider();
-//		
-//		player_0.add(ace_d);
-//		player_0.add(nine_s);
-//		dealer_0.add(ace_s);
-//		dealer_0.add(six_s);
-//		dealer_0.add(nine_s);
-//		dealer_0.add(ten_h);
-//		dealer_0.blackjack_Win(player_0);
-//		
-//		assertEquals(false, player_0.win);
-//		assertEquals(true, dealer_0.win);
-//		
-//		player_1.add(six_s);
-//		player_1.add(ace_d);
-//		player_1.add(jack_c);
-//		dealer_1.add(ten_h);
-//		dealer_1.add(ace_d);
-//		dealer_1.add(nine_s);
-//		dealer_1.blackjack_Win(player_1);
-//		
-//		assertEquals(false, player_1.win);
-//		assertEquals(true, dealer_1.win);
-//	}
-//	
+	
+	/**
+	 * R37
+	 * Player's initial blackjack is detected
+	 */
+	public void test_Player_Blackjack()
+	{
+		player_0.default_hand.add(ace_d);
+		player_0.default_hand.add(jack_c);
+		assertEquals(true, player_0.default_hand.blackjack());
+		
+		player_1.default_hand.add(jack_c);
+		player_1.default_hand.add(ace_s);
+		assertEquals(true, player_1.default_hand.blackjack());
+		
+		player_2.default_hand.add(ace_s);
+		player_2.default_hand.add(queen_c);
+		assertEquals(true, player_2.default_hand.blackjack());
+		
+		player_3.default_hand.add(queen_c);
+		player_3.default_hand.add(ace_d);
+		assertEquals(true, player_3.default_hand.blackjack());
+		
+		player_4.default_hand.add(ace_s);
+		player_4.default_hand.add(king_c);
+		assertEquals(true, player_4.default_hand.blackjack());
+		
+		player_5.default_hand.add(king_d);
+		player_5.default_hand.add(ace_d);
+		assertEquals(true, player_5.default_hand.blackjack());
+		
+		player_6.default_hand.add(ace_s);
+		player_6.default_hand.add(ten_h);
+		assertEquals(true, player_6.default_hand.blackjack());
+	}
+	
+	/**
+	 * R38
+	 * Dealer's initial blackjack is detected
+	 */
+	public void test_Dealer_Blackjack()
+	{
+		dealer_0.default_hand.add(ace_d);
+		dealer_0.default_hand.add(jack_c);
+		assertEquals(true, dealer_0.default_hand.blackjack());
+		
+		dealer_1.default_hand.add(jack_c);
+		dealer_1.default_hand.add(ace_s);
+		assertEquals(true, dealer_1.default_hand.blackjack());
+		
+		dealer_2.default_hand.add(ace_s);
+		dealer_2.default_hand.add(queen_c);
+		assertEquals(true, dealer_2.default_hand.blackjack());
+		
+		dealer_3.default_hand.add(queen_c);
+		dealer_3.default_hand.add(ace_d);
+		assertEquals(true, dealer_3.default_hand.blackjack());
+		
+		dealer_4.default_hand.add(ace_s);
+		dealer_4.default_hand.add(king_c);
+		assertEquals(true, dealer_4.default_hand.blackjack());
+		
+		dealer_5.default_hand.add(king_d);
+		dealer_5.default_hand.add(ace_d);
+		assertEquals(true, dealer_5.default_hand.blackjack());
+		
+		dealer_6.default_hand.add(ace_s);
+		dealer_6.default_hand.add(ten_h);
+		assertEquals(true, dealer_6.default_hand.blackjack());
+	}
+	
+	/**
+	 * R39
+	 * If player has Blackjack and the dealer doesn't, player wins
+	 */
+	public void test_Player_Blackjack_Win()
+	{
+		System.out.println("\nR39 - If player has Blackjack and the dealer doesn't, player wins");
+		divider();
+		
+		player_0.default_hand.add(ace_d);
+		player_0.default_hand.add(two_s);
+		player_0.default_hand.add(ten_h);
+		
+		dealer_0.default_hand.add(six_s);
+		dealer_0.default_hand.add(nine_s);
+		
+		player_0.blackjack_Win(dealer_0, player_0.default_hand, dealer_0.default_hand);
+		
+		assertEquals(true, player_0.win);
+		assertEquals(false, dealer_0.win);
+	}
+	
+	/**
+	 * R40
+	 * If dealer has Blackjack it wins
+	 */
+	public void test_Dealer_Blackjack_Win()
+	{
+		System.out.println("\nR40 - If dealer has Blackjack it wins");
+		divider();
+		
+		player_0.default_hand.add(ace_d);
+		player_0.default_hand.add(nine_s);
+		
+		dealer_0.default_hand.add(ace_s);
+		dealer_0.default_hand.add(six_s);
+		dealer_0.default_hand.add(nine_s);
+		dealer_0.default_hand.add(ten_h);
+		
+		player_0.blackjack_Win(dealer_0, player_0.default_hand, dealer_0.default_hand);
+		
+		assertEquals(false, player_0.win);
+		assertEquals(true, dealer_0.win);
+		
+		player_1.default_hand.add(six_s);
+		player_1.default_hand.add(ace_d);
+		player_1.default_hand.add(jack_c);
+		dealer_1.default_hand.add(ten_h);
+		dealer_1.default_hand.add(ace_d);
+		dealer_1.default_hand.add(nine_s);
+		
+		player_1.blackjack_Win(dealer_1, player_1.default_hand, dealer_1.default_hand);
+		
+		assertEquals(false, player_1.win);
+		assertEquals(true, dealer_1.win);
+	}
+	
 //	/**
 //	 * R41
 //	 * Player's hand score is displayed and it's correct
@@ -658,10 +662,13 @@ public class WinTest extends TestCase
 //	public void test_Player_Split()
 //	{
 //		player_0.default_hand.add(nine_s);
-//		player_0.default_hand.add(nine_s);
+//		player_0.default_hand.add(nine_c);
+//		
+//		deck_maker.make_deck(deck_1);
+//		
+//		player_0.split_check(dealer_0, deck_1);
+//		
 //		assertEquals(18, player_0.default_hand.score);
-//		
-//		
 //	}
 	/**************
 	 * Tests(End) * 

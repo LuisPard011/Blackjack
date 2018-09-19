@@ -7,7 +7,6 @@ public class Hand
 	// Variables
 	int score;
 	ArrayList<Card> cards;
-	boolean splitable;
 	
 	/*
 	 * All functions four counting the score of a hand should be in the Hand class
@@ -20,7 +19,6 @@ public class Hand
 	{
 		this.score = 0;
 		this.cards = new ArrayList<Card>();
-		this.splitable = false;
 	}
 	
 	/**
@@ -102,19 +100,6 @@ public class Hand
 		}
 		System.out.println();
 		return true;
-	}
-	
-	/**
-	 * Determine if hand is splitable
-	 */
-	public boolean splitable()
-	{
-		if(this.cards.get(0).getRank() == this.cards.get(1).getRank())
-		{
-			this.splitable = true;
-			return true;
-		}
-		return false;
 	}
 	
 	public boolean blackjack()

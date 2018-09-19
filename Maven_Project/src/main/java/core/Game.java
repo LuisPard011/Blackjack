@@ -36,7 +36,6 @@ public class Game
 	{	
 		// Variables
 		int draw_times = 2;
-		Scanner scanner = new Scanner(System.in);
 		
 		// Create deck
 		Deck_Maker deck_maker = new Deck_Maker();
@@ -53,11 +52,14 @@ public class Game
 		dealer.hit(deck, draw_times, dealer.default_hand);
 		dealer.default_hand.show_cards(1);
 		
+		
+		
+		/////////////////////////////////////////////////////////////////
+		
+		
+		
 		// Player's turn
-		while(!player.bust(dealer, player.default_hand) && !player.stand)
-		{
-			player.hit_or_stand(deck, player.default_hand);
-		}
+		player.player_turn(dealer, deck, player.default_hand);
 		if(player.bust)
 		{
 			continue_play();
@@ -75,6 +77,17 @@ public class Game
 			continue_play();
 			return true;
 		}
+		
+		
+		
+		
+		
+		
+		
+		///////////////////////////////////////////////////////
+		
+		
+		
 		
 		// If there are no busts
 		player.determine_winner(dealer, player.default_hand, dealer.default_hand);
