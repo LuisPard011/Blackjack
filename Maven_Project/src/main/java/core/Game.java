@@ -13,7 +13,7 @@ public class Game
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public boolean choose_mode(Scanner scanner) throws FileNotFoundException, IOException
+	public void choose_mode(Scanner scanner) throws FileNotFoundException, IOException
 	{
 		// Interface output
 		System.out.println("Console or file input? (c/f): ");
@@ -32,8 +32,6 @@ public class Game
 			System.out.println("Invalid input");
 			choose_mode(scanner);
 		}
-		
-		return true;
 	}
 	
 	/**
@@ -41,7 +39,7 @@ public class Game
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public boolean play_console() throws FileNotFoundException, IOException
+	public void play_console() throws FileNotFoundException, IOException
 	{	
 		// Variables
 		int draw_times = 2;
@@ -60,6 +58,12 @@ public class Game
 		Dealer dealer = new Dealer();
 		dealer.hit(deck, draw_times, dealer.default_hand);
 		dealer.default_hand.show_cards(1);
+		
+		if(player.blackjack_Win(dealer))
+		{
+			dealer.default_hand.show_cards(draw_times);
+			continue_play();
+		}
 		
 		// Player's turn
 		if(player.can_split())
@@ -80,6 +84,7 @@ public class Game
 		}
 		
 		// Dealer's turn
+		dealer.default_hand.show_cards(draw_times);
 		if(dealer.can_split())
 		{
 			if(dealer.choose_split())
@@ -101,7 +106,6 @@ public class Game
 		// End game
 		player.determine_winner(dealer);
 		continue_play();
-		return true;
 	}
 	
 	/**
@@ -109,7 +113,7 @@ public class Game
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public boolean play_file() throws FileNotFoundException, IOException
+	public void play_file() throws FileNotFoundException, IOException
 	{
 		// Variables
 		boolean stand = false;
@@ -118,12 +122,12 @@ public class Game
 		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 		String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
-		String path_4 = "src\\main\\java\\core\\Input_File_4.txt";
-		String path_5 = "src\\main\\java\\core\\Input_File_5.txt";
+//		String path_4 = "src\\main\\java\\core\\Input_File_4.txt";
+//		String path_5 = "src\\main\\java\\core\\Input_File_5.txt";
 		
 		// Read file input
 		Reader reader = new Reader();
-		String[] commands = reader.read_file_input(path_1);
+		String[] commands = reader.read_file_input(path_3);
 		
 		// Create players
 		Player player = new Player();
@@ -187,7 +191,6 @@ public class Game
 		// End game
 		player.determine_winner(dealer);
 		continue_play();
-		return true;
 	}
 	
 	/**
@@ -195,7 +198,7 @@ public class Game
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public boolean continue_play() throws FileNotFoundException, IOException
+	public void continue_play() throws FileNotFoundException, IOException
 	{
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("Continue playing? (y/n): ");
@@ -204,18 +207,15 @@ public class Game
 		if(continue_play.equalsIgnoreCase("y"))
 		{
 			choose_mode(scanner);
-			return true;
 		}
 		else if(continue_play.equalsIgnoreCase("n"))
 		{
 			System.out.println("Thanks for playing");
-			return true;
 		}
 		else
 		{
 			System.out.println("Invalid input");
 			continue_play();
-			return true;
 		}
 	}
 }

@@ -28,10 +28,9 @@ public class Hand
 	/**
 	 * Interface output to show hand's score
 	 */
-	public boolean show_score()
+	public void show_score()
 	{
 		System.out.println("Score is: " + this.score);
-		return true;
 	}
 	
 	/**
@@ -43,7 +42,7 @@ public class Hand
 		int new_score = 0;
 		int aces = 0;
 		
-		// Count cards in hand
+		// Count cards in hand	
 		for(int i = 0; i < this.cards.size(); ++i)
 		{
 			if(this.cards.get(i).getRank() < 11)
@@ -71,6 +70,7 @@ public class Hand
 			}
 		}
 		
+		// Adjust score depending on aces in hand
 		for(int i = 0; i < aces; ++i)
 		{
 			if(new_score >= 21)
@@ -79,14 +79,15 @@ public class Hand
 			}
 		}
 		
+		// Update hand's score
 		this.score = new_score;
 	}
 	
 	/**
-	 * Show all cards in hand
+	 * Interface output to show specific number of cards in hand
 	 * @param cards
 	 */
-	public boolean show_cards(int cards)
+	public void show_cards(int cards)
 	{
 		System.out.print("Cards in hand are: ");
 		for(int i = 0; i < cards; ++i)
@@ -94,15 +95,19 @@ public class Hand
 			System.out.print(this.cards.get(i).toString() + " ");
 		}
 		System.out.println();
-		return true;
 	}
 	
+	/**
+	 * Determine if hand has a blackjack
+	 * @return true if aces and cards worth 10 points are found
+	 */
 	public boolean blackjack()
 	{
+		// Variables
 		boolean has_ace = false;
 		boolean has_ten_value = false;
 		
-		// Iterate through hand to find either aces, tens and face cards
+		// Iterate through hand to find aces, tens and face cards
 		for(int i = 0; i < this.cards.size(); ++i)
 		{
 			if(this.cards.get(i).getRank() == 10 || 
@@ -118,9 +123,15 @@ public class Hand
 			}
 		}
 		
-		if(has_ace == true && has_ten_value == true) {return true;}
-		
-		return false;
+		// Determine whether or not hand has blackjack
+		if(has_ace == true && has_ten_value == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean bust()

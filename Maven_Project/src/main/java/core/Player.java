@@ -9,6 +9,7 @@ public class Player
 	Hand default_hand;
 	Hand split_hand_1;
 	Hand split_hand_2;
+	boolean splitted;
 	boolean has_blackjack;
 	
 	// Constructor
@@ -17,6 +18,7 @@ public class Player
 		this.default_hand = new Hand();
 		this.split_hand_1 = new Hand();
 		this.split_hand_2 = new Hand();
+		this.splitted = false;
 		this.has_blackjack = false;
 	}
 	
@@ -40,7 +42,7 @@ public class Player
 	 * @param hand
 	 * @return true if stand is chosen
 	 */
-	public boolean hit_or_stand(Stack<Card> deck, Hand hand)
+	public void hit_or_stand(Stack<Card> deck, Hand hand)
 	{
 		// Local variables
 		Scanner scanner = new Scanner(System.in);
@@ -58,10 +60,6 @@ public class Player
 			if(hit_or_stand.equalsIgnoreCase("h"))
 			{
 				this.hit(deck, 1, hand);
-				
-				// Interface output
-				hand.show_cards(hand.cards.size());
-				hand.show_score();
 			}
 			else if(hit_or_stand.equalsIgnoreCase("s"))
 			{
@@ -72,8 +70,13 @@ public class Player
 				System.out.println("Invalid input"); 
 				hit_or_stand(deck, hand);
 			}
+			
+			if(hand.bust())
+			{
+				hand.show_cards(hand.cards.size());
+				this.bust();
+			}
 		}
-		return stand;
 	}
 	
 	
@@ -88,29 +91,29 @@ public class Player
 		int dealer_highest_score = 0;
 		
 		// Check if player is bust and find its hand with the highest score under 22
-		if(!this.default_hand.bust())
+		if(!this.default_hand.bust() && !this.splitted)
 		{
 			player_highest_score = this.default_hand.score;
 		}
-		else if(player_highest_score < this.split_hand_1.score && !this.split_hand_1.bust())
+		if(player_highest_score < this.split_hand_1.score && !this.split_hand_1.bust())
 		{
 			player_highest_score = this.split_hand_1.score;
 		}
-		else if(player_highest_score < this.split_hand_2.score && !this.split_hand_2.bust())
+		if(player_highest_score < this.split_hand_2.score && !this.split_hand_2.bust())
 		{
 			player_highest_score = this.split_hand_2.score;
 		}
 		
 		// Check if dealer is bust and find its hand with the highest score under 22
-		if(!dealer.default_hand.bust())
+		if(!dealer.default_hand.bust() && !this.splitted)
 		{
 			dealer_highest_score = dealer.default_hand.score;
 		}
-		else if(dealer_highest_score < dealer.split_hand_1.score && !dealer.split_hand_1.bust())
+		if(dealer_highest_score < dealer.split_hand_1.score && !dealer.split_hand_1.bust())
 		{
 			dealer_highest_score = dealer.split_hand_1.score;
 		}
-		else if(dealer_highest_score < dealer.split_hand_2.score && !dealer.split_hand_2.bust())
+		if(dealer_highest_score < dealer.split_hand_2.score && !dealer.split_hand_2.bust())
 		{
 			dealer_highest_score = dealer.split_hand_2.score;
 		}
@@ -150,7 +153,11 @@ public class Player
 		System.out.println("Would you like to split? (y/n): ");
 		choose_split = scanner.next();
 		
-		if(choose_split.equalsIgnoreCase("y")) {return true;}
+		if(choose_split.equalsIgnoreCase("y"))
+		{
+			this.splitted = true;
+			return true;
+		}
 		else {return false;}
 	}
 	

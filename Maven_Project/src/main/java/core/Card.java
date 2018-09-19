@@ -21,28 +21,32 @@ public class Card implements Comparable<Card>{
 	protected String rank;
 	protected HashMap<String, Integer> rankValue;
 
-	/** creates a card with specified suit and rank
+	/** Creates a card with specified suit and rank
 	 * 
 	 * @param suit is the suit of the card (must be a string from Card.SUITS)
 	 * @param rank is the rank of the card (must be a string from Card.RANKS)
 	 */
-	public Card(String suit, String rank){
-		// assume input is valid!
+	public Card(String suit, String rank)
+	{
 		this.suit = suit; 
 		this.rank = rank;
 		this.rankValue = new HashMap<String,Integer>(15);
-		for(int r = 2; r < RANKS.length; r+=1){
+		for(int r = 2; r < RANKS.length; r+=1)
+		{
 			this.rankValue.put(RANKS[r], r);
 		}
 	}
 	
-	/** the suit of the current card 
+	/** The suit of the current card 
 	 *
 	 * @return the suit of this card (must be a string from Card.SUITS) 
 	 */
-	public String getSuit(){return this.suit;}
+	public String getSuit()
+	{
+		return this.suit;
+	}
 
-	/** the numerical representation of the rank of the current card
+	/** The numerical representation of the rank of the current card
 	 *  <p>
 	 * ranks have the numerical values
 	 *  2 = 2, 3 = 3, ..., 10 = 10
@@ -50,35 +54,50 @@ public class Card implements Comparable<Card>{
 	 *	 
 	 * @return the numerical rank of this card 
 	 */
-	public int getRank(){
-		if(this.rank.equals(RANKS[0])){ return -1; }   // "no card"
+	public int getRank()
+	{
+		if(this.rank.equals(RANKS[0]))
+		{
+			return -1; // "no card"
+		}   
 		return rankValue.get(this.rank);
 	}
 
-	/** the string representation of the rank of the current card 
+	/** The string representation of the rank of the current card 
 	 *
 	 * @return the string representation of the rank of this card (must be a string from Card.RANKS) 
 	 */
-	public String getRankString(){ return this.rank; }
+	public String getRankString()
+	{
+		return this.rank;
+	}
 	
 	/**
 	 * Compare cards
 	 */
-	public int compareTo(Card other){return 0;}
+	public int compareTo(Card other)
+	{
+		return 0;
+	}
 
 	@Override
-	/** I did alter this toString() function 
-	 *  to satisfy 3004's output requirements
+	/**
+	 * I edited this function to meet the output requirements for 3004's Blackjack assignment
+	 * Outputs a string representation of a card object
 	 */
 	public final String toString()
 	{
-		// outputs a string representation of a card object
-		if(this.rank.equals(RANKS[0])){ 
+		if(this.rank.equals(RANKS[0]))
+		{ 
 			return "no card"; 
 		}
 
 		int r = getRank();
-		if(r >= 2 && r <= 10){return getSuit().substring(0,1) + r;}
+		
+		if(r >= 2 && r <= 10)
+		{
+			return getSuit().substring(0,1) + r;
+		}
 		else if(r >= 11 && r <= 14)
 		{
 			switch(r)
@@ -89,6 +108,7 @@ public class Card implements Comparable<Card>{
 				case 14: return getSuit().substring(0,1) + "A";
 			}
 		}
+		
 		return "no card";
 	}
 
