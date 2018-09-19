@@ -13,29 +13,24 @@ public class Player
 	Hand default_hand;
 	Hand split_hand_1;
 	Hand split_hand_2;
-	
-	boolean win;
-	boolean lose;
-	String name;
+	boolean has_blackjack;
 	
 	/**
 	 * Constructor
-	 * @param player_name
 	 */
-	public Player(String player_name)
+	public Player()
 	{
 		this.default_hand = new Hand();
 		this.split_hand_1 = new Hand();
 		this.split_hand_2 = new Hand();
-		this.win = false;
-		this.lose = false;
-		this.name = player_name;
+		this.has_blackjack = false;
 	}
 	
 	/**
 	 * Draw x number of cards
 	 * @param deck
 	 * @param draw_times
+	 * @param hand
 	 */
 	public void hit(Stack<Card> deck, int draw_times, Hand hand)
 	{
@@ -48,8 +43,9 @@ public class Player
 	/**
 	 * Give player the option to either hit or stand
 	 * @param deck
+	 * @param hand
 	 */
-	public void hit_or_stand(Stack<Card> deck, Hand hand)
+	public boolean hit_or_stand(Stack<Card> deck, Hand hand)
 	{
 		Scanner scanner = new Scanner(System.in);
 		boolean stand = false;
@@ -65,6 +61,7 @@ public class Player
 			{
 				this.hit(deck, 1, hand);
 				hand.show_cards(hand.cards.size());
+				hand.show_score();
 			}
 			else if(hit_or_stand.equalsIgnoreCase("s"))
 			{
@@ -76,27 +73,58 @@ public class Player
 				hit_or_stand(deck, hand);
 			}
 		}
+		return stand;
 	}
+	
+	
 	
 	/**
 	 * If neither the player nor the dealer busts
 	 * Then, scores are compared to determine winner
 	 * @param dealer
-	 * @param player_hand
-	 * @param dealer_hand
 	 */
-	public void determine_winner(Dealer dealer, Hand player_hand, Hand dealer_hand)
-	{
-		// If player's score is greater than dealer's
-		if(player_hand.score > dealer_hand.score)
+	public void determine_winner(Dealer dealer)
+	{	
+		int player_highest_score = 0;
+		int dealer_highest_score = 0;
+		
+		if(!this.default_hand.bust())
 		{
-			System.out.println("Player wins");
-			this.win = true;
+			player_highest_score = this.default_hand.score;
+		}
+		else if(player_highest_score < this.split_hand_1.score && !this.split_hand_1.bust())
+		{
+			player_highest_score = this.split_hand_1.score;
+		}
+		else if(player_highest_score < this.split_hand_2.score && !this.split_hand_2.bust())
+		{
+			player_highest_score = this.split_hand_2.score;
+		}
+		
+		if(!dealer.default_hand.bust())
+		{
+			dealer_highest_score = dealer.default_hand.score;
+		}
+		else if(dealer_highest_score < dealer.split_hand_1.score && !dealer.split_hand_1.bust())
+		{
+			dealer_highest_score = dealer.split_hand_1.score;
+		}
+		else if(dealer_highest_score < dealer.split_hand_2.score && !dealer.split_hand_2.bust())
+		{
+			dealer_highest_score = dealer.split_hand_2.score;
+		}
+		
+		if(player_highest_score > dealer_highest_score)
+		{
+			System.out.println("Player has " + player_highest_score 
+					+ " and dealer has " + dealer_highest_score + 
+					". Player wins");
 		}
 		else
 		{
-			System.out.println("Dealer wins");
-			dealer.win = true;
+			System.out.println("Player has " + player_highest_score 
+					+ " and dealer has " + dealer_highest_score + 
+					". Dealer wins");
 		}
 	}
 	
@@ -137,9 +165,9 @@ public class Player
 	 * @param deck
 	 * @param hand
 	 */
-	public void player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand, Hand dealer_hand)
+	public void player_turn(Dealer dealer, Stack<Card> deck, Hand player_hand)
 	{
-		if(this.blackjack_Win(dealer, player_hand, dealer_hand)) {return;}
+		if(this.blackjack_Win(dealer)) {return;}
 		this.hit_or_stand(deck, player_hand);
 	}
 
@@ -148,30 +176,35 @@ public class Player
 	 * Look for blackjacks in all of player and dealer's hands
 	 * Get rid of hand parameters and maybe dealer too
 	 * @param dealer
-	 * @param player_hand
-	 * @param dealer_hand
 	 * @return
 	 */
-	public boolean blackjack_Win(Dealer dealer, Hand player_hand, Hand dealer_hand)
+	public boolean blackjack_Win(Dealer dealer)
 	{
-		if(player_hand.blackjack() && !dealer_hand.blackjack())
+		if(this.default_hand.blackjack() || this.split_hand_1.blackjack() || this.split_hand_2.blackjack())
 		{
-			this.win = true;
+			this.has_blackjack = true;
+		}
+		else if(dealer.default_hand.blackjack() || dealer.split_hand_1.blackjack() || dealer.split_hand_2.blackjack())
+		{
+			dealer.has_blackjack = true;
+		}
+		
+		if(this.has_blackjack && !dealer.has_blackjack)
+		{
 			System.out.println("Player has blackjack and dealer does not. Player wins");
 			return true;
 		}
-		else if(!player_hand.blackjack() && dealer_hand.blackjack())
+		else if(!this.has_blackjack && dealer.has_blackjack)
 		{
 			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
-			dealer.win = true;
 			return true;
 		}
-		else if(player_hand.blackjack() && dealer_hand.blackjack())
+		else if(this.has_blackjack && dealer.has_blackjack)
 		{
 			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
-			dealer.win = true;
 			return true;
 		}
+		
 		return false;
 	}
 	
@@ -179,12 +212,12 @@ public class Player
 	{
 		if(!this.can_split() && this.default_hand.bust())
 		{
-			this.lose = true;
+			System.out.println("Busted");
 			return true;
 		}
 		else if(this.can_split() && this.split_hand_1.bust() && this.split_hand_2.bust())
 		{
-			this.lose = true;
+			System.out.println("Busted");
 			return true;
 		}
 		else

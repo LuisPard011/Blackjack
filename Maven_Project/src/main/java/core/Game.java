@@ -43,12 +43,12 @@ public class Game
 		deck_maker.make_deck(deck);
 		
 		// Create player
-		Player player = new Player("Player");
+		Player player = new Player();
 		player.hit(deck, draw_times, player.default_hand);
 		player.default_hand.show_cards(2);
 		
 		// Create dealer
-		Dealer dealer = new Dealer("Dealer");
+		Dealer dealer = new Dealer();
 		dealer.hit(deck, draw_times, dealer.default_hand);
 		dealer.default_hand.show_cards(1);
 		
@@ -83,13 +83,13 @@ public class Game
 			if(dealer.choose_split())
 			{
 				dealer.split_hand();
-				dealer.dealer_turn(deck, player, player.default_hand, dealer.split_hand_1);
-				dealer.dealer_turn(deck, player, player.default_hand, dealer.split_hand_2);
+				dealer.dealer_turn(deck, player, dealer.split_hand_1);
+				dealer.dealer_turn(deck, player, dealer.split_hand_2);
 			}
-			else
-			{
-				dealer.dealer_turn(deck, player, player.default_hand, dealer.default_hand);
-			}
+		}
+		else
+		{
+			dealer.dealer_turn(deck, player, dealer.default_hand);
 		}
 		
 		
@@ -99,7 +99,7 @@ public class Game
 		
 		
 		
-		
+		player.determine_winner(dealer);
 		continue_play();
 		return true;
 	}
@@ -121,8 +121,8 @@ public class Game
 		String[] commands = reader.read_file_input(path_3);
 		
 		// Create players
-		Player player = new Player("Player");
-		Dealer dealer = new Dealer("Dealer");
+		Player player = new Player();
+		Dealer dealer = new Dealer();
 		
 		// Player's first two cards
 		for(int i = 0; i < 2; ++i){reader.add_card_from_input(player, commands, i, player.default_hand);}
@@ -134,22 +134,23 @@ public class Game
 		dealer.default_hand.show_cards(2);
 		dealer.default_hand.show_score();
 		
+		boolean stand = false;
+		
 		for(int i = 4; i < commands.length; ++i)
 		{
 			/*
 			 * All cards from now on are added to player
-			 * This is the case, until arr[i].charAt(0) == 'S' 
-			 * And the same string is of length 1
+			 * This is the case, until arr[i].charAt(0) == 'S' and the same string is of length 1
 			 * After this point, all cards are added to the dealer
 			 */
 			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1)
 			{
-//				player.stand = true;
+				stand = true;
 				continue;
 			}
 			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
 			
-//			if(!player.stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
+			if(!stand){reader.add_card_from_input(player, commands, i, player.default_hand);}
 			else{reader.add_card_from_input(dealer, commands, i, dealer.default_hand);}
 		}
 		
