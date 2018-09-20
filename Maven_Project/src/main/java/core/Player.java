@@ -23,7 +23,7 @@ public class Player
 	}
 	
 	/**
-	 * draw_times cards from deck and put them into hand
+	 * Draw_times cards from deck and put them into hand
 	 * @param deck
 	 * @param draw_times
 	 * @param hand
@@ -33,6 +33,10 @@ public class Player
 		for(int i = 0; i < draw_times; ++i)
 		{
 			hand.add(deck.pop());
+		}
+		if(hand.blackjack())
+		{
+			return;
 		}
 	}
 	
@@ -89,55 +93,65 @@ public class Player
 		// Variables
 		int player_highest_score = 0;
 		int dealer_highest_score = 0;
+		Hand player_best_hand = new Hand();
+		Hand dealer_best_hand = new Hand();
 		
 		// Check if player is bust and find its hand with the highest score under 22
 		if(!this.default_hand.bust() && !this.splitted)
 		{
 			player_highest_score = this.default_hand.score;
+			player_best_hand = this.default_hand;
 		}
 		if(player_highest_score < this.split_hand_1.score && !this.split_hand_1.bust())
 		{
 			player_highest_score = this.split_hand_1.score;
+			player_best_hand = this.split_hand_1;
 		}
 		if(player_highest_score < this.split_hand_2.score && !this.split_hand_2.bust())
 		{
 			player_highest_score = this.split_hand_2.score;
+			player_best_hand = this.split_hand_2;
 		}
 		
 		// Check if dealer is bust and find its hand with the highest score under 22
-		if(!dealer.default_hand.bust() && !this.splitted)
+		if(!dealer.default_hand.bust() && !dealer.splitted)
 		{
 			dealer_highest_score = dealer.default_hand.score;
+			dealer_best_hand = dealer.default_hand;
 		}
 		if(dealer_highest_score < dealer.split_hand_1.score && !dealer.split_hand_1.bust())
 		{
 			dealer_highest_score = dealer.split_hand_1.score;
+			dealer_best_hand = dealer.split_hand_1;
 		}
 		if(dealer_highest_score < dealer.split_hand_2.score && !dealer.split_hand_2.bust())
 		{
 			dealer_highest_score = dealer.split_hand_2.score;
+			dealer_best_hand = dealer.split_hand_2;
 		}
 		
 		// Interface output
 		if(player_highest_score > dealer_highest_score)
 		{
-			System.out.println("Player has " + player_highest_score 
-					+ " and dealer has " + dealer_highest_score + 
-					". Player wins");
+			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
+					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
+					") points. Player wins");
 		}
 		else if(player_highest_score == 0)
 		{
-			System.out.println("Player busted. Dealer wins with " + dealer_highest_score + " points");
+			System.out.println("Player busted. Dealer wins with [" + dealer_best_hand.toString() 
+					+ "] (" + dealer_highest_score + ") points");
 		}
 		else if(dealer_highest_score == 0)
 		{
-			System.out.println("Dealer busted. Player wins with " + player_highest_score + " points");
+			System.out.println("Dealer busted. Player wins with [" + player_best_hand.toString() 
+			+ "] (" + player_highest_score + ") points");
 		}
 		else
 		{
-			System.out.println("Player has " + player_highest_score 
-					+ " and dealer has " + dealer_highest_score + 
-					". Dealer wins");
+			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
+					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
+					") points. Dealer wins");
 		}
 	}
 	
@@ -194,7 +208,7 @@ public class Player
 		{
 			this.has_blackjack = true;
 		}
-		else if(dealer.default_hand.blackjack() || dealer.split_hand_1.blackjack() || dealer.split_hand_2.blackjack())
+		if(dealer.default_hand.blackjack() || dealer.split_hand_1.blackjack() || dealer.split_hand_2.blackjack())
 		{
 			dealer.has_blackjack = true;
 		}

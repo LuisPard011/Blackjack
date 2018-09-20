@@ -139,4 +139,30 @@ public class Hand
 		if(this.score > 21) {return true;}
 		else {return false;}
 	}
+	
+	@Override
+	/**
+	 * I got some of this code from StackOverflow
+	 * https://stackoverflow.com/questions/5925420/how-to-create-a-string-from-string-array-or-arraylist
+	 */
+	public final String toString()
+	{
+		int hand_size = this.cards.size();
+		String[] cards_array = new String[hand_size];
+		StringBuilder builder = new StringBuilder();
+		
+		for(int i = 0; i < hand_size; ++i)
+		{
+			cards_array[i] = this.cards.get(i).toString();
+		}
+
+		for (String string : cards_array) {
+		    if (builder.length() > 0) {
+		        builder.append(" ");
+		    }
+		    builder.append(string);
+		}
+		
+		return builder.toString();
+	}
 }

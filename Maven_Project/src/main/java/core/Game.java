@@ -7,6 +7,12 @@ import java.util.Stack;
 
 public class Game
 {	
+	public void welcome()
+	{
+		System.out.println("Hello, welcome to the Blackjack table");
+		System.out.println("=== === === === ==== === === === ===");
+	}
+	
 	/**
 	 * Choose between console or file input modes
 	 * @param scanner

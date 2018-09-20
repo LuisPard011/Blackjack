@@ -16,6 +16,7 @@ public class Main
 	{	
 		Scanner scanner = new Scanner(System.in);
 		Game game = new Game();
+		game.welcome();
 		game.choose_mode(scanner);
 	}
 }
