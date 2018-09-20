@@ -55,7 +55,9 @@ public class WinTest extends TestCase
 	Stack<Card> deck_1 = new Stack<Card>();
 	Stack<Card> deck_2 = new Stack<Card>();
 	
-	String[] commands;
+	String[] commands_0;
+	String[] commands_1;
+	String[] commands_2;
 	int[] arr_1;
 	int[] arr_2;
 	Card temp_card_1;
@@ -135,10 +137,17 @@ public class WinTest extends TestCase
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException
 	{
-		commands = reader.read_file_input(path_3);
+		commands_0 = reader.read_file_input(path_1);
+		assertEquals("SK", commands_0[0]);
+		assertEquals("CA", commands_0[commands_0.length-1]);
 		
-		assertEquals("S10", commands[0]);
-		assertEquals("D2", commands[commands.length-1]);
+		commands_1 = reader.read_file_input(path_2);
+		assertEquals("SK", commands_1[0]);
+		assertEquals("DJ", commands_1[commands_1.length-1]);
+		
+		commands_2 = reader.read_file_input(path_3);
+		assertEquals("S10", commands_2[0]);
+		assertEquals("D2", commands_2[commands_2.length-1]);
 	}
 	
 	/**
