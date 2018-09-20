@@ -28,7 +28,7 @@ public class Player
 	 * @param draw_times
 	 * @param hand
 	 */
-	public void hit(Stack<Card> deck, int draw_times, Hand hand)
+	public boolean hit(Stack<Card> deck, int draw_times, Hand hand)
 	{
 		for(int i = 0; i < draw_times; ++i)
 		{
@@ -36,7 +36,10 @@ public class Player
 		}
 		if(hand.blackjack())
 		{
-			return;
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	
@@ -46,7 +49,7 @@ public class Player
 	 * @param hand
 	 * @return true if stand is chosen
 	 */
-	public void hit_or_stand(Stack<Card> deck, Hand hand)
+	public void hit_or_stand(Stack<Card> deck, Hand hand, Dealer dealer)
 	{
 		// Local variables
 		Scanner scanner = new Scanner(System.in);
@@ -63,7 +66,10 @@ public class Player
 			// If-Else control structure for hit or stand
 			if(hit_or_stand.equalsIgnoreCase("h"))
 			{
-				this.hit(deck, 1, hand);
+				if(this.hit(deck, 1, hand) && !dealer.default_hand.cards.isEmpty())
+				{
+					this.blackjack_Win(dealer);
+				}
 			}
 			else if(hit_or_stand.equalsIgnoreCase("s"))
 			{
@@ -72,7 +78,7 @@ public class Player
 			else
 			{
 				System.out.println("Invalid input"); 
-				hit_or_stand(deck, hand);
+				hit_or_stand(deck, hand, dealer);
 			}
 			
 			if(hand.bust())
@@ -257,12 +263,12 @@ public class Player
 	 * routine for a turn after splitting initial hand
 	 * @param deck
 	 */
-	public void split_turn(Stack<Card> deck)
+	public void split_turn(Stack<Card> deck, Dealer dealer)
 	{
 		this.hit(deck, 1, this.split_hand_1);
-		this.hit_or_stand(deck, this.split_hand_1);
+		this.hit_or_stand(deck, this.split_hand_1, dealer);
 		
 		this.hit(deck, 1, this.split_hand_2);
-		this.hit_or_stand(deck, this.split_hand_2);
+		this.hit_or_stand(deck, this.split_hand_2, dealer);
 	}
 } 

@@ -77,16 +77,16 @@ public class Game
 			if(player.choose_split())
 			{
 				player.split_hand();
-				player.split_turn(deck);
+				player.split_turn(deck, dealer);
 			}
 			else
 			{
-				player.hit_or_stand(deck, player.default_hand);
+				player.hit_or_stand(deck, player.default_hand, dealer);
 			}
 		}
 		else
 		{
-			player.hit_or_stand(deck, player.default_hand);
+			player.hit_or_stand(deck, player.default_hand, dealer);
 		}
 		
 		// Dealer's turn

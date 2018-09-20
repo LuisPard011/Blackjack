@@ -690,12 +690,14 @@ public class WinTest extends TestCase
 		player_0.default_hand.add(two_c);
 		player_0.default_hand.add(two_s);
 		
+		dealer_0.default_hand.add(five_d);
+		
 		deck_maker.make_deck(deck_1);
 		
 		if(player_0.choose_split())
 		{
 			player_0.split_hand();
-			player_0.split_turn(deck_1);
+			player_0.split_turn(deck_1, dealer_0);
 		}
 		
 		player_0.determine_winner(dealer_0);
