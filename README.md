@@ -1,2 +1,4 @@
 # Blackjack
-Repository for the Blackjack assignment from COMP_3004A_F18
+Blackjack game made for an assignment for COMP 3004 F18
+
+Code is at Blackjack/Maven_Project/src/main/java/core/
