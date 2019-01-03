@@ -189,9 +189,9 @@ public class Game
 		}
 		
 		// Interface output
-		player.default_hand.show_cards(player.default_hand.cards.size());
+		player.default_hand.show_cards(player.default_hand.size());
 		player.default_hand.show_score();
-		dealer.default_hand.show_cards(dealer.default_hand.cards.size());
+		dealer.default_hand.show_cards(dealer.default_hand.size());
 		dealer.default_hand.show_score();
 		
 		// End game

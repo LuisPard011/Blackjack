@@ -199,8 +199,8 @@ public class WinTest extends TestCase
 		temp_card_1 = deck_1.peek();
 		player_0.hit(deck_1, 1, player_0.default_hand);
 		
-		assertEquals(temp_card_1.get_rank(), player_0.default_hand.cards.get(0).get_rank());
-		assertEquals(temp_card_1.get_suit(), player_0.default_hand.cards.get(0).get_suit());
+		assertEquals(temp_card_1.get_rank(), player_0.default_hand.get(0).get_rank());
+		assertEquals(temp_card_1.get_suit(), player_0.default_hand.get(0).get_suit());
 	}
 	
 	/**
@@ -215,10 +215,10 @@ public class WinTest extends TestCase
 		temp_card_2 = deck_1.peek();
 		player_0.hit(deck_1, 1, player_0.default_hand);
 		
-		assertEquals(temp_card_1.get_rank(), player_0.default_hand.cards.get(0).get_rank());
-		assertEquals(temp_card_1.get_suit(), player_0.default_hand.cards.get(0).get_suit());
-		assertEquals(temp_card_2.get_rank(), player_0.default_hand.cards.get(1).get_rank());
-		assertEquals(temp_card_2.get_suit(), player_0.default_hand.cards.get(1).get_suit());
+		assertEquals(temp_card_1.get_rank(), player_0.default_hand.get(0).get_rank());
+		assertEquals(temp_card_1.get_suit(), player_0.default_hand.get(0).get_suit());
+		assertEquals(temp_card_2.get_rank(), player_0.default_hand.get(1).get_rank());
+		assertEquals(temp_card_2.get_suit(), player_0.default_hand.get(1).get_suit());
 	}
 	
 	/**
@@ -246,7 +246,7 @@ public class WinTest extends TestCase
 		player_0.default_hand.add(two_s);
 		player_0.default_hand.add(six_s);
 		
-		player_0.default_hand.show_cards(player_0.default_hand.cards.size());
+		player_0.default_hand.show_cards(player_0.default_hand.size());
 	}
 	
 	/**
@@ -273,7 +273,7 @@ public class WinTest extends TestCase
 		
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(two_s);
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.cards.size());
+		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
 		dealer_0.default_hand.show_score();
 		
 		deck_maker.make_deck(deck_1);
@@ -293,7 +293,7 @@ public class WinTest extends TestCase
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(six_s);
 		
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.cards.size());
+		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
 		dealer_0.default_hand.show_score();
 		
 		deck_maker.make_deck(deck_1);
@@ -323,7 +323,7 @@ public class WinTest extends TestCase
 		// Draw repeatedly until score >= 16 or soft 17
 		dealer_0.dealer_turn(deck_1, player_0, dealer_0.default_hand); 
 		
-		assertTrue(dealer_0.default_hand.cards.size() > 2);
+		assertTrue(dealer_0.default_hand.size() > 2);
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class WinTest extends TestCase
 		dealer_0.default_hand.add(two_s);
 		dealer_0.default_hand.add(six_s);
 		
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.cards.size());
+		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
 	}
 	
 	/**
@@ -575,8 +575,9 @@ public class WinTest extends TestCase
 		View.divider();
 		
 		player_0.default_hand.add(king_c);
-		player_0.default_hand.show_cards(player_0.default_hand.cards.size());
+		player_0.default_hand.show_cards(player_0.default_hand.size());
 		player_0.default_hand.show_score();
+		assertEquals(10, player_0.default_hand.get_score());
 	}
 	
 	/**
@@ -588,12 +589,12 @@ public class WinTest extends TestCase
 		View.divider();
 		
 		dealer_0.default_hand.add(five_d);
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.cards.size());
+		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
 		dealer_0.default_hand.show_score();
 		
 		dealer_1.default_hand.add(eight_c);
 		dealer_1.default_hand.add(ace_d);
-		dealer_1.default_hand.show_cards(dealer_1.default_hand.cards.size());
+		dealer_1.default_hand.show_cards(dealer_1.default_hand.size());
 		dealer_1.default_hand.show_score();
 	}
 	

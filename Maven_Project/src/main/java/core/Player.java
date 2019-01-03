@@ -58,7 +58,7 @@ public class Player
 		while(!hand.bust() && !stand)
 		{
 			// Interface output
-			hand.show_cards(hand.cards.size());
+			hand.show_cards(hand.size());
 			hand.show_score();
 			System.out.print("Hit or stand? (h/s): ");
 			String hit_or_stand = scanner.next();
@@ -66,7 +66,7 @@ public class Player
 			// If-Else control structure for hit or stand
 			if(hit_or_stand.equalsIgnoreCase("h"))
 			{
-				if(this.hit(deck, 1, hand) && !dealer.default_hand.cards.isEmpty())
+				if(this.hit(deck, 1, hand) && !dealer.default_hand.isEmpty())
 				{
 					this.blackjack_Win(dealer);
 				}
@@ -83,7 +83,7 @@ public class Player
 			
 			if(hand.bust())
 			{
-				hand.show_cards(hand.cards.size());
+				hand.show_cards(hand.size());
 				this.bust();
 			}
 		}
@@ -186,8 +186,8 @@ public class Player
 	 */
 	public void split_hand()
 	{
-		this.split_hand_1.add(this.default_hand.cards.get(0));
-		this.split_hand_2.add(this.default_hand.cards.get(1));
+		this.split_hand_1.add(this.default_hand.get(0));
+		this.split_hand_2.add(this.default_hand.get(1));
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public class Player
 	 */
 	public boolean can_split()
 	{
-		if(this.default_hand.cards.get(0).get_rank() == this.default_hand.cards.get(1).get_rank())
+		if(this.default_hand.get(0).get_rank() == this.default_hand.get(1).get_rank())
 		{
 			return true;
 		}
