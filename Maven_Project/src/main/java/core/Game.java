@@ -3,9 +3,10 @@ package core;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.Stack;
 
-public class Game {	
+public class Game {
+	
+	final int draw_times = 2;
 	
 	/**
 	 * Choose between console or file input modes.
@@ -20,11 +21,9 @@ public class Game {
 
 		switch(mode) {
 		case("c"):
-		case("C"):
 			play_console();
 			break;
 		case("f"):
-		case("F"):
 			play_file();
 			break;
 		default:
@@ -41,14 +40,13 @@ public class Game {
 	 */
 	public void play_console() throws FileNotFoundException, IOException {	
 		// Variables
-		int draw_times = 2;
 		Deck deck = new Deck();
 		Player player = new Player();
 		Dealer dealer = new Dealer();
 		
 		// Player setup
 		player.hit(deck, draw_times, player.default_hand);
-		View.cards(2, player.default_hand);
+		View.cards(draw_times, player.default_hand);
 
 		// Dealer setup
 		dealer.hit(deck, draw_times, dealer.default_hand);
@@ -110,21 +108,21 @@ public class Game {
 		String[] commands = reader.read_file_input(path_3);
 
 		// Draw player's first two cards
-		for(int i = 0; i < 2; ++i) {
+		for(int i = 0; i < draw_times; ++i) {
 			reader.add_card_from_input(player, commands, i, player.default_hand);
 		}
 
 		// Interface output
-		View.cards(2, player.default_hand);
+		View.cards(draw_times, player.default_hand);
 		View.score(player.default_hand);
 
 		// Draw dealer's first two cards
-		for(int i = 2; i < 4; ++i) {
+		for(int i = draw_times; i < 4; ++i) {
 			reader.add_card_from_input(dealer, commands, i, dealer.default_hand);
 		}
 
 		// Interface output
-		View.cards(2, dealer.default_hand);
+		View.cards(draw_times, dealer.default_hand);
 		View.score(dealer.default_hand);
 
 		// Go through the rest of the input
@@ -170,19 +168,18 @@ public class Game {
 	public void continue_play() throws FileNotFoundException, IOException {
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = View.scanner.next();
-
-		if(continue_play.equalsIgnoreCase("y"))
-		{
+		
+		switch(continue_play) {
+		case("y"):
 			choose_mode(View.scanner);
-		}
-		else if(continue_play.equalsIgnoreCase("n"))
-		{
+			break;
+		case("n"):
 			System.out.println("Thanks for playing");
-		}
-		else
-		{
+			break;
+		default:
 			System.out.println("Invalid input");
 			continue_play();
+			break;
 		}
 	}
 }
