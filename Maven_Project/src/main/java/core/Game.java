@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
-	
+
 	final int draw_times = 2;
-	
+
 	/**
 	 * Choose between console or file input modes.
 	 * @param scanner
@@ -20,10 +20,10 @@ public class Game {
 		String mode = scanner.next();
 
 		switch(mode) {
-		case("c"):
+		case "c":
 			play_console();
 			break;
-		case("f"):
+		case "f":
 			play_file();
 			break;
 		default:
@@ -43,17 +43,17 @@ public class Game {
 		Deck deck = new Deck();
 		Player player = new Player();
 		Dealer dealer = new Dealer();
-		
+
 		// Player setup
-		player.hit(deck, draw_times, player.default_hand);
-		View.cards(draw_times, player.default_hand);
+		player.hit(deck, draw_times, player.get_default_hand());
+		View.cards(draw_times, player.get_default_hand());
 
 		// Dealer setup
-		dealer.hit(deck, draw_times, dealer.default_hand);
-		View.cards(1, dealer.default_hand);
+		dealer.hit(deck, draw_times, dealer.get_default_hand());
+		View.cards(1, dealer.get_default_hand());
 
 		if(player.blackjack_Win(dealer)) {
-			View.cards(draw_times, dealer.default_hand);
+			View.cards(draw_times, dealer.get_default_hand());
 			continue_play();
 		}
 
@@ -63,21 +63,21 @@ public class Game {
 				player.split_hand();
 				player.split_turn(deck, dealer);
 			}
-			else player.hit_or_stand(deck, player.default_hand, dealer);
+			else player.hit_or_stand(deck, player.get_default_hand(), dealer);
 		}
-		else player.hit_or_stand(deck, player.default_hand, dealer);
+		else player.hit_or_stand(deck, player.get_default_hand(), dealer);
 
 		// Dealer's turn
-		View.cards(draw_times, dealer.default_hand);
+		View.cards(draw_times, dealer.get_default_hand());
 		if(dealer.can_split()) {
 			if(dealer.choose_split()) {
 				dealer.split_hand();
-				dealer.dealer_turn(deck, player, dealer.split_hand_1);
-				dealer.dealer_turn(deck, player, dealer.split_hand_2);
+				dealer.dealer_turn(deck, player, dealer.get_split_hand_1());
+				dealer.dealer_turn(deck, player, dealer.get_split_hand_2());
 			}
-			else dealer.dealer_turn(deck, player, dealer.default_hand);
+			else dealer.dealer_turn(deck, player, dealer.get_default_hand());
 		}
-		else dealer.dealer_turn(deck, player, dealer.default_hand);
+		else dealer.dealer_turn(deck, player, dealer.get_default_hand());
 
 		// End game
 		player.determine_winner(dealer);
@@ -109,21 +109,21 @@ public class Game {
 
 		// Draw player's first two cards
 		for(int i = 0; i < draw_times; ++i) {
-			reader.add_card_from_input(player, commands, i, player.default_hand);
+			reader.add_card_from_input(player, commands, i, player.get_default_hand());
 		}
 
 		// Interface output
-		View.cards(draw_times, player.default_hand);
-		View.score(player.default_hand);
+		View.cards(draw_times, player.get_default_hand());
+		View.score(player.get_default_hand());
 
 		// Draw dealer's first two cards
 		for(int i = draw_times; i < 4; ++i) {
-			reader.add_card_from_input(dealer, commands, i, dealer.default_hand);
+			reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());
 		}
 
 		// Interface output
-		View.cards(draw_times, dealer.default_hand);
-		View.score(dealer.default_hand);
+		View.cards(draw_times, dealer.get_default_hand());
+		View.score(dealer.get_default_hand());
 
 		// Go through the rest of the input
 		for(int i = 4; i < commands.length; ++i) {
@@ -142,18 +142,18 @@ public class Game {
 			}
 
 			if(!stand) {
-				reader.add_card_from_input(player, commands, i, player.default_hand);
+				reader.add_card_from_input(player, commands, i, player.get_default_hand());
 			}
 			else {
-				reader.add_card_from_input(dealer, commands, i, dealer.default_hand);	
+				reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());	
 			}
 		}
 
 		// Interface output
-		View.cards(player.default_hand.size(), player.default_hand);
-		View.score(player.default_hand);
-		View.cards(dealer.default_hand.size(), dealer.default_hand);
-		View.score(dealer.default_hand);
+		View.cards(player.get_default_hand().size(), player.get_default_hand());
+		View.score(player.get_default_hand());
+		View.cards(dealer.get_default_hand().size(), dealer.get_default_hand());
+		View.score(dealer.get_default_hand());
 
 		// End game
 		player.determine_winner(dealer);
@@ -168,12 +168,12 @@ public class Game {
 	public void continue_play() throws FileNotFoundException, IOException {
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = View.scanner.next();
-		
+
 		switch(continue_play) {
-		case("y"):
+		case "y":
 			choose_mode(View.scanner);
 			break;
-		case("n"):
+		case "n":
 			System.out.println("Thanks for playing");
 			break;
 		default:
