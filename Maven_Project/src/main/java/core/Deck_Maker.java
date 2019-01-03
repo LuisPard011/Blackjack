@@ -1,87 +1,60 @@
 package core;
 
-/*
- * Much of the code for this class came from code provided by
- * Professor Michael Jason Hinek for the COMP 1406 class from summer of 2017 (in which I was enrolled)
- */
-
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Stack;
 
-public class Deck_Maker
-{	
-	// Variables
-	int deck_size = 52;
-	Card[] source_deck = null;
-
-	// Constructor
-	public Deck_Maker()
-	{
-		this.source_deck = new Card[deck_size];
-	}
+/**
+ * This class is based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
+ */
+public class Deck_Maker {
 	
+	/*********************
+	 * CLASS VARIABLE(S) *
+	 *********************/
+	protected static int deck_size = 52;
+	private Card[] source_deck = new Card[deck_size];
+	
+	/********
+	 * ELSE *
+	 ********/
 	/**
-	 * From 1406
-	 * Fill the temporary deck with cards
+	 * Fill the temporary deck with cards.
 	 */
-	public void populate_source_deck()
-	{
+	public void populate_source_deck() {
 		int index = 0;
 		
-		for(int r=2; r<=14; r+=1)
-		{
-			for(int s=0; s<4; s+=1)
-			{
+		for(int r=2; r<=14; r+=1) {
+			for(int s=0; s<4; s+=1) {
 				this.source_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
 			}
 		}
 	}
 	
 	/**
-	 * From 1406
-	 * Shuffle the temporary deck, randomly
+	 * Shuffle the temporary deck, randomly.
 	 */
-	public void shuffle_source_deck()
-	{
+	public void shuffle_source_deck() {
 		Random rnd = new Random();
 		Card swap;
+		int pos;
 		
-		for(int i = deck_size-1; i>=0; i=i-1)
-		{
-			int pos = rnd.nextInt(i+1);
-			swap = this.source_deck[pos];
-			this.source_deck[pos] = this.source_deck[i];
-			this.source_deck[i] = swap;
+		for(int i = deck_size-1; i>=0; i=i-1) {
+			pos = rnd.nextInt(i+1);
+			swap = source_deck[pos];
+			source_deck[pos] = source_deck[i];
+			source_deck[i] = swap;
 		}
 	}
 	
 	/**
-	 * From 1406
-	 * 
-	 * Fill the draw pile with cards from the deck
-	 * Cards in pile appear in the same order as they are in the deck
+	 * Fill the draw pile with cards from the deck.
+	 * Cards in pile appear in the same order as they are in the deck.
+	 * @param deck to be used in game
 	 */
-	public void make_deck(Stack<Card> deck_to_make)
-	{
-		this.populate_source_deck();
-		this.shuffle_source_deck();
-		
-		for(int i = 0; i < deck_size; ++i)
-		{
-			deck_to_make.push(this.source_deck[i]);
-		}
-	}
-	
-	/**
-	 * Show all the cards in the deck within a specific range
-	 * @param start
-	 * @param end
-	 */
-	public void show_source_deck(int start, int end)
-	{
-		System.out.println("Cards in source deck are: " 
-				+ Arrays.toString(Arrays.copyOfRange(this.source_deck, start, end)));
+	public void make_deck(Stack<Card> deck) {
+		populate_source_deck();
+		shuffle_source_deck();
+		for(int i = 0; i < deck_size; ++i) deck.push(this.source_deck[i]);
 	}
 
 }

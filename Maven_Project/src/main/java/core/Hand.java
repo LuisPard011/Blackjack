@@ -2,18 +2,31 @@ package core;
 
 import java.util.ArrayList;
 
-public class Hand
-{
-	// Variables
-	int score;
+public class Hand {
+	
+	/************************
+	 * INSTANCE VARIABLE(S) *
+	 ************************/
+	private int score;
 	ArrayList<Card> cards;
 	
-	// Constructor
-	public Hand()
-	{
-		this.score = 0;
-		this.cards = new ArrayList<Card>();
+	/******************
+	 * CONSTRUCTOR(S) *
+	 ******************/
+	public Hand() {
+		score = 0;
+		cards = new ArrayList<Card>();
 	}
+	
+	/*************
+	 * GETTER(S) *
+	 *************/
+	public int get_score() { return score; }
+	
+	/*************
+	 * SETTER(S) *
+	 *************/
+	public void set_score(int score) { this.score = score; }
 	
 	/**
 	 * Add one card to hand and update score
@@ -45,13 +58,13 @@ public class Hand
 		// Count cards in hand	
 		for(int i = 0; i < this.cards.size(); ++i)
 		{
-			if(this.cards.get(i).getRank() < 11)
+			if(this.cards.get(i).get_rank() < 11)
 			{
-				new_score += this.cards.get(i).getRank();
+				new_score += this.cards.get(i).get_rank();
 			}
 			else
 			{
-				switch(this.cards.get(i).getRank())
+				switch(this.cards.get(i).get_rank())
 				{
 					case 11:
 						new_score += 10;
@@ -110,14 +123,14 @@ public class Hand
 		// Iterate through hand to find aces, tens and face cards
 		for(int i = 0; i < this.cards.size(); ++i)
 		{
-			if(this.cards.get(i).getRank() == 10 || 
-					this.cards.get(i).getRank() == 11 ||
-					this.cards.get(i).getRank() == 12 ||
-					this.cards.get(i).getRank() == 13)
+			if(this.cards.get(i).get_rank() == 10 || 
+					this.cards.get(i).get_rank() == 11 ||
+					this.cards.get(i).get_rank() == 12 ||
+					this.cards.get(i).get_rank() == 13)
 			{
 				has_ten_value = true;
 			}
-			else if(this.cards.get(i).getRank() == 14)
+			else if(this.cards.get(i).get_rank() == 14)
 			{
 				has_ace = true;
 			}

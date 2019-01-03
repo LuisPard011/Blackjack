@@ -105,34 +105,34 @@ public class Player
 		// Check if player is bust and find its hand with the highest score under 22
 		if(!this.default_hand.bust() && !this.splitted)
 		{
-			player_highest_score = this.default_hand.score;
+			player_highest_score = this.default_hand.get_score();
 			player_best_hand = this.default_hand;
 		}
-		if(player_highest_score < this.split_hand_1.score && !this.split_hand_1.bust())
+		if(player_highest_score < this.split_hand_1.get_score() && !this.split_hand_1.bust())
 		{
-			player_highest_score = this.split_hand_1.score;
+			player_highest_score = this.split_hand_1.get_score();
 			player_best_hand = this.split_hand_1;
 		}
-		if(player_highest_score < this.split_hand_2.score && !this.split_hand_2.bust())
+		if(player_highest_score < this.split_hand_2.get_score() && !this.split_hand_2.bust())
 		{
-			player_highest_score = this.split_hand_2.score;
+			player_highest_score = this.split_hand_2.get_score();
 			player_best_hand = this.split_hand_2;
 		}
 		
 		// Check if dealer is bust and find its hand with the highest score under 22
 		if(!dealer.default_hand.bust() && !dealer.splitted)
 		{
-			dealer_highest_score = dealer.default_hand.score;
+			dealer_highest_score = dealer.default_hand.get_score();
 			dealer_best_hand = dealer.default_hand;
 		}
-		if(dealer_highest_score < dealer.split_hand_1.score && !dealer.split_hand_1.bust())
+		if(dealer_highest_score < dealer.split_hand_1.get_score() && !dealer.split_hand_1.bust())
 		{
-			dealer_highest_score = dealer.split_hand_1.score;
+			dealer_highest_score = dealer.split_hand_1.get_score();
 			dealer_best_hand = dealer.split_hand_1;
 		}
-		if(dealer_highest_score < dealer.split_hand_2.score && !dealer.split_hand_2.bust())
+		if(dealer_highest_score < dealer.split_hand_2.get_score() && !dealer.split_hand_2.bust())
 		{
-			dealer_highest_score = dealer.split_hand_2.score;
+			dealer_highest_score = dealer.split_hand_2.get_score();
 			dealer_best_hand = dealer.split_hand_2;
 		}
 		
@@ -195,7 +195,7 @@ public class Player
 	 */
 	public boolean can_split()
 	{
-		if(this.default_hand.cards.get(0).getRank() == this.default_hand.cards.get(1).getRank())
+		if(this.default_hand.cards.get(0).get_rank() == this.default_hand.cards.get(1).get_rank())
 		{
 			return true;
 		}

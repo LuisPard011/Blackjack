@@ -9,9 +9,9 @@ import junit.framework.TestCase;
 
 public class WinTest extends TestCase
 {	
-	/********************
-	 * Variables(Start) * 
-	 ********************/
+	/*************
+	 * VARIABLES * 
+	 *************/
 	Card ace_d = new Card("D", "A");
 	Card ace_s = new Card("S", "A");
 	Card two_c = new Card("C", "2");
@@ -64,36 +64,22 @@ public class WinTest extends TestCase
 	Card temp_card_2;
 	
 	int counter = 0;
-	int deck_size = 52;
 	
 	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
 	String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
 	String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
-	/******************
-	 * Variables(End) * 
-	 ******************/
-	
-	/*******************
-	 * Functions(Start)* 
-	 *******************/
-	public void divider(){System.out.println("==========================");}
-	/*******************
-	 * Functions(End)* 
-	 *******************/
-	
-	/****************
-	 * Tests(Start) * 
-	 ****************/
+
+	/*********
+	 * TESTS * 
+	 *********/
 	/**
 	 * R11
 	 * Check there are 52 cards in the deck
 	 */
-	public void test_Cards_In_Deck()
-	{	
+	public void test_Cards_In_Deck() {	
 		deck_maker.make_deck(deck_1);
 		
-		while(!deck_1.isEmpty())
-		{
+		while(!deck_1.isEmpty()) {
 			deck_1.pop();
 			counter += 1;
 		}
@@ -108,18 +94,16 @@ public class WinTest extends TestCase
 	 * Else it passes
 	 * I use the rank of cards to compare the order of decks
 	 */
-	public void test_Shuffling()
-	{	
+	public void test_Shuffling() {	
 		deck_maker.make_deck(deck_1);
 		deck_maker.make_deck(deck_2);
 		
-		arr_1 = new int[deck_size];
-		arr_2 = new int[deck_size];
+		arr_1 = new int[Deck_Maker.deck_size];
+		arr_2 = new int[Deck_Maker.deck_size];
 		
-		for(int i = 0; i < deck_size; ++i)
-		{
-			arr_1[i] = deck_1.pop().getRank();
-			arr_2[i] = deck_2.pop().getRank();
+		for(int i = 0; i < Deck_Maker.deck_size; ++i) {
+			arr_1[i] = deck_1.pop().get_rank();
+			arr_2[i] = deck_2.pop().get_rank();
 		}
 		
 		assertEquals(false, Arrays.equals(arr_1, arr_2));
@@ -135,8 +119,7 @@ public class WinTest extends TestCase
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void test_File_Input() throws FileNotFoundException, IOException
-	{
+	public void test_File_Input() throws FileNotFoundException, IOException {
 		commands_0 = reader.read_file_input(path_1);
 		assertEquals("SK", commands_0[0]);
 		assertEquals("CA", commands_0[commands_0.length-1]);
@@ -159,13 +142,11 @@ public class WinTest extends TestCase
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void test_Console_Input() throws FileNotFoundException, IOException
-	{
-		System.out.println("\nR17 - Test support for console input");
-		divider();
-		
-		game.play_console();
-	}
+//	public void test_Console_Input() throws FileNotFoundException, IOException {
+//		System.out.println("\nR17 - Test support for console input");
+//		View.divider();
+//		game.play_console();
+//	}
 	
 	/**
 	 * R18
@@ -173,13 +154,11 @@ public class WinTest extends TestCase
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void test_Choose_FC() throws FileNotFoundException, IOException
-	{
-		System.out.println("\nR18 - Test option to choose between file and console input");
-		divider();
-		
-		game.choose_mode(scanner);
-	}
+//	public void test_Choose_FC() throws FileNotFoundException, IOException {
+//		System.out.println("\nR18 - Test option to choose between file and console input");
+//		View.divider();
+//		game.choose_mode(scanner);
+//	}
 	
 	/**
 	 * R19
@@ -187,10 +166,9 @@ public class WinTest extends TestCase
 	 * If I tried to show 3 cards in this test
 	 * Then an IndexOutOfBounds would happen
 	 */
-	public void test_See_Two_Cards()
-	{
+	public void test_See_Two_Cards() {
 		System.out.println("\nR19 - Test if the player's first two cards are visible");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(king_c);
@@ -202,10 +180,9 @@ public class WinTest extends TestCase
 	 * R20
 	 * Test that only one of the dealer's cards is visible at the start
 	 */
-	public void test_see_One_Card()
-	{
+	public void test_see_One_Card() {
 		System.out.println("\nR20 - Test that only one of the dealer's cards is visible at the start");
-		divider();
+		View.divider();
 		
 		dealer_0.default_hand.add(two_s);
 		dealer_0.default_hand.add(nine_s);
@@ -217,22 +194,20 @@ public class WinTest extends TestCase
 	 * R21
 	 * Test if the player can hit
 	 */
-	public void test_Player_Hit()
-	{
+	public void test_Player_Hit() {
 		deck_maker.make_deck(deck_1);
 		temp_card_1 = deck_1.peek();
 		player_0.hit(deck_1, 1, player_0.default_hand);
 		
-		assertEquals(temp_card_1.getRank(), player_0.default_hand.cards.get(0).getRank());
-		assertEquals(temp_card_1.getSuit(), player_0.default_hand.cards.get(0).getSuit());
+		assertEquals(temp_card_1.get_rank(), player_0.default_hand.cards.get(0).get_rank());
+		assertEquals(temp_card_1.get_suit(), player_0.default_hand.cards.get(0).get_suit());
 	}
 	
 	/**
 	 * R22
 	 * Test player can hit repeatedly
 	 */
-	public void test_Player_Multi_Hits()
-	{
+	public void test_Player_Multi_Hits() {
 		deck_maker.make_deck(deck_1);
 		
 		temp_card_1 = deck_1.peek();
@@ -240,10 +215,10 @@ public class WinTest extends TestCase
 		temp_card_2 = deck_1.peek();
 		player_0.hit(deck_1, 1, player_0.default_hand);
 		
-		assertEquals(temp_card_1.getRank(), player_0.default_hand.cards.get(0).getRank());
-		assertEquals(temp_card_1.getSuit(), player_0.default_hand.cards.get(0).getSuit());
-		assertEquals(temp_card_2.getRank(), player_0.default_hand.cards.get(1).getRank());
-		assertEquals(temp_card_2.getSuit(), player_0.default_hand.cards.get(1).getSuit());
+		assertEquals(temp_card_1.get_rank(), player_0.default_hand.cards.get(0).get_rank());
+		assertEquals(temp_card_1.get_suit(), player_0.default_hand.cards.get(0).get_suit());
+		assertEquals(temp_card_2.get_rank(), player_0.default_hand.cards.get(1).get_rank());
+		assertEquals(temp_card_2.get_suit(), player_0.default_hand.cards.get(1).get_suit());
 	}
 	
 	/**
@@ -252,22 +227,20 @@ public class WinTest extends TestCase
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void test_Player_Stand() throws FileNotFoundException, IOException
-	{
-		System.out.println("\nR23 - Test that player can stand");
-		divider();
-		
-		game.play_console();
-	}
+//	public void test_Player_Stand() throws FileNotFoundException, IOException {
+//		System.out.println("\nR23 - Test that player can stand");
+//		View.divider();
+//		
+//		game.play_console();
+//	}
 	
 	/**
 	 * R24
 	 * Hand of the player is displayed at the end of the turn
 	 */
-	public void test_Display_Player_Hand_End()
-	{
+	public void test_Display_Player_Hand_End() {
 		System.out.println("\nR24 - Hand of player is displayed at end of turn");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(two_s);
@@ -280,12 +253,11 @@ public class WinTest extends TestCase
 	 * R25
 	 * Player can bust and dealer wins because of it
 	 */
-	public void test_Player_Bust()
-	{
+	public void test_Player_Bust() {
 		System.out.println("\nR25 - Player can bust and dealer wins because of it");
-		divider();
+		View.divider();
 		
-		player_0.default_hand.score = 22;
+		player_0.default_hand.set_score(22);
 		dealer_0.default_hand.add(eight_c);
 		
 		player_0.determine_winner(dealer_0);
@@ -295,10 +267,9 @@ public class WinTest extends TestCase
 	 * R26
 	 * Dealer has <= 16, thus it hits
 	 */
-	public void test_Dealer_16()
-	{
+	public void test_Dealer_16() {
 		System.out.println("\nR26 - Dealer has <= 16, thus it hits");
-		divider();
+		View.divider();
 		
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(two_s);
@@ -308,17 +279,16 @@ public class WinTest extends TestCase
 		deck_maker.make_deck(deck_1);
 		dealer_0.dealer_turn(deck_1, player_0, dealer_0.default_hand);
 		
-		assertTrue(dealer_0.default_hand.score >= 16);
+		assertTrue(dealer_0.default_hand.get_score() >= 16);
 	}
 	
 	/**
 	 * R27
 	 * Dealer has soft 17, thus it hits
 	 */
-	public void test_Dealer_Soft_17()
-	{
+	public void test_Dealer_Soft_17() {
 		System.out.println("\nR27 - Dealer has soft 17, thus it hits");
-		divider();
+		View.divider();
 		
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(six_s);
@@ -343,10 +313,9 @@ public class WinTest extends TestCase
 	 * This means dealer must draw again to make it to 16 or soft 17
 	 * Thus the number of cards in the hand must be equal or greater 3 (or 0, 1, 2)
 	 */
-	public void test_Dealer_Repeat_Hit()
-	{
+	public void test_Dealer_Repeat_Hit() {
 		System.out.println("\nR28 - Dealer can hit repeatedly");
-		divider();
+		View.divider();
 		
 		deck_maker.make_deck(deck_1);
 		dealer_0.default_hand.add(two_s);
@@ -361,10 +330,9 @@ public class WinTest extends TestCase
 	 * R29 
 	 * Dealer's cards are visible at the end of turn
 	 */
-	public void test_Display_Dealer_Hand_End()
-	{
+	public void test_Display_Dealer_Hand_End() {
 		System.out.println("\nR29 - Dealer's cards are visible at the end of turn");
-		divider();
+		View.divider();
 		
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(two_s);
@@ -377,13 +345,12 @@ public class WinTest extends TestCase
 	 * R30
 	 * If dealer busts, player wins
 	 */
-	public void test_Dealer_Bust()
-	{
+	public void test_Dealer_Bust() {
 		System.out.println("\nR30 - If dealer busts, player wins");
-		divider();
+		View.divider();
 		
-		player_0.default_hand.score = 1;
-		dealer_0.default_hand.score = 22;
+		player_0.default_hand.set_score(1);
+		dealer_0.default_hand.set_score(22);
 		
 		player_0.determine_winner(dealer_0);
 		System.out.println("0 means the dealer busted");
@@ -395,13 +362,12 @@ public class WinTest extends TestCase
 	 * R31
 	 * Ace can count as 1
 	 */
-	public void test_Ace_1()
-	{
+	public void test_Ace_1() {
 		player_0.default_hand.add(two_s);
 		player_0.default_hand.add(king_c);
 		player_0.default_hand.add(ace_s);
 		
-		assertEquals(13, player_0.default_hand.score);
+		assertEquals(13, player_0.default_hand.get_score());
 		
 		player_1.default_hand.add(seven_c);
 		player_1.default_hand.add(five_d);
@@ -409,7 +375,7 @@ public class WinTest extends TestCase
 		player_1.default_hand.add(ace_d);
 		player_1.default_hand.add(six_s);
 		
-		assertEquals(23, player_1.default_hand.score);
+		assertEquals(23, player_1.default_hand.get_score());
 		
 		dealer_1.default_hand.add(ace_d);
 		dealer_1.default_hand.add(two_s);
@@ -420,82 +386,76 @@ public class WinTest extends TestCase
 		dealer_1.default_hand.add(jack_c);
 		dealer_1.default_hand.add(eight_c);
 		
-		assertEquals(41, dealer_1.default_hand.score);
+		assertEquals(41, dealer_1.default_hand.get_score());
 	}
 
 	/**
 	 * R32
 	 * Ace can count as 11
 	 */
-	public void test_Ace_11()
-	{
+	public void test_Ace_11() {
 		player_0.default_hand.add(two_s);
 		player_0.default_hand.add(ace_s);
 		
-		assertEquals(13, player_0.default_hand.score);
+		assertEquals(13, player_0.default_hand.get_score());
 	}
 	
 	/**
 	 * R33
 	 * Two aces in hand, one counts as 1 and the other as 11
 	 */
-	public void test_Aces_1_11()
-	{
+	public void test_Aces_1_11() {
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(ace_s);
 		
-		assertEquals(12, player_0.default_hand.score);
+		assertEquals(12, player_0.default_hand.get_score());
 	}
 	
 	/**
 	 * R34
 	 * One ace can count as 11 and then 1
 	 */
-	public void test_Aces_11_1()
-	{
+	public void test_Aces_11_1() {
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(two_s);
-		assertEquals(13, player_0.default_hand.score);
+		assertEquals(13, player_0.default_hand.get_score());
 		
 		player_0.default_hand.add(king_c);
 		player_0.default_hand.add(six_s);
-		assertEquals(19, player_0.default_hand.score);
+		assertEquals(19, player_0.default_hand.get_score());
 	}
 	
 	/**
 	 * R35
 	 * A hand can count two aces as 1 each
 	 */
-	public void test_Aces_1_1()
-	{
+	public void test_Aces_1_1() {
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(ace_s);
 		player_0.default_hand.add(king_d);
 		player_0.default_hand.add(six_s);
 		player_0.default_hand.add(nine_s);
 		
-		assertEquals(27, player_0.default_hand.score);
+		assertEquals(27, player_0.default_hand.get_score());
 	}
 	
 	/**
 	 * R36
 	 * J, Q and K count as 10
 	 */
-	public void test_Face_Cards_Values()
-	{
+	public void test_Face_Cards_Values() {
 		player_0.default_hand.add(jack_c);
 		player_0.default_hand.add(queen_c);
 		player_0.default_hand.add(king_c);
 		
-		assertEquals(30, player_0.default_hand.score);
+		assertEquals(30, player_0.default_hand.get_score());
 	}
 	
 	/**
 	 * R37
 	 * Player's initial blackjack is detected
 	 */
-	public void test_Player_Blackjack()
-	{
+	public void test_Player_Blackjack() {
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(jack_c);
 		assertEquals(true, player_0.default_hand.blackjack());
@@ -529,8 +489,7 @@ public class WinTest extends TestCase
 	 * R38
 	 * Dealer's initial blackjack is detected
 	 */
-	public void test_Dealer_Blackjack()
-	{
+	public void test_Dealer_Blackjack() {
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(jack_c);
 		assertEquals(true, dealer_0.default_hand.blackjack());
@@ -564,10 +523,9 @@ public class WinTest extends TestCase
 	 * R39
 	 * If player has Blackjack and the dealer doesn't, player wins
 	 */
-	public void test_Player_Blackjack_Win()
-	{
+	public void test_Player_Blackjack_Win() {
 		System.out.println("\nR39 - If player has Blackjack and the dealer doesn't, player wins");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(two_s);
@@ -583,10 +541,9 @@ public class WinTest extends TestCase
 	 * R40
 	 * If dealer has Blackjack it wins
 	 */
-	public void test_Dealer_Blackjack_Win()
-	{
+	public void test_Dealer_Blackjack_Win() {
 		System.out.println("\nR40 - If dealer has Blackjack it wins");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(nine_s);
@@ -613,10 +570,9 @@ public class WinTest extends TestCase
 	 * R41
 	 * Player's hand score is displayed and it's correct
 	 */
-	public void test_Player_Score()
-	{
+	public void test_Player_Score() {
 		System.out.println("\nR41 - Player's hand score is displayed and it's correct");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(king_c);
 		player_0.default_hand.show_cards(player_0.default_hand.cards.size());
@@ -627,10 +583,9 @@ public class WinTest extends TestCase
 	 * R42
 	 * Dealer's hand score is displayed and it's correct
 	 */
-	public void test_Dealer_Score()
-	{
+	public void test_Dealer_Score() {
 		System.out.println("\nR42 - Dealer's hand score is displayed and it's correct");
-		divider();
+		View.divider();
 		
 		dealer_0.default_hand.add(five_d);
 		dealer_0.default_hand.show_cards(dealer_0.default_hand.cards.size());
@@ -646,10 +601,9 @@ public class WinTest extends TestCase
 	 * R44
 	 * If there are no busts and player's score > dealer's, then player wins
 	 */
-	public void test_Highest_Score_Player_Wins()
-	{
+	public void test_Highest_Score_Player_Wins() {
 		System.out.println("\nR44 - If there are no busts and player's score > dealer's, then player wins");
-		divider();
+		View.divider();
 		
 		player_0.default_hand.add(jack_c);
 		player_0.default_hand.add(king_d);
@@ -665,10 +619,9 @@ public class WinTest extends TestCase
 	 * If there are no busts and player's score is not greater than dealer's
 	 * Dealer wins
 	 */
-	public void test_Highest_Score_Player_Loses()
-	{
+	public void test_Highest_Score_Player_Loses() {
 		System.out.println("\nR45 - If there are no busts and player's score is not greater than dealer's, then dealer wins");
-		divider();
+		View.divider();
 		player_0.default_hand.add(two_s);
 		
 		dealer_0.default_hand.add(king_c);
@@ -682,54 +635,50 @@ public class WinTest extends TestCase
 	 * Test support for player splitting
 	 * Chooses player's best hand and displays it
 	 */
-	public void test_Player_Split()
-	{
-		System.out.println("\nR47 - Test player splitting");
-		divider();
-		
-		player_0.default_hand.add(two_c);
-		player_0.default_hand.add(two_s);
-		
-		dealer_0.default_hand.add(five_d);
-		
-		deck_maker.make_deck(deck_1);
-		
-		if(player_0.choose_split())
-		{
-			player_0.split_hand();
-			player_0.split_turn(deck_1, dealer_0);
-		}
-		
-		player_0.determine_winner(dealer_0);
-	}
+//	public void test_Player_Split() {
+//		System.out.println("\nR47 - Test player splitting");
+//		View.divider();
+//		
+//		player_0.default_hand.add(two_c);
+//		player_0.default_hand.add(two_s);
+//		
+//		dealer_0.default_hand.add(five_d);
+//		
+//		deck_maker.make_deck(deck_1);
+//		
+//		if(player_0.choose_split())
+//		{
+//			player_0.split_hand();
+//			player_0.split_turn(deck_1, dealer_0);
+//		}
+//		
+//		player_0.determine_winner(dealer_0);
+//	}
 	
 	/**
 	 * R48
 	 * Test support for player splitting
 	 */
-	public void test_Dealer_Split()
-	{
-		System.out.println("\nR48 - Test dealer splitting");
-		divider();
-		
-		dealer_0.default_hand.add(nine_s);
-		dealer_0.default_hand.add(nine_c);
-		
-		player_0.default_hand.add(eight_c);
-		player_0.default_hand.add(two_c);
-		
-		deck_maker.make_deck(deck_1);
-		
-		if(dealer_0.choose_split())
-		{
-			dealer_0.split_hand();
-			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_1);
-			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_2);
-		}
-		
-		player_0.determine_winner(dealer_0);
-	}
-	/**************
-	 * Tests(End) * 
-	 **************/
+//	public void test_Dealer_Split() {
+//		System.out.println("\nR48 - Test dealer splitting");
+//		View.divider();
+//		
+//		dealer_0.default_hand.add(nine_s);
+//		dealer_0.default_hand.add(nine_c);
+//		
+//		player_0.default_hand.add(eight_c);
+//		player_0.default_hand.add(two_c);
+//		
+//		deck_maker.make_deck(deck_1);
+//		
+//		if(dealer_0.choose_split())
+//		{
+//			dealer_0.split_hand();
+//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_1);
+//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_2);
+//		}
+//		
+//		player_0.determine_winner(dealer_0);
+//	}
+
 }

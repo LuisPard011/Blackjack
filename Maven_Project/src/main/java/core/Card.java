@@ -1,115 +1,83 @@
 package core;
 
-/*
- * I didn't write this class
- * It was provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017
- * This Card class was used for the 1406 team project
- */
-
 import java.util.HashMap;
 
-public class Card implements Comparable<Card>{
+/**
+ * This class is based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
+ */
+public class Card {
 
-	// Arrays for ranks and suits
-	public final static String[] SUITS = { "D", "C", "H", "S", "None"};
-	public final static String[] RANKS = { "None", "None", 
-			"2", "3", "4", "5", "6", "7", "8", "9", "10", 
-			"J", "Q", "K", "A"};
+	/*********************
+	 * CLASS VARIABLE(S) *
+	 *********************/
+	protected final static String[] SUITS = { "D", "C", "H", "S"};
+	protected final static String[] RANKS = { "None", "None", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
-	// Variables
-	protected String suit;
-	protected String rank;
-	protected HashMap<String, Integer> rankValue;
+	/************************
+	 * INSTANCE VARIABLE(S) *
+	 ************************/
+	private String suit;
+	private String rank;
+	private HashMap<String, Integer> rankValue;
 
-	/** Creates a card with specified suit and rank
-	 * 
+	/******************
+	 * CONSTRUCTOR(S) *
+	 ******************/
+	/** 
+	 * Creates a card with specified suit and rank.
 	 * @param suit is the suit of the card (must be a string from Card.SUITS)
 	 * @param rank is the rank of the card (must be a string from Card.RANKS)
 	 */
-	public Card(String suit, String rank)
-	{
+	public Card(String suit, String rank) {
 		this.suit = suit; 
 		this.rank = rank;
-		this.rankValue = new HashMap<String,Integer>(15);
-		for(int r = 2; r < RANKS.length; r+=1)
-		{
-			this.rankValue.put(RANKS[r], r);
-		}
+		rankValue = new HashMap<String,Integer>(15);
+		for(int r = 2; r < RANKS.length; r+=1) rankValue.put(RANKS[r], r);
 	}
-	
-	/** The suit of the current card 
-	 *
+
+	/*************
+	 * GETTER(S) *
+	 *************/
+	/** 
+	 * The suit of the current card. 
 	 * @return the suit of this card (must be a string from Card.SUITS) 
 	 */
-	public String getSuit()
-	{
-		return this.suit;
-	}
+	public String get_suit() { return suit; }
 
-	/** The numerical representation of the rank of the current card
-	 *  <p>
-	 * ranks have the numerical values
-	 *  2 = 2, 3 = 3, ..., 10 = 10
-	 *  Jack = 11, Queen = 12, King = 13, Ace = 14
-	 *	 
-	 * @return the numerical rank of this card 
+	/** 
+	 * Ranks have the numerical values.
+	 * 2 = 2, 3 = 3, ..., 10 = 10.
+	 * Jack = 11, Queen = 12, King = 13, Ace = 14.
+	 * @return the numerical representation of the rank of the current card
 	 */
-	public int getRank()
-	{
-		if(this.rank.equals(RANKS[0]))
-		{
-			return -1; // "no card"
-		}   
-		return rankValue.get(this.rank);
+	public int get_rank() {
+		if(rank.equals(RANKS[0]) || rank.equals(RANKS[1])) return -1; // "no card"
+		return rankValue.get(rank);
 	}
 
-	/** The string representation of the rank of the current card 
-	 *
+	/** 
+	 * The string representation of the rank of the current card. 
 	 * @return the string representation of the rank of this card (must be a string from Card.RANKS) 
 	 */
-	public String getRankString()
-	{
-		return this.rank;
-	}
-	
-	/**
-	 * Compare cards
-	 */
-	public int compareTo(Card other)
-	{
-		return 0;
-	}
+	public String get_rank_string() { return rank; }
 
+	/********
+	 * ELSE *
+	 ********/
 	@Override
-	/**
-	 * I edited this function to meet the output requirements for 3004's Blackjack assignment
-	 * Outputs a string representation of a card object
-	 */
-	public final String toString()
-	{
-		if(this.rank.equals(RANKS[0]))
-		{ 
-			return "no card"; 
-		}
-
-		int r = getRank();
+	public final String toString() {
+		int r = get_rank();
 		
-		if(r >= 2 && r <= 10)
-		{
-			return getSuit().substring(0,1) + r;
+		switch(r) {
+		case -1:
+			return "no card";
+		case 11: return get_suit() + "J";
+		case 12: return get_suit() + "Q";
+		case 13: return get_suit() + "K";
+		case 14: return get_suit() + "A";
+		default:
+			return get_suit() + r;
 		}
-		else if(r >= 11 && r <= 14)
-		{
-			switch(r)
-			{
-				case 11: return getSuit().substring(0,1) + "J";
-				case 12: return getSuit().substring(0,1) + "Q";
-				case 13: return getSuit().substring(0,1) + "K";
-				case 14: return getSuit().substring(0,1) + "A";
-			}
-		}
-		
-		return "no card";
 	}
 
 }
