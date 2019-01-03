@@ -107,31 +107,6 @@ public class Hand extends ArrayList<Card>{
 		if(score > 21) return true;
 		else return false;
 	}
-	
-	
-	
-	
-
-	
-	
-	/**
-	 * Interface output to show hand's score.
-	 */
-	public void show_score() { System.out.println("Score is: " + get_score()); }
-
-	/**
-	 * Interface output to show specific number of cards in hand.
-	 * @param cards
-	 */
-	public void show_cards(int cards) {
-		System.out.print("Cards in hand are: ");
-		for(Card card : this) { System.out.print(card.toString() + " "); }
-		System.out.println();
-	}
-
-
-	
-	
 
 	@Override
 	public final String toString() {

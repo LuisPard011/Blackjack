@@ -2,21 +2,13 @@ package core;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
-public class Main
-{
-	/**
-	 * Main function
-	 * @param args
-	 * @throws FileNotFoundException
-	 * @throws IOException
-	 */
-	public static void main(String[] args) throws FileNotFoundException, IOException
-	{	
-		Scanner scanner = new Scanner(System.in);
+public class Main {
+
+	public static void main(String[] args) throws FileNotFoundException, IOException {	
 		Game game = new Game();
-		game.welcome();
-		game.choose_mode(scanner);
+		View.welcome();
+		game.choose_mode(View.scanner);
 	}
+	
 }

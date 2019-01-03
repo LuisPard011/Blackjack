@@ -52,16 +52,15 @@ public class Player
 	public void hit_or_stand(Stack<Card> deck, Hand hand, Dealer dealer)
 	{
 		// Local variables
-		Scanner scanner = new Scanner(System.in);
 		boolean stand = false;
 		
 		while(!hand.bust() && !stand)
 		{
 			// Interface output
-			hand.show_cards(hand.size());
-			hand.show_score();
+			View.cards(hand.size(), hand);
+			View.score(hand);
 			System.out.print("Hit or stand? (h/s): ");
-			String hit_or_stand = scanner.next();
+			String hit_or_stand = View.scanner.next();
 			
 			// If-Else control structure for hit or stand
 			if(hit_or_stand.equalsIgnoreCase("h"))
@@ -83,8 +82,8 @@ public class Player
 			
 			if(hand.bust())
 			{
-				hand.show_cards(hand.size());
-				this.bust();
+				View.cards(hand.size(), hand);
+				bust();
 			}
 		}
 	}
@@ -167,11 +166,10 @@ public class Player
 	 */
 	public boolean choose_split()
 	{
-		Scanner scanner = new Scanner(System.in);
 		String choose_split;
 		
 		System.out.println("Would you like to split? (y/n): ");
-		choose_split = scanner.next();
+		choose_split = View.scanner.next();
 		
 		if(choose_split.equalsIgnoreCase("y"))
 		{

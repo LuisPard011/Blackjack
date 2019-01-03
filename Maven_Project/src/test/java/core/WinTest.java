@@ -3,7 +3,6 @@ package core;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.Stack;
 import junit.framework.TestCase;
 
@@ -47,8 +46,7 @@ public class WinTest extends TestCase
 	Dealer dealer_5 = new Dealer();
 	Dealer dealer_6 = new Dealer();
 	
-	Deck_Maker deck_maker = new Deck_Maker();
-	Scanner scanner = new Scanner(System.in);
+	Deck deck_maker = new Deck();
 	Game game = new Game();
 	Reader reader = new Reader();
 	
@@ -98,10 +96,10 @@ public class WinTest extends TestCase
 		deck_maker.make_deck(deck_1);
 		deck_maker.make_deck(deck_2);
 		
-		arr_1 = new int[Deck_Maker.deck_size];
-		arr_2 = new int[Deck_Maker.deck_size];
+		arr_1 = new int[Deck.deck_size];
+		arr_2 = new int[Deck.deck_size];
 		
-		for(int i = 0; i < Deck_Maker.deck_size; ++i) {
+		for(int i = 0; i < Deck.deck_size; ++i) {
 			arr_1[i] = deck_1.pop().get_rank();
 			arr_2[i] = deck_2.pop().get_rank();
 		}
@@ -173,7 +171,7 @@ public class WinTest extends TestCase
 		player_0.default_hand.add(ace_d);
 		player_0.default_hand.add(king_c);
 		
-		player_0.default_hand.show_cards(2);
+		View.cards(2, player_0.default_hand);
 	}
 	
 	/**
@@ -187,7 +185,7 @@ public class WinTest extends TestCase
 		dealer_0.default_hand.add(two_s);
 		dealer_0.default_hand.add(nine_s);
 		
-		dealer_0.default_hand.show_cards(1);
+		View.cards(1, dealer_0.default_hand);
 	}
 	
 	/**
@@ -246,7 +244,7 @@ public class WinTest extends TestCase
 		player_0.default_hand.add(two_s);
 		player_0.default_hand.add(six_s);
 		
-		player_0.default_hand.show_cards(player_0.default_hand.size());
+		View.cards(player_0.default_hand.size(), player_0.default_hand);
 	}
 	
 	/**
@@ -273,8 +271,8 @@ public class WinTest extends TestCase
 		
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(two_s);
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
-		dealer_0.default_hand.show_score();
+		View.cards(dealer_0.default_hand.size(), dealer_0.default_hand);
+		View.score(dealer_0.default_hand);
 		
 		deck_maker.make_deck(deck_1);
 		dealer_0.dealer_turn(deck_1, player_0, dealer_0.default_hand);
@@ -293,14 +291,14 @@ public class WinTest extends TestCase
 		dealer_0.default_hand.add(ace_d);
 		dealer_0.default_hand.add(six_s);
 		
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
-		dealer_0.default_hand.show_score();
+		View.cards(dealer_0.default_hand.size(), dealer_0.default_hand);
+		View.score(dealer_0.default_hand);
 		
 		deck_maker.make_deck(deck_1);
 		temp_card_1 = deck_1.peek();
 		
 		dealer_0.dealer_turn(deck_1, player_0, dealer_0.default_hand);
-		dealer_0.default_hand.show_score();
+		View.score(dealer_0.default_hand);
 		
 		assertFalse(temp_card_1 == deck_1.peek());
 	}
@@ -338,7 +336,7 @@ public class WinTest extends TestCase
 		dealer_0.default_hand.add(two_s);
 		dealer_0.default_hand.add(six_s);
 		
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
+		View.cards(dealer_0.default_hand.size(), dealer_0.default_hand);
 	}
 	
 	/**
@@ -575,8 +573,8 @@ public class WinTest extends TestCase
 		View.divider();
 		
 		player_0.default_hand.add(king_c);
-		player_0.default_hand.show_cards(player_0.default_hand.size());
-		player_0.default_hand.show_score();
+		View.cards(player_0.default_hand.size(), player_0.default_hand);
+		View.score(player_0.default_hand);
 		assertEquals(10, player_0.default_hand.get_score());
 	}
 	
@@ -589,13 +587,13 @@ public class WinTest extends TestCase
 		View.divider();
 		
 		dealer_0.default_hand.add(five_d);
-		dealer_0.default_hand.show_cards(dealer_0.default_hand.size());
-		dealer_0.default_hand.show_score();
+		View.cards(dealer_0.default_hand.size(), dealer_0.default_hand);
+		View.score(dealer_0.default_hand);
 		
 		dealer_1.default_hand.add(eight_c);
 		dealer_1.default_hand.add(ace_d);
-		dealer_1.default_hand.show_cards(dealer_1.default_hand.size());
-		dealer_1.default_hand.show_score();
+		View.cards(dealer_1.default_hand.size(), dealer_1.default_hand);
+		View.score(dealer_1.default_hand);
 	}
 	
 	/**

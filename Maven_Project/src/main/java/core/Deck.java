@@ -6,7 +6,11 @@ import java.util.Stack;
 /**
  * This class is based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
  */
-public class Deck_Maker {
+public class Deck extends Stack<Card> {
+	
+	public Deck() {
+		make_deck(this);
+	}
 	
 	/*********************
 	 * CLASS VARIABLE(S) *
