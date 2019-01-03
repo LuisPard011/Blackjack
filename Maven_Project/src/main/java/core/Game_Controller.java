@@ -4,10 +4,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Game {
+public class Game_Controller {
 
+	/*********************
+	 * CLASS VARIABLE(S) *
+	 *********************/
 	final int draw_times = 2;
+	private Deck deck;
+	private Player player;
+	private Dealer dealer;
 
+	/********
+	 * ELSE *
+	 ********/
 	/**
 	 * Choose between console or file input modes.
 	 * @param scanner
@@ -40,9 +49,9 @@ public class Game {
 	 */
 	public void play_console() throws FileNotFoundException, IOException {	
 		// Variables
-		Deck deck = new Deck();
-		Player player = new Player();
-		Dealer dealer = new Dealer();
+		deck = new Deck();
+		player = new Player();
+		dealer = new Dealer();
 
 		// Player setup
 		player.hit(deck, draw_times, player.get_default_hand());
@@ -93,15 +102,15 @@ public class Game {
 	{
 		// Variables
 		boolean stand = false;
-		Player player = new Player();
-		Dealer dealer = new Dealer();
+		player = new Player();
+		dealer = new Dealer();
 
 		// Paths to files
-		//		String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
-		//		String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
-		String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
-		//		String path_4 = "src\\main\\java\\core\\Input_File_4.txt";
-		//		String path_5 = "src\\main\\java\\core\\Input_File_5.txt";
+		//		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
+		//		String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
+		String path_3 = "src\\main\\java\\text_files\\Input_File_3.txt";
+		//		String path_4 = "src\\main\\java\\text_files\\Input_File_4.txt";
+		//		String path_5 = "src\\main\\java\\text_files\\Input_File_5.txt";
 
 		// Read file input
 		Reader reader = new Reader();

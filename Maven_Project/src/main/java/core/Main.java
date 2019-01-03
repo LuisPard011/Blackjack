@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {	
-		Game game = new Game();
+		Game_Controller game = new Game_Controller();
 		View.welcome();
 		game.choose_mode(View.scanner);
 	}

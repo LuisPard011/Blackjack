@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.Stack;
 import junit.framework.TestCase;
 
-public class WinTest extends TestCase
-{	
+public class Tests extends TestCase {	
 	/*************
 	 * VARIABLES * 
 	 *************/
@@ -47,7 +46,7 @@ public class WinTest extends TestCase
 	Dealer dealer_6 = new Dealer();
 	
 	Deck deck_maker = new Deck();
-	Game game = new Game();
+	Game_Controller game = new Game_Controller();
 	Reader reader = new Reader();
 	
 	Stack<Card> deck_1 = new Stack<Card>();
@@ -63,9 +62,9 @@ public class WinTest extends TestCase
 	
 	int counter = 0;
 	
-	String path_1 = "src\\main\\java\\core\\Input_File_1.txt";
-	String path_2 = "src\\main\\java\\core\\Input_File_2.txt";
-	String path_3 = "src\\main\\java\\core\\Input_File_3.txt";
+	String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
+	String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
+	String path_3 = "src\\main\\java\\text_files\\Input_File_3.txt";
 
 	/*********
 	 * TESTS * 
@@ -228,7 +227,6 @@ public class WinTest extends TestCase
 //	public void test_Player_Stand() throws FileNotFoundException, IOException {
 //		System.out.println("\nR23 - Test that player can stand");
 //		View.divider();
-//		
 //		game.play_console();
 //	}
 	
@@ -645,8 +643,7 @@ public class WinTest extends TestCase
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(player_0.choose_split())
-//		{
+//		if(player_0.choose_split()) {
 //			player_0.split_hand();
 //			player_0.split_turn(deck_1, dealer_0);
 //		}
@@ -670,11 +667,10 @@ public class WinTest extends TestCase
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(dealer_0.choose_split())
-//		{
+//		if(dealer_0.choose_split()) {
 //			dealer_0.split_hand();
-//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_1);
-//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.split_hand_2);
+//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.get_split_hand_1());
+//			dealer_0.dealer_turn(deck_1, player_0, dealer_0.get_split_hand_2());
 //		}
 //		
 //		player_0.determine_winner(dealer_0);

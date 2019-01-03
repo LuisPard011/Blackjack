@@ -8,9 +8,15 @@ import java.util.Stack;
  */
 public class Deck extends Stack<Card> {
 	
-	public Deck() {
-		make_deck(this);
-	}
+	/*********************
+	 * CLASS VARIABLE(S) *
+	 *********************/
+	private static final long serialVersionUID = 1L;
+	
+	/******************
+	 * CONSTRUCTOR(S) *
+	 ******************/
+	public Deck() { make_deck(this); }
 	
 	/*********************
 	 * CLASS VARIABLE(S) *

@@ -1,10 +1,8 @@
 package core;
 
-import java.util.Scanner;
 import java.util.Stack;
 
-public class Player
-{
+public class Player {
 	/************************
 	 * INSTANCE VARIABLE(S) *
 	 ************************/
@@ -39,6 +37,9 @@ public class Player
 	 *************/
 	public void set_has_blackjack(boolean true_or_false) { has_blackjack = true_or_false; }
 
+	/********
+	 * ELSE *
+	 ********/
 	/**
 	 * Draw_times cards from deck and put them into hand.
 	 * @param deck
@@ -96,8 +97,7 @@ public class Player
 	 * If neither the player nor the dealer busts, scores are compared to determine winner
 	 * @param dealer
 	 */
-	public void determine_winner(Dealer dealer)
-	{	
+	public void determine_winner(Dealer dealer) {	
 		// Variables
 		int player_highest_score = 0;
 		int dealer_highest_score = 0;
@@ -105,58 +105,48 @@ public class Player
 		Hand dealer_best_hand = new Hand();
 
 		// Check if player is bust and find its hand with the highest score under 22
-		if(!this.get_default_hand().bust() && !this.splitted)
-		{
+		if(!this.get_default_hand().bust() && !this.splitted) {
 			player_highest_score = this.get_default_hand().get_score();
 			player_best_hand = this.get_default_hand();
 		}
-		if(player_highest_score < this.get_split_hand_1().get_score() && !this.get_split_hand_1().bust())
-		{
+		if(player_highest_score < this.get_split_hand_1().get_score() && !this.get_split_hand_1().bust()) {
 			player_highest_score = this.get_split_hand_1().get_score();
 			player_best_hand = this.get_split_hand_1();
 		}
-		if(player_highest_score < this.get_split_hand_2().get_score() && !this.get_split_hand_2().bust())
-		{
+		if(player_highest_score < this.get_split_hand_2().get_score() && !this.get_split_hand_2().bust()) {
 			player_highest_score = this.get_split_hand_2().get_score();
 			player_best_hand = this.get_split_hand_2();
 		}
 
 		// Check if dealer is bust and find its hand with the highest score under 22
-		if(!dealer.get_default_hand().bust() && !dealer.get_splitted())
-		{
+		if(!dealer.get_default_hand().bust() && !dealer.get_splitted()) {
 			dealer_highest_score = dealer.get_default_hand().get_score();
 			dealer_best_hand = dealer.get_default_hand();
 		}
-		if(dealer_highest_score < dealer.get_split_hand_1().get_score() && !dealer.get_split_hand_1().bust())
-		{
+		if(dealer_highest_score < dealer.get_split_hand_1().get_score() && !dealer.get_split_hand_1().bust()) {
 			dealer_highest_score = dealer.get_split_hand_1().get_score();
 			dealer_best_hand = dealer.get_split_hand_1();
 		}
-		if(dealer_highest_score < dealer.get_split_hand_2().get_score() && !dealer.get_split_hand_2().bust())
-		{
+		if(dealer_highest_score < dealer.get_split_hand_2().get_score() && !dealer.get_split_hand_2().bust()) {
 			dealer_highest_score = dealer.get_split_hand_2().get_score();
 			dealer_best_hand = dealer.get_split_hand_2();
 		}
 
 		// Interface output
-		if(player_highest_score > dealer_highest_score)
-		{
+		if(player_highest_score > dealer_highest_score) {
 			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
 					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
 					") points. Player wins");
 		}
-		else if(player_highest_score == 0)
-		{
+		else if(player_highest_score == 0) {
 			System.out.println("Player busted. Dealer wins with [" + dealer_best_hand.toString() 
 			+ "] (" + dealer_highest_score + ") points");
 		}
-		else if(dealer_highest_score == 0)
-		{
+		else if(dealer_highest_score == 0) {
 			System.out.println("Dealer busted. Player wins with [" + player_best_hand.toString() 
 			+ "] (" + player_highest_score + ") points");
 		}
-		else
-		{
+		else {
 			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
 					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
 					") points. Dealer wins");
@@ -164,29 +154,26 @@ public class Player
 	}
 
 	/**
-	 * Give player the option to split hand
+	 * Give player the option to split hand.
 	 * @return true if split has been chosen
 	 */
-	public boolean choose_split()
-	{
+	public boolean choose_split() {
 		String choose_split;
 
 		System.out.println("Would you like to split? (y/n): ");
 		choose_split = View.scanner.next();
 
-		if(choose_split.equalsIgnoreCase("y"))
-		{
-			this.splitted = true;
+		if(choose_split.equalsIgnoreCase("y")) {
+			splitted = true;
 			return true;
 		}
-		else {return false;}
+		else return false;
 	}
 
 	/**
-	 * Split hand
+	 * Split hand.
 	 */
-	public void split_hand()
-	{
+	public void split_hand() {
 		this.get_split_hand_1().add(this.get_default_hand().get(0));
 		this.get_split_hand_2().add(this.get_default_hand().get(1));
 	}
@@ -194,44 +181,34 @@ public class Player
 	/**
 	 * @return true if initial hand can be split
 	 */
-	public boolean can_split()
-	{
-		if(this.get_default_hand().get(0).get_rank() == this.get_default_hand().get(1).get_rank())
-		{
-			return true;
-		}
-		return false;
+	public boolean can_split() {
+		if(default_hand.get(0).get_rank() == default_hand.get(1).get_rank()) return true;
+		else return false;
 	}
 
 	/**
-	 * Look for blackjacks in all of player's and dealer's hands
-	 * Get rid of hand parameters and maybe dealer too
+	 * Look for blackjacks in all of player's and dealer's hands.
+	 * Get rid of hand parameters and maybe dealer too.
 	 * @param dealer
 	 * @return true if anyone has a blackjack
 	 */
-	public boolean blackjack_Win(Dealer dealer)
-	{
-		if(this.get_default_hand().blackjack() || this.get_split_hand_1().blackjack() || this.get_split_hand_2().blackjack())
-		{
+	public boolean blackjack_Win(Dealer dealer) {
+		if(this.get_default_hand().blackjack() || this.get_split_hand_1().blackjack() || this.get_split_hand_2().blackjack()) {
 			has_blackjack = true;
 		}
-		if(dealer.get_default_hand().blackjack() || dealer.get_split_hand_1().blackjack() || dealer.get_split_hand_2().blackjack())
-		{
+		if(dealer.get_default_hand().blackjack() || dealer.get_split_hand_1().blackjack() || dealer.get_split_hand_2().blackjack()) {
 			dealer.set_has_blackjack(true);
 		}
 
-		if(this.get_has_blackjack() && !dealer.get_has_blackjack())
-		{
+		if(this.get_has_blackjack() && !dealer.get_has_blackjack()) {
 			System.out.println("Player has blackjack and dealer does not. Player wins");
 			return true;
 		}
-		else if(!this.get_has_blackjack() && dealer.get_has_blackjack())
-		{
+		else if(!this.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
 			return true;
 		}
-		else if(this.get_has_blackjack() && dealer.get_has_blackjack())
-		{
+		else if(this.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
 			return true;
 		}
@@ -242,34 +219,27 @@ public class Player
 	/**
 	 * @return true if player's default hand or both split hands have busted
 	 */
-	public boolean bust()
-	{
-		if(!this.can_split() && this.get_default_hand().bust())
-		{
+	public boolean bust() {
+		if(!can_split() && get_default_hand().bust()) {
 			System.out.println("Busted");
 			return true;
 		}
-		else if(this.can_split() && this.get_split_hand_1().bust() && this.get_split_hand_2().bust())
-		{
+		else if(can_split() && get_split_hand_1().bust() && get_split_hand_2().bust()) {
 			System.out.println("Busted");
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		else return false;
 	}
 
 	/**
 	 * routine for a turn after splitting initial hand
 	 * @param deck
 	 */
-	public void split_turn(Stack<Card> deck, Dealer dealer)
-	{
-		this.hit(deck, 1, this.get_split_hand_1());
-		this.hit_or_stand(deck, this.get_split_hand_1(), dealer);
+	public void split_turn(Stack<Card> deck, Dealer dealer) {
+		hit(deck, 1, get_split_hand_1());
+		hit_or_stand(deck, get_split_hand_1(), dealer);
 
-		this.hit(deck, 1, this.get_split_hand_2());
-		this.hit_or_stand(deck, this.get_split_hand_2(), dealer);
+		hit(deck, 1, get_split_hand_2());
+		hit_or_stand(deck, get_split_hand_2(), dealer);
 	}
 } 

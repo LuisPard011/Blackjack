@@ -6,47 +6,53 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Reader
-{
-	public String[] read_file_input(String path) throws FileNotFoundException, IOException
-	{
-		// ArrayList where line from input file will be stored
-		ArrayList<String> words = new ArrayList<>();
+public class Reader {
+	
+	/********
+	 * ELSE *
+	 ********/
+	/**
+	 * 
+	 * @param path
+	 * @return
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public String[] read_file_input(String path) throws FileNotFoundException, IOException {
+		ArrayList<String> words = new ArrayList<>(); // ArrayList where line from input file will be stored
 		
-		/*
-		 *  I got this try block of code to read from file from StackOverflow
-		 *  https://stackoverflow.com/questions/15695984/java-print-contents-of-text-file-to-screen
-		 *  The comment from user Dariusz is where I got this block
-		 *  I didn't even change some of the variable names
-		 */
-		try (BufferedReader br = new BufferedReader(new FileReader(path)))
-		{
+		// I got this try-catch block from https://stackoverflow.com/questions/15695984/java-print-contents-of-text-file-to-screen
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line = null;
-			while ((line = br.readLine()) != null) {words.add(line);}
+			while((line = br.readLine()) != null) { words.add(line); }
 		}
-		catch(FileNotFoundException e)
-		{
+		catch(FileNotFoundException e) {
 			System.err.println("* File not found\n* Program has been terminated");
 			System.exit(0);
 		}
 		
-		// Line from file is split into individual words and stored in this array
-		String[] commands = words.get(0).split(" ");
-		
+		String[] commands = words.get(0).split(" "); // Line from file is split into individual words and stored in this array
 		return commands;
 	}
 	
-	public void add_card_from_input(Player player, String[] array, int index, Hand hand)
-	{
+	/**
+	 * 
+	 * @param player
+	 * @param array
+	 * @param index
+	 * @param hand
+	 */
+	public void add_card_from_input(Player player, String[] array, int index, Hand hand) {
 		Card input_card;
-		if(array[index].charAt(1) != '1')
-		{
+		
+		if(array[index].charAt(1) != '1') {
 			input_card = new Card(Character.toString(array[index].charAt(0)), Character.toString(array[index].charAt(1)));
 		}
-		else
-		{
+		else {
 			input_card = new Card(Character.toString(array[index].charAt(0)), "10");
 		}
+		
 		hand.add(input_card);
 	}
+	
 }

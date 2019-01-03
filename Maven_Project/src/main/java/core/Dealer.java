@@ -3,6 +3,11 @@ package core;
 import java.util.Stack;
 
 public class Dealer extends Player {	
+	
+	/********
+	 * ELSE *
+	 ********/
+	
 	/**
 	 * @param deck
 	 * @param player
