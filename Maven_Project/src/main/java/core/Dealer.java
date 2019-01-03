@@ -7,7 +7,6 @@ public class Dealer extends Player {
 	/********
 	 * ELSE *
 	 ********/
-	
 	/**
 	 * @param deck
 	 * @param player
