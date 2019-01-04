@@ -53,51 +53,18 @@ public class Player {
 	 * @param deck
 	 * @param draw_times
 	 * @param hand
+	 * @return true if at least one card was drawn
 	 */
 	public boolean hit(Stack<Card> deck, int draw_times, Hand hand) {
-		for(int i = 0; i < draw_times; i++) hand.add(deck.pop());
-		if(hand.has_blackjack()) return true;
-		else return false;
-	}
-
-	/**
-	 * Give player the option to either hit or stand
-	 * @param deck to draw from
-	 * @param hand to add card drawn
-	 * @return true if stand is chosen
-	 */
-	public void hit_or_stand(Stack<Card> deck, Hand hand, House dealer) {
-		// Local variables
-		boolean stand = false;
-
-		while(!hand.bust() && !stand) {
-			// Interface output
-			System.out.println(hand);
-			View.score(hand);
-			System.out.print("Hit or stand? (h/s): ");
-			String hit_or_stand = View.scanner.next();
-
-			// control structure for hit or stand
-			switch(hit_or_stand) {
-			case "h":
-				if(hit(deck, 1, hand) && !dealer.get_default_hand().isEmpty()) {
-					Game_Controller.blackjack_win(this, dealer);
-				}
-				break;
-			case "s":
-				stand = true;	
-				break;
-			default:
-				View.inavlid_input();
-				hit_or_stand(deck, hand, dealer);
-				break;
-			}
-
-			if(hand.bust()) {
-				System.out.println(hand);
-				bust();
-			}
+		int start_hand_size = hand.size();
+		
+		for(int i = 0; i < draw_times; i++) {
+			if(!deck.isEmpty()) hand.add(deck.pop());
+			else break;
 		}
+		
+		if(hand.size() > start_hand_size) return true;
+		else return false;
 	}
 
 	/**
@@ -131,15 +98,5 @@ public class Player {
 		else return false;
 	}
 
-	/**
-	 * Routine for a turn after splitting initial hand.
-	 * @param deck to draw from
-	 */
-	public void split_turn(Stack<Card> deck, House dealer) {
-		hit(deck, 1, get_split_hand_1());
-		hit_or_stand(deck, get_split_hand_1(), dealer);
 
-		hit(deck, 1, get_split_hand_2());
-		hit_or_stand(deck, get_split_hand_2(), dealer);
-	}
 } 

@@ -3,6 +3,7 @@ package core;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Game_Controller {
 
@@ -67,11 +68,11 @@ public class Game_Controller {
 			if(player.can_split()) {
 				if(choose_split(player)) {
 					player.split_hand();
-					player.split_turn(deck, dealer);
+					split_turn(deck, player);
 				}
-				else player.hit_or_stand(deck, player.get_default_hand(), dealer);
+				else hit_or_stand(deck, player.get_default_hand(), player);
 			}
-			else player.hit_or_stand(deck, player.get_default_hand(), dealer);
+			else hit_or_stand(deck, player.get_default_hand(), player);
 
 			// Dealer's turn
 			System.out.println(dealer.get_default_hand());
@@ -298,5 +299,58 @@ public class Game_Controller {
 			return true;
 		}
 		else return false;
+	}
+	
+	/**
+	 * Give player the option to either hit or stand.
+	 * @param deck to draw from
+	 * @param hand to add card drawn
+	 * @return true if stand is chosen
+	 */
+	public boolean hit_or_stand(Stack<Card> deck, Hand hand, Player guest_or_house) {
+		// Local variables
+		boolean stand = false;
+
+		while(!hand.bust() && !stand) {
+			// Interface output
+			System.out.println(hand);
+			View.score(hand);
+			System.out.print("Hit or stand? (h/s): ");
+			String hit_or_stand = View.scanner.next();
+
+			// control structure for hit or stand
+			switch(hit_or_stand) {
+			case "h":
+				guest_or_house.hit(deck, 1, hand);
+				break;
+			case "s":
+				stand = true;	
+				break;
+			default:
+				View.inavlid_input();
+				hit_or_stand(deck, hand, guest_or_house);
+				break;
+			}
+
+			if(hand.bust()) {
+				System.out.println(hand);
+				guest_or_house.bust();
+			}
+		}
+		
+		return stand;
+	}
+	
+	/**
+	 * Routine for a turn after splitting initial hand.
+	 * @param deck to draw from
+	 * @param guest_or_house
+	 */
+	public void split_turn(Stack<Card> deck, Player guest_or_house) {
+		guest_or_house.hit(deck, 1, guest_or_house.get_split_hand_1());
+		hit_or_stand(deck, guest_or_house.get_split_hand_1(), guest_or_house);
+
+		guest_or_house.hit(deck, 1, guest_or_house.get_split_hand_2());
+		hit_or_stand(deck, guest_or_house.get_split_hand_2(), guest_or_house);
 	}
 }
