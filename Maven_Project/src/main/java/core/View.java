@@ -29,5 +29,10 @@ public class View {
 	 * Interface output to display hand's score.
 	 */
 	public static void score(Hand hand) { System.out.println("Score is: " + hand.get_score()); }
+	
+	/**
+	 * Invalid input message.
+	 */
+	public static void inavlid_input() { System.out.println("Invalid input"); }
 
 }

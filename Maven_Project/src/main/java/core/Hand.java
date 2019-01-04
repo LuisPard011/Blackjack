@@ -17,9 +17,7 @@ public class Hand extends ArrayList<Card>{
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
-	public Hand() {
-		score = 0;
-	}
+	public Hand() { score = 0; }
 
 	/*************
 	 * GETTER(S) *
@@ -74,7 +72,7 @@ public class Hand extends ArrayList<Card>{
 	 * Determine if hand has a blackjack.
 	 * @return true if aces and cards worth 10 points are found
 	 */
-	public boolean blackjack() {
+	public boolean has_blackjack() {
 		// Variables
 		boolean has_ace = false;
 		boolean has_ten_value = false;
@@ -100,8 +98,7 @@ public class Hand extends ArrayList<Card>{
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return true if hand busted
 	 */
 	public boolean bust() {
 		if(get_score() > 21) return true;

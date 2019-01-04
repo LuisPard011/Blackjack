@@ -461,31 +461,31 @@ public class Tests extends TestCase {
 	public void test_Player_Blackjack() {
 		player_0.get_default_hand().add(ace_d);
 		player_0.get_default_hand().add(jack_c);
-		assertEquals(true, player_0.get_default_hand().blackjack());
+		assertEquals(true, player_0.get_default_hand().has_blackjack());
 		
 		player_1.get_default_hand().add(jack_c);
 		player_1.get_default_hand().add(ace_s);
-		assertEquals(true, player_1.get_default_hand().blackjack());
+		assertEquals(true, player_1.get_default_hand().has_blackjack());
 		
 		player_2.get_default_hand().add(ace_s);
 		player_2.get_default_hand().add(queen_c);
-		assertEquals(true, player_2.get_default_hand().blackjack());
+		assertEquals(true, player_2.get_default_hand().has_blackjack());
 		
 		player_3.get_default_hand().add(queen_c);
 		player_3.get_default_hand().add(ace_d);
-		assertEquals(true, player_3.get_default_hand().blackjack());
+		assertEquals(true, player_3.get_default_hand().has_blackjack());
 		
 		player_4.get_default_hand().add(ace_s);
 		player_4.get_default_hand().add(king_c);
-		assertEquals(true, player_4.get_default_hand().blackjack());
+		assertEquals(true, player_4.get_default_hand().has_blackjack());
 		
 		player_5.get_default_hand().add(king_d);
 		player_5.get_default_hand().add(ace_d);
-		assertEquals(true, player_5.get_default_hand().blackjack());
+		assertEquals(true, player_5.get_default_hand().has_blackjack());
 		
 		player_6.get_default_hand().add(ace_s);
 		player_6.get_default_hand().add(ten_h);
-		assertEquals(true, player_6.get_default_hand().blackjack());
+		assertEquals(true, player_6.get_default_hand().has_blackjack());
 	}
 	
 	/**
@@ -495,31 +495,31 @@ public class Tests extends TestCase {
 	public void test_Dealer_Blackjack() {
 		dealer_0.get_default_hand().add(ace_d);
 		dealer_0.get_default_hand().add(jack_c);
-		assertEquals(true, dealer_0.get_default_hand().blackjack());
+		assertEquals(true, dealer_0.get_default_hand().has_blackjack());
 		
 		dealer_1.get_default_hand().add(jack_c);
 		dealer_1.get_default_hand().add(ace_s);
-		assertEquals(true, dealer_1.get_default_hand().blackjack());
+		assertEquals(true, dealer_1.get_default_hand().has_blackjack());
 		
 		dealer_2.get_default_hand().add(ace_s);
 		dealer_2.get_default_hand().add(queen_c);
-		assertEquals(true, dealer_2.get_default_hand().blackjack());
+		assertEquals(true, dealer_2.get_default_hand().has_blackjack());
 		
 		dealer_3.get_default_hand().add(queen_c);
 		dealer_3.get_default_hand().add(ace_d);
-		assertEquals(true, dealer_3.get_default_hand().blackjack());
+		assertEquals(true, dealer_3.get_default_hand().has_blackjack());
 		
 		dealer_4.get_default_hand().add(ace_s);
 		dealer_4.get_default_hand().add(king_c);
-		assertEquals(true, dealer_4.get_default_hand().blackjack());
+		assertEquals(true, dealer_4.get_default_hand().has_blackjack());
 		
 		dealer_5.get_default_hand().add(king_d);
 		dealer_5.get_default_hand().add(ace_d);
-		assertEquals(true, dealer_5.get_default_hand().blackjack());
+		assertEquals(true, dealer_5.get_default_hand().has_blackjack());
 		
 		dealer_6.get_default_hand().add(ace_s);
 		dealer_6.get_default_hand().add(ten_h);
-		assertEquals(true, dealer_6.get_default_hand().blackjack());
+		assertEquals(true, dealer_6.get_default_hand().has_blackjack());
 	}
 	
 	/**
@@ -538,6 +538,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(nine_s);
 		
 		assertTrue(Game_Controller.blackjack_win(player_0, dealer_0));
+		assertTrue(player_0.get_winner());
 	}
 	
 	/**

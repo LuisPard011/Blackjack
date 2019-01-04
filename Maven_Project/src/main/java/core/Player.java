@@ -52,14 +52,14 @@ public class Player {
 	 */
 	public boolean hit(Stack<Card> deck, int draw_times, Hand hand) {
 		for(int i = 0; i < draw_times; i++) hand.add(deck.pop());
-		if(hand.blackjack()) return true;
+		if(hand.has_blackjack()) return true;
 		else return false;
 	}
 
 	/**
 	 * Give player the option to either hit or stand
-	 * @param deck
-	 * @param hand
+	 * @param deck to draw from
+	 * @param hand to add card drawn
 	 * @return true if stand is chosen
 	 */
 	public void hit_or_stand(Stack<Card> deck, Hand hand, Dealer dealer) {
@@ -84,7 +84,7 @@ public class Player {
 				stand = true;	
 				break;
 			default:
-				System.out.println("Invalid input"); 
+				View.inavlid_input();
 				hit_or_stand(deck, hand, dealer);
 				break;
 			}
@@ -134,7 +134,7 @@ public class Player {
 	 */
 	public boolean bust() {
 		if(!can_split() && default_hand.bust()) {
-			System.out.println("Busted");
+			System.out.println(default_hand + "\nBusted");
 			return true;
 		}
 		else if(can_split() && split_hand_1.bust() && split_hand_2.bust()) {
@@ -145,8 +145,8 @@ public class Player {
 	}
 
 	/**
-	 * routine for a turn after splitting initial hand
-	 * @param deck
+	 * Routine for a turn after splitting initial hand.
+	 * @param deck to draw from
 	 */
 	public void split_turn(Stack<Card> deck, Dealer dealer) {
 		hit(deck, 1, get_split_hand_1());

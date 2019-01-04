@@ -21,8 +21,8 @@ public class Deck extends Stack<Card> {
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
-	protected static int deck_size = 52;
-	private Card[] source_deck = new Card[deck_size];
+	public static final int deck_size = 52;
+	private Card[] temp_deck = new Card[deck_size];
 	
 	/********
 	 * ELSE *
@@ -30,12 +30,12 @@ public class Deck extends Stack<Card> {
 	/**
 	 * Fill the temporary deck with cards.
 	 */
-	public void populate_source_deck() {
+	public void populate_temp_deck() {
 		int index = 0;
 		
 		for(int r=2; r<=14; r+=1) {
 			for(int s=0; s<4; s+=1) {
-				source_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
+				temp_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
 			}
 		}
 	}
@@ -43,28 +43,28 @@ public class Deck extends Stack<Card> {
 	/**
 	 * Shuffle the temporary deck, randomly.
 	 */
-	public void shuffle_source_deck() {
+	public void shuffle_temp_deck() {
 		Random rnd = new Random();
 		Card swap;
 		int pos;
 		
 		for(int i = deck_size-1; i>=0; i=i-1) {
 			pos = rnd.nextInt(i+1);
-			swap = source_deck[pos];
-			source_deck[pos] = source_deck[i];
-			source_deck[i] = swap;
+			swap = temp_deck[pos];
+			temp_deck[pos] = temp_deck[i];
+			temp_deck[i] = swap;
 		}
 	}
 	
 	/**
-	 * Fill the draw pile with cards from the deck.
-	 * Cards in pile appear in the same order as they are in the deck.
+	 * Fill the actual deck with cards from the temporary deck.
+	 * Cards in actual deck appear in the same order as they are in the temporary deck.
 	 * @param deck to be used in game
 	 */
 	public void make_deck(Stack<Card> deck) {
-		populate_source_deck();
-		shuffle_source_deck();
-		for(int i = 0; i < deck_size; ++i) deck.push(this.source_deck[i]);
+		populate_temp_deck();
+		shuffle_temp_deck();
+		for(int i = 0; i < deck_size; ++i) deck.push(this.temp_deck[i]);
 	}
 
 }

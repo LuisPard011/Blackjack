@@ -9,7 +9,7 @@ public class Game_Controller {
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
-	final int draw_times = 2;
+	private final int draw_times = 2;
 	private Deck deck;
 	private Player player;
 	private Dealer dealer;
@@ -24,7 +24,6 @@ public class Game_Controller {
 	 * @throws IOException
 	 */
 	public void choose_mode(Scanner scanner) throws FileNotFoundException, IOException {
-		// Interface output
 		System.out.println("Console or file input? (c/f): ");
 		String mode = scanner.next();
 
@@ -36,7 +35,7 @@ public class Game_Controller {
 			play_file();
 			break;
 		default:
-			System.out.println("Invalid input");
+			View.inavlid_input();
 			choose_mode(scanner);
 			break;
 		}
@@ -47,8 +46,8 @@ public class Game_Controller {
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
-	public void play_console() throws FileNotFoundException, IOException {	
-		// Variables
+	public void play_console() throws FileNotFoundException, IOException {
+		// Local variables
 		deck = new Deck();
 		player = new Player();
 		dealer = new Dealer();
@@ -59,37 +58,37 @@ public class Game_Controller {
 
 		// Dealer setup
 		dealer.hit(deck, draw_times, dealer.get_default_hand());
-		System.out.println("Dealer's face-up card is: " + dealer.get_default_hand().get(0).toString());
+		System.out.println("Dealer's face-up card is: [" + dealer.get_default_hand().get(0).toString() + "]");
 
-		if(blackjack_win(player, dealer)) {
-			System.out.println(dealer.get_default_hand());
-			continue_play();
-		}
+		blackjack_win(player, dealer);
 
-		// Player's turn
-		if(player.can_split()) {
-			if(player.choose_split()) {
-				player.split_hand();
-				player.split_turn(deck, dealer);
+		if(!player.get_winner() && !dealer.get_winner()) {
+			// Player's turn
+			if(player.can_split()) {
+				if(player.choose_split()) {
+					player.split_hand();
+					player.split_turn(deck, dealer);
+				}
+				else player.hit_or_stand(deck, player.get_default_hand(), dealer);
 			}
 			else player.hit_or_stand(deck, player.get_default_hand(), dealer);
-		}
-		else player.hit_or_stand(deck, player.get_default_hand(), dealer);
 
-		// Dealer's turn
-		System.out.println(dealer.get_default_hand());
-		if(dealer.can_split()) {
-			if(dealer.choose_split()) {
-				dealer.split_hand();
-				dealer.dealer_turn(deck, player, dealer.get_split_hand_1());
-				dealer.dealer_turn(deck, player, dealer.get_split_hand_2());
+			// Dealer's turn
+			System.out.println(dealer.get_default_hand());
+			if(dealer.can_split()) {
+				if(dealer.choose_split()) {
+					dealer.split_hand();
+					dealer.dealer_turn(deck, player, dealer.get_split_hand_1());
+					dealer.dealer_turn(deck, player, dealer.get_split_hand_2());
+				}
+				else dealer.dealer_turn(deck, player, dealer.get_default_hand());
 			}
 			else dealer.dealer_turn(deck, player, dealer.get_default_hand());
-		}
-		else dealer.dealer_turn(deck, player, dealer.get_default_hand());
 
-		// End game
-		determine_winner(player, dealer);
+			// End game
+			determine_winner(player, dealer);
+		}
+
 		continue_play();
 	}
 
@@ -181,7 +180,7 @@ public class Game_Controller {
 			System.out.println("Thanks for playing");
 			break;
 		default:
-			System.out.println("Invalid input");
+			View.inavlid_input();
 			continue_play();
 			break;
 		}
@@ -253,30 +252,30 @@ public class Game_Controller {
 	
 	/**
 	 * Look for blackjacks in all of player's and dealer's hands.
-	 * Get rid of hand parameters and maybe dealer too.
-	 * @param dealer
-	 * @return true if anyone has a blackjack
+	 * @param player whose hands will be checked for blackjacks
+	 * @param dealer whose hands will be checked for blackjacks
+	 * @return true if either the player, dealer or both have at least one blackjack
 	 */
 	public static boolean blackjack_win(Player player, Dealer dealer) {
-		if(player.get_default_hand().blackjack() || player.get_split_hand_1().blackjack() || player.get_split_hand_2().blackjack()) {
+		if(player.get_default_hand().has_blackjack() || player.get_split_hand_1().has_blackjack() || player.get_split_hand_2().has_blackjack()) {
 			player.set_has_blackjack(true);
 		}
-		if(dealer.get_default_hand().blackjack() || dealer.get_split_hand_1().blackjack() || dealer.get_split_hand_2().blackjack()) {
+		if(dealer.get_default_hand().has_blackjack() || dealer.get_split_hand_1().has_blackjack() || dealer.get_split_hand_2().has_blackjack()) {
 			dealer.set_has_blackjack(true);
 		}
 
 		if(player.get_has_blackjack() && !dealer.get_has_blackjack()) {
-			System.out.println("Player has blackjack and dealer does not. Player wins");
+			System.out.println("Player has blackjack and dealer does not.\nWinner: Player" );
 			player.set_winner(true);
 			return true;
 		}
 		else if(!player.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
+			System.out.println("Player does not have a blackjack, but dealer does.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
 		else if(player.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
+			System.out.println("Both the player and dealer have a blackjack.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
