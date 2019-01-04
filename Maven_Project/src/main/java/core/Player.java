@@ -72,8 +72,8 @@ public class Player {
 			// control structure for hit or stand
 			switch(hit_or_stand) {
 			case "h":
-				if(this.hit(deck, 1, hand) && !dealer.get_default_hand().isEmpty()) {
-					this.blackjack_Win(dealer);
+				if(hit(deck, 1, hand) && !dealer.get_default_hand().isEmpty()) {
+					blackjack_Win(dealer);
 				}
 				break;
 			case "s":
@@ -105,17 +105,17 @@ public class Player {
 		Hand dealer_best_hand = new Hand();
 
 		// Check if player is bust and find its hand with the highest score under 22
-		if(!this.get_default_hand().bust() && !this.splitted) {
-			player_highest_score = this.get_default_hand().get_score();
-			player_best_hand = this.get_default_hand();
+		if(!default_hand.bust() && !splitted) {
+			player_highest_score = default_hand.get_score();
+			player_best_hand = default_hand;
 		}
-		if(player_highest_score < this.get_split_hand_1().get_score() && !this.get_split_hand_1().bust()) {
-			player_highest_score = this.get_split_hand_1().get_score();
-			player_best_hand = this.get_split_hand_1();
+		if(player_highest_score < split_hand_1.get_score() && !split_hand_1.bust()) {
+			player_highest_score = split_hand_1.get_score();
+			player_best_hand = split_hand_1;
 		}
-		if(player_highest_score < this.get_split_hand_2().get_score() && !this.get_split_hand_2().bust()) {
-			player_highest_score = this.get_split_hand_2().get_score();
-			player_best_hand = this.get_split_hand_2();
+		if(player_highest_score < split_hand_2.get_score() && !split_hand_2.bust()) {
+			player_highest_score = split_hand_2.get_score();
+			player_best_hand = split_hand_2;
 		}
 
 		// Check if dealer is bust and find its hand with the highest score under 22
@@ -174,8 +174,8 @@ public class Player {
 	 * Split hand.
 	 */
 	public void split_hand() {
-		this.get_split_hand_1().add(this.get_default_hand().get(0));
-		this.get_split_hand_2().add(this.get_default_hand().get(1));
+		split_hand_1.add(default_hand.get(0));
+		split_hand_2.add(default_hand.get(1));
 	}
 
 	/**
@@ -193,22 +193,22 @@ public class Player {
 	 * @return true if anyone has a blackjack
 	 */
 	public boolean blackjack_Win(Dealer dealer) {
-		if(this.get_default_hand().blackjack() || this.get_split_hand_1().blackjack() || this.get_split_hand_2().blackjack()) {
+		if(default_hand.blackjack() || split_hand_1.blackjack() || split_hand_2.blackjack()) {
 			has_blackjack = true;
 		}
 		if(dealer.get_default_hand().blackjack() || dealer.get_split_hand_1().blackjack() || dealer.get_split_hand_2().blackjack()) {
 			dealer.set_has_blackjack(true);
 		}
 
-		if(this.get_has_blackjack() && !dealer.get_has_blackjack()) {
+		if(has_blackjack && !dealer.get_has_blackjack()) {
 			System.out.println("Player has blackjack and dealer does not. Player wins");
 			return true;
 		}
-		else if(!this.get_has_blackjack() && dealer.get_has_blackjack()) {
+		else if(!has_blackjack && dealer.get_has_blackjack()) {
 			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
 			return true;
 		}
-		else if(this.get_has_blackjack() && dealer.get_has_blackjack()) {
+		else if(has_blackjack && dealer.get_has_blackjack()) {
 			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
 			return true;
 		}
@@ -220,11 +220,11 @@ public class Player {
 	 * @return true if player's default hand or both split hands have busted
 	 */
 	public boolean bust() {
-		if(!can_split() && get_default_hand().bust()) {
+		if(!can_split() && default_hand.bust()) {
 			System.out.println("Busted");
 			return true;
 		}
-		else if(can_split() && get_split_hand_1().bust() && get_split_hand_2().bust()) {
+		else if(can_split() && split_hand_1.bust() && split_hand_2.bust()) {
 			System.out.println("Busted");
 			return true;
 		}

@@ -110,9 +110,9 @@ public class Hand extends ArrayList<Card>{
 
 	@Override
 	public final String toString() {
-		String[] card_array = new String[this.size()];
+		String[] card_array = new String[size()];
 		StringBuilder builder = new StringBuilder();
-		for(int i = 0; i < this.size(); i++) card_array[i] = get(i).toString();
+		for(int i = 0; i < size(); i++) card_array[i] = get(i).toString();
 		for (String string : card_array) {
 			if (builder.length() > 0) builder.append(" ");
 			builder.append(string);

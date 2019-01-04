@@ -35,7 +35,7 @@ public class Deck extends Stack<Card> {
 		
 		for(int r=2; r<=14; r+=1) {
 			for(int s=0; s<4; s+=1) {
-				this.source_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
+				source_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
 			}
 		}
 	}
