@@ -104,7 +104,7 @@ public class Hand extends ArrayList<Card>{
 	 * @return
 	 */
 	public boolean bust() {
-		if(score > 21) return true;
+		if(get_score() > 21) return true;
 		else return false;
 	}
 

@@ -15,7 +15,7 @@ public class Dealer extends Player {
 	 */
 	public void dealer_turn(Stack<Card> deck, Player player, Hand dealer_hand) {
 		// Check for blackjacks
-		if(player.blackjack_Win(this)) {
+		if(Game_Controller.blackjack_win(player, this)) {
 			return;
 		}
 		
