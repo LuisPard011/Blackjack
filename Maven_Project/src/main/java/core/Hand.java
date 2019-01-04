@@ -54,7 +54,7 @@ public class Hand extends ArrayList<Card>{
 
 		// Adjust score depending on aces in hand
 		for(int i = 0; i < aces; i++) {
-			if(score >= 21) score -= 10;
+			if(score > 21) score -= 10;
 		}
 
 		return score; 

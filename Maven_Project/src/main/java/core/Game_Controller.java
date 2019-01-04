@@ -66,8 +66,8 @@ public class Game_Controller {
 		if(!guest.get_winner() && !dealer.get_winner()) {
 			// Player's turn
 			if(guest.can_split() && choose_split(guest)) {
-					guest.split_hand();
-					split_turn(deck, guest);
+				guest.split_hand();
+				split_turn(deck, guest);
 			}
 			else hit_or_stand(deck, guest.get_default_hand(), guest);
 
@@ -84,11 +84,10 @@ public class Game_Controller {
 				}
 				else dealer.dealer_turn(deck, guest, dealer.get_default_hand());
 			}
-
-			// End game
-			determine_winner(guest, dealer);
 		}
 
+		// End game
+		determine_winner(guest, dealer);
 		continue_play();
 	}
 
@@ -185,7 +184,7 @@ public class Game_Controller {
 			break;
 		}
 	}
-	
+
 	/**
 	 * If neither the player nor the dealer busts, scores are compared to determine winner
 	 * @param dealer
@@ -205,7 +204,7 @@ public class Game_Controller {
 		else if(player.get_default_hand().bust() && !player.get_splitted()) {
 			player_best_hand = player.get_default_hand();
 		}
-		
+
 		// Not else-if, so that both split hands are checked if none of them busted
 		if(player_highest_score < player.get_split_hand_1().get_score() && !player.get_split_hand_1().bust()) {
 			player_highest_score = player.get_split_hand_1().get_score();
@@ -224,7 +223,7 @@ public class Game_Controller {
 		else if(dealer.get_default_hand().bust() && !dealer.get_splitted()) {
 			dealer_best_hand = dealer.get_default_hand();
 		}
-		
+
 		// Not else-if, so that both split hands are checked if none of them busted
 		if(dealer_highest_score < dealer.get_split_hand_1().get_score() && !dealer.get_split_hand_1().bust()) {
 			dealer_highest_score = dealer.get_split_hand_1().get_score();
@@ -238,28 +237,28 @@ public class Game_Controller {
 		// Interface output
 		if(player_highest_score == 0) {
 			System.out.println("Player busted.\n" +
-		                       "Dealer wins: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.");
+					"Dealer wins: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.");
 			dealer.set_winner(true);
 		}
 		else if(dealer_highest_score == 0) {
 			System.out.println("Dealer busted.\n" + 
-		                       "Player wins: " + player_best_hand.toString() + " (" + player_highest_score + ") points.");
+					"Player wins: " + player_best_hand.toString() + " (" + player_highest_score + ") points.");
 			player.set_winner(true);
 		}
 		else if(player_highest_score > dealer_highest_score) {
 			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" +
-					           "Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" +
-					           "Winner: Player");
+					"Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" +
+					"Winner: Player");
 			player.set_winner(true);
 		}
 		else {
 			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" + 
-		                       "Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" + 
-					           "Winner: Dealer");
+					"Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" + 
+					"Winner: Dealer");
 			dealer.set_winner(true);
 		}
 	}
-	
+
 	/**
 	 * Look for blackjacks in all of player's and dealer's hands.
 	 * @param player whose hands will be checked for blackjacks
@@ -292,7 +291,7 @@ public class Game_Controller {
 
 		return false;
 	}
-	
+
 	/**
 	 * Give player the option to split hand.
 	 * @return true if split has been chosen
@@ -309,7 +308,7 @@ public class Game_Controller {
 		}
 		else return false;
 	}
-	
+
 	/**
 	 * Give player the option to either hit or stand.
 	 * @param deck to draw from
@@ -320,7 +319,7 @@ public class Game_Controller {
 		// Local variables
 		boolean stand = false;
 
-		while(!hand.bust() && !stand) {
+		while(!hand.bust() && !stand && !hand.has_blackjack()) {
 			// Interface output
 			System.out.println(hand);
 			View.score(hand);
@@ -346,10 +345,10 @@ public class Game_Controller {
 				guest_or_house.completely_busted();
 			}
 		}
-		
+
 		return stand;
 	}
-	
+
 	/**
 	 * Routine for a turn after splitting initial hand.
 	 * @param deck to draw from
