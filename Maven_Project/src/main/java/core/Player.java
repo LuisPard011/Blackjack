@@ -64,7 +64,7 @@ public class Player {
 
 		while(!hand.bust() && !stand) {
 			// Interface output
-			View.cards(hand.size(), hand);
+			System.out.println(hand);
 			View.score(hand);
 			System.out.print("Hit or stand? (h/s): ");
 			String hit_or_stand = View.scanner.next();
@@ -86,7 +86,7 @@ public class Player {
 			}
 
 			if(hand.bust()) {
-				View.cards(hand.size(), hand);
+				System.out.println(hand);
 				bust();
 			}
 		}
@@ -134,22 +134,22 @@ public class Player {
 
 		// Interface output
 		if(player_highest_score > dealer_highest_score) {
-			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
-					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
-					") points. Player wins");
+			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" +
+					           "Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" +
+					           "Winner: Player");
 		}
 		else if(player_highest_score == 0) {
-			System.out.println("Player busted. Dealer wins with [" + dealer_best_hand.toString() 
-			+ "] (" + dealer_highest_score + ") points");
+			System.out.println("Player busted.\n" +
+		                       "Dealer wins: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.");
 		}
 		else if(dealer_highest_score == 0) {
-			System.out.println("Dealer busted. Player wins with [" + player_best_hand.toString() 
-			+ "] (" + player_highest_score + ") points");
+			System.out.println("Dealer busted.\n" + 
+		                       "Player wins: " + player_best_hand.toString() + " (" + player_highest_score + ") points.");
 		}
 		else {
-			System.out.println("Player has [" + player_best_hand.toString() + "] (" + player_highest_score 
-					+ ") points and dealer has [" + dealer_best_hand.toString() + "] (" + dealer_highest_score + 
-					") points. Dealer wins");
+			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" + 
+		                       "Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" + 
+					           "Winner: Dealer");
 		}
 	}
 

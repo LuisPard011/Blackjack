@@ -55,14 +55,14 @@ public class Game_Controller {
 
 		// Player setup
 		player.hit(deck, draw_times, player.get_default_hand());
-		View.cards(draw_times, player.get_default_hand());
+		System.out.println(player.get_default_hand());
 
 		// Dealer setup
 		dealer.hit(deck, draw_times, dealer.get_default_hand());
-		View.cards(1, dealer.get_default_hand());
+		System.out.println("Dealer's face-up card is: " + dealer.get_default_hand().get(0).toString());
 
 		if(player.blackjack_Win(dealer)) {
-			View.cards(draw_times, dealer.get_default_hand());
+			System.out.println(dealer.get_default_hand());
 			continue_play();
 		}
 
@@ -77,7 +77,7 @@ public class Game_Controller {
 		else player.hit_or_stand(deck, player.get_default_hand(), dealer);
 
 		// Dealer's turn
-		View.cards(draw_times, dealer.get_default_hand());
+		System.out.println(dealer.get_default_hand());
 		if(dealer.can_split()) {
 			if(dealer.choose_split()) {
 				dealer.split_hand();
@@ -98,9 +98,8 @@ public class Game_Controller {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void play_file() throws FileNotFoundException, IOException
-	{
-		// Variables
+	public void play_file() throws FileNotFoundException, IOException {
+		// Local variables
 		boolean stand = false;
 		player = new Player();
 		dealer = new Dealer();
@@ -122,7 +121,7 @@ public class Game_Controller {
 		}
 
 		// Interface output
-		View.cards(draw_times, player.get_default_hand());
+		System.out.println(player.get_default_hand());
 		View.score(player.get_default_hand());
 
 		// Draw dealer's first two cards
@@ -131,7 +130,7 @@ public class Game_Controller {
 		}
 
 		// Interface output
-		View.cards(draw_times, dealer.get_default_hand());
+		System.out.println(dealer.get_default_hand());
 		View.score(dealer.get_default_hand());
 
 		// Go through the rest of the input
@@ -144,24 +143,20 @@ public class Game_Controller {
 				stand = true;
 				continue;
 			}
-			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1){continue;}
+			else if(commands[i].charAt(0) == 'H' && commands[i].length() == 1) continue;
 			else if(commands[i].charAt(0) == 'D' && commands[i].length() == 1) {
 				// will have to add not to default hand
 				// maybe continue might come in handy
 			}
 
-			if(!stand) {
-				reader.add_card_from_input(player, commands, i, player.get_default_hand());
-			}
-			else {
-				reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());	
-			}
+			if(!stand) reader.add_card_from_input(player, commands, i, player.get_default_hand());
+			else reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());	
 		}
 
 		// Interface output
-		View.cards(player.get_default_hand().size(), player.get_default_hand());
+		System.out.println(player.get_default_hand());
 		View.score(player.get_default_hand());
-		View.cards(dealer.get_default_hand().size(), dealer.get_default_hand());
+		System.out.println(dealer.get_default_hand());
 		View.score(dealer.get_default_hand());
 
 		// End game

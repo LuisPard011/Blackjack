@@ -117,6 +117,6 @@ public class Hand extends ArrayList<Card>{
 			if (builder.length() > 0) builder.append(" ");
 			builder.append(string);
 		}
-		return builder.toString();
+		return "Cards in hand are [" + builder.toString() + "]";
 	}
 }

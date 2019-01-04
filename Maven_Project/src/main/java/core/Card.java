@@ -70,7 +70,7 @@ public class Card {
 		
 		switch(r) {
 		case -1:
-			return "no card";
+			return "No card";
 		case 11: return get_suit() + "J";
 		case 12: return get_suit() + "Q";
 		case 13: return get_suit() + "K";

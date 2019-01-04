@@ -170,7 +170,7 @@ public class Tests extends TestCase {
 		player_0.get_default_hand().add(ace_d);
 		player_0.get_default_hand().add(king_c);
 		
-		View.cards(2, player_0.get_default_hand());
+		System.out.println(player_0.get_default_hand());
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(two_s);
 		dealer_0.get_default_hand().add(nine_s);
 		
-		View.cards(1, dealer_0.get_default_hand());
+		System.out.println(dealer_0.get_default_hand());
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class Tests extends TestCase {
 		player_0.get_default_hand().add(two_s);
 		player_0.get_default_hand().add(six_s);
 		
-		View.cards(player_0.get_default_hand().size(), player_0.get_default_hand());
+		System.out.println(player_0.get_default_hand());
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class Tests extends TestCase {
 		
 		dealer_0.get_default_hand().add(ace_d);
 		dealer_0.get_default_hand().add(two_s);
-		View.cards(dealer_0.get_default_hand().size(), dealer_0.get_default_hand());
+		System.out.println(dealer_0.get_default_hand());
 		View.score(dealer_0.get_default_hand());
 		
 		deck_maker.make_deck(deck_1);
@@ -289,7 +289,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(ace_d);
 		dealer_0.get_default_hand().add(six_s);
 		
-		View.cards(dealer_0.get_default_hand().size(), dealer_0.get_default_hand());
+		System.out.println(dealer_0.get_default_hand());
 		View.score(dealer_0.get_default_hand());
 		
 		deck_maker.make_deck(deck_1);
@@ -334,7 +334,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(two_s);
 		dealer_0.get_default_hand().add(six_s);
 		
-		View.cards(dealer_0.get_default_hand().size(), dealer_0.get_default_hand());
+		System.out.println(dealer_0.get_default_hand());
 	}
 	
 	/**
@@ -571,7 +571,7 @@ public class Tests extends TestCase {
 		View.divider();
 		
 		player_0.get_default_hand().add(king_c);
-		View.cards(player_0.get_default_hand().size(), player_0.get_default_hand());
+		System.out.println(player_0.get_default_hand());
 		View.score(player_0.get_default_hand());
 		assertEquals(10, player_0.get_default_hand().get_score());
 	}
@@ -585,12 +585,12 @@ public class Tests extends TestCase {
 		View.divider();
 		
 		dealer_0.get_default_hand().add(five_d);
-		View.cards(dealer_0.get_default_hand().size(), dealer_0.get_default_hand());
+		System.out.println(dealer_0.get_default_hand());
 		View.score(dealer_0.get_default_hand());
 		
 		dealer_1.get_default_hand().add(eight_c);
 		dealer_1.get_default_hand().add(ace_d);
-		View.cards(dealer_1.get_default_hand().size(), dealer_1.get_default_hand());
+		System.out.println(dealer_1.get_default_hand());
 		View.score(dealer_1.get_default_hand());
 	}
 	
