@@ -267,14 +267,17 @@ public class Game_Controller {
 
 		if(player.get_has_blackjack() && !dealer.get_has_blackjack()) {
 			System.out.println("Player has blackjack and dealer does not. Player wins");
+			player.set_winner(true);
 			return true;
 		}
 		else if(!player.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println("Player does not have a blackjack, but dealer does. Dealer wins");
+			dealer.set_winner(true);
 			return true;
 		}
 		else if(player.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println("Both the player and dealer have a blackjack. Dealer wins");
+			dealer.set_winner(true);
 			return true;
 		}
 

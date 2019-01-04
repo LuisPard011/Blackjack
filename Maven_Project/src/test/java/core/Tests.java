@@ -356,7 +356,6 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(king_s);
 		
 		Game_Controller.determine_winner(player_0, dealer_0);
-		System.out.println("0 means the dealer busted");
 		
 		assertTrue(dealer_0.get_default_hand().bust());
 		assertTrue(player_0.get_winner());
@@ -558,6 +557,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(ten_h); 	// ten
 		
 		Game_Controller.blackjack_win(player_0, dealer_0);
+		assertTrue(dealer_0.get_winner());
 		
 		player_1.get_default_hand().add(six_s);
 		player_1.get_default_hand().add(ace_d);
@@ -568,6 +568,7 @@ public class Tests extends TestCase {
 		dealer_1.get_default_hand().add(nine_s);
 		
 		Game_Controller.blackjack_win(player_1, dealer_1);
+		assertTrue(dealer_1.get_winner());
 	}
 	
 	/**
@@ -596,10 +597,14 @@ public class Tests extends TestCase {
 		System.out.println(dealer_0.get_default_hand());
 		View.score(dealer_0.get_default_hand());
 		
+		assertEquals(5, dealer_0.get_default_hand().get_score());
+		
 		dealer_1.get_default_hand().add(eight_c);
 		dealer_1.get_default_hand().add(ace_d);
 		System.out.println(dealer_1.get_default_hand());
 		View.score(dealer_1.get_default_hand());
+		
+		assertEquals(19, dealer_1.get_default_hand().get_score());
 	}
 	
 	/**
@@ -617,6 +622,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(six_s);
 		
 		Game_Controller.determine_winner(player_0, dealer_0);
+		assertTrue(player_0.get_winner());
 	}
 	
 	/**
@@ -633,6 +639,7 @@ public class Tests extends TestCase {
 		dealer_0.get_default_hand().add(six_s);
 		
 		Game_Controller.determine_winner(player_0, dealer_0);
+		assertTrue(dealer_0.get_winner());
 	}
 	
 	/**
