@@ -14,8 +14,6 @@ public class Dealer extends Player {
 	 * @return true if blackjack found
 	 */
 	public boolean dealer_turn(Stack<Card> deck, Player player, Hand dealer_hand) {
-		if(Game_Controller.blackjack_win(player, this)) return true; // Check for blackjacks
-		
 		// Draw repeatedly until dealer's score is less than 16 or it has a soft 17
 		while(dealer_hand.get_score() <= 16 || dealer_hand.get_score() == 17 && dealer_hand.get_score() > 0) {
 			hit(deck, 1, dealer_hand);

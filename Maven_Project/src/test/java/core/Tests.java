@@ -29,7 +29,7 @@ public class Tests extends TestCase {
 	Card king_d = new Card("D", "K");
 	Card king_s = new Card("S", "K");
 	
-	Guest guest = new Guest();
+	Guest guest = new Guest("Guest");
 	Dealer dealer = new Dealer();
 	
 	Deck deck_maker = new Deck();
@@ -246,7 +246,7 @@ public class Tests extends TestCase {
 		
 		dealer.get_default_hand().add(eight_c);
 		
-		Game_Controller.determine_winner(guest, dealer);
+		game.determine_winner(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 	
@@ -261,7 +261,6 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(ace_d);
 		dealer.get_default_hand().add(two_s);
 		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
 		
 		deck_maker.make_deck(deck_1);
 		dealer.dealer_turn(deck_1, guest, dealer.get_default_hand());
@@ -281,13 +280,11 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(six_s);
 		
 		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
 		
 		deck_maker.make_deck(deck_1);
 		temp_card_1 = deck_1.peek();
 		
 		dealer.dealer_turn(deck_1, guest, dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
 		
 		assertFalse(temp_card_1 == deck_1.peek());
 	}
@@ -342,7 +339,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(king_d);
 		dealer.get_default_hand().add(king_s);
 		
-		Game_Controller.determine_winner(guest, dealer);
+		game.determine_winner(guest, dealer);
 		
 		assertTrue(dealer.get_default_hand().bust());
 		assertTrue(guest.get_winner());
@@ -540,7 +537,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(six_s);
 		dealer.get_default_hand().add(nine_s);
 		
-		assertTrue(Game_Controller.blackjack_win(guest, dealer));
+		assertTrue(game.blackjack_win(guest, dealer));
 		assertTrue(guest.get_winner());
 	}
 	
@@ -559,7 +556,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(six_s);
 		dealer.get_default_hand().add(ten_h); 	// ten
 		
-		Game_Controller.blackjack_win(guest, dealer);
+		game.blackjack_win(guest, dealer);
 		assertTrue(dealer.get_winner());
 		dealer.get_default_hand().clear();
 		
@@ -571,7 +568,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(ace_d);	// ace
 		dealer.get_default_hand().add(nine_s);
 		
-		Game_Controller.blackjack_win(guest, dealer);
+		game.blackjack_win(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 	
@@ -585,7 +582,6 @@ public class Tests extends TestCase {
 		
 		guest.get_default_hand().add(king_c);
 		System.out.println(guest.get_default_hand());
-		View.score(guest.get_default_hand());
 		assertEquals(10, guest.get_default_hand().get_score());
 	}
 	
@@ -599,7 +595,6 @@ public class Tests extends TestCase {
 		
 		dealer.get_default_hand().add(five_d);
 		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
 		
 		assertEquals(5, dealer.get_default_hand().get_score());
 		dealer.get_default_hand().clear();
@@ -607,7 +602,6 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(eight_c);
 		dealer.get_default_hand().add(ace_d);
 		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
 		
 		assertEquals(19, dealer.get_default_hand().get_score());
 	}
@@ -626,7 +620,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(king_c);
 		dealer.get_default_hand().add(six_s);
 		
-		Game_Controller.determine_winner(guest, dealer);
+		game.determine_winner(guest, dealer);
 		assertTrue(guest.get_winner());
 	}
 	
@@ -643,7 +637,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(king_c);
 		dealer.get_default_hand().add(six_s);
 		
-		Game_Controller.determine_winner(guest, dealer);
+		game.determine_winner(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 	
@@ -663,12 +657,12 @@ public class Tests extends TestCase {
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(Game_Controller.choose_split(guest)) {
+//		if(game.choose_split(guest)) {
 //			guest.split_hand();
-//			Game_Controller.split_turn(deck_1, guest);
+//			game.split_turn(deck_1, guest);
 //		}
 //		
-//		Game_Controller.determine_winner(guest, dealer);
+//		game.determine_winner(guest, dealer);
 //	}
 	
 	/**
@@ -687,13 +681,13 @@ public class Tests extends TestCase {
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(Game_Controller.choose_split(dealer)) {
+//		if(game.choose_split(dealer)) {
 //			dealer.split_hand();
 //			dealer.dealer_turn(deck_1, guest, dealer.get_split_hand_1());
 //			dealer.dealer_turn(deck_1, guest, dealer.get_split_hand_2());
 //		}
 //		
-//		Game_Controller.determine_winner(guest, dealer);
+//		game.determine_winner(guest, dealer);
 //	}
 
 }

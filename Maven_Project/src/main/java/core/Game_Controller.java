@@ -2,7 +2,6 @@ package core;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 import java.util.Stack;
 
 public class Game_Controller {
@@ -15,6 +14,20 @@ public class Game_Controller {
 	private Guest guest;
 	private Dealer dealer;
 
+	/************************
+	 * INSTANCE VARIABLE(S) *
+	 ************************/
+	private String mode;
+	private String guest_name;
+
+	/******************
+	 * CONSTRUCTOR(S) *
+	 ******************/
+	public Game_Controller() {
+		mode = "";
+		guest_name = "Guest";
+	}
+
 	/********
 	 * ELSE *
 	 ********/
@@ -24,12 +37,16 @@ public class Game_Controller {
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
-	public void choose_mode(Scanner scanner) throws FileNotFoundException, IOException {
-		System.out.println("Console or file input? (c/f): ");
-		String mode = scanner.next();
+	public void start() throws FileNotFoundException, IOException {
+		View.welcome();
+
+		System.out.println("Would you like to play using console or file input? (c/f): ");
+		mode = View.scanner.next();
 
 		switch(mode) {
-		case "c":
+		case "c":			
+			System.out.println("What is your name?: ");
+			guest_name = View.scanner.next();
 			play_console();
 			break;
 		case "f":
@@ -37,7 +54,7 @@ public class Game_Controller {
 			break;
 		default:
 			View.inavlid_input();
-			choose_mode(scanner);
+			start();
 			break;
 		}
 	}
@@ -50,16 +67,18 @@ public class Game_Controller {
 	public void play_console() throws FileNotFoundException, IOException {
 		// Local variables
 		deck = new Deck();
-		guest = new Guest();
+		guest = new Guest(guest_name);
 		dealer = new Dealer();
+		
+		View.divider();
 
 		// Player setup
 		guest.hit(deck, draw_times, guest.get_default_hand());
-		System.out.println(guest.get_default_hand());
+		View.hand(guest, guest.get_default_hand());
 
 		// Dealer setup
 		dealer.hit(deck, draw_times, dealer.get_default_hand());
-		System.out.println("Dealer's face-up card is: [" + dealer.get_default_hand().get(0).toString() + "]");
+		System.out.println("Dealer: [" + dealer.get_default_hand().get(0) + "]");
 
 		blackjack_win(guest, dealer);
 
@@ -73,14 +92,11 @@ public class Game_Controller {
 
 			// Dealer's turn
 			if(!guest.completely_busted()) {
-				System.out.println(dealer.get_default_hand());
-				if(dealer.can_split()) {
-					if(choose_split(dealer)) {
-						dealer.split_hand();
-						dealer.dealer_turn(deck, guest, dealer.get_split_hand_1());
-						dealer.dealer_turn(deck, guest, dealer.get_split_hand_2());
-					}
-					else dealer.dealer_turn(deck, guest, dealer.get_default_hand());
+				View.hand(dealer, dealer.get_default_hand());
+				if(dealer.can_split() && choose_split(dealer)) {
+					dealer.split_hand();
+					dealer.dealer_turn(deck, guest, dealer.get_split_hand_1());
+					dealer.dealer_turn(deck, guest, dealer.get_split_hand_2());
 				}
 				else dealer.dealer_turn(deck, guest, dealer.get_default_hand());
 			}
@@ -99,10 +115,10 @@ public class Game_Controller {
 	public void play_file() throws FileNotFoundException, IOException {
 		// Local variables
 		boolean stand = false;
-		guest = new Guest();
+		guest = new Guest(guest_name);
 		dealer = new Dealer();
 
-		// Paths to files
+		// File paths
 		//		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
 		//		String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
 		String path_3 = "src\\main\\java\\text_files\\Input_File_3.txt";
@@ -118,25 +134,21 @@ public class Game_Controller {
 			reader.add_card_from_input(guest, commands, i, guest.get_default_hand());
 		}
 
-		// Interface output
-		System.out.println(guest.get_default_hand());
-		View.score(guest.get_default_hand());
+		View.divider();
+		View.hand(guest, guest.get_default_hand());
 
 		// Draw dealer's first two cards
 		for(int i = draw_times; i < 4; ++i) {
 			reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());
 		}
 
-		// Interface output
-		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
+		View.hand(dealer, dealer.get_default_hand());
 
 		// Go through the rest of the input
 		for(int i = 4; i < commands.length; ++i) {
-			/*
-			 * Add cards to player's default hand until arr[i].charAt(0) == 'S' and the same string is of length 1
-			 * After this point, all cards are added to the dealer
-			 */
+
+			// Add cards to player's default hand until arr[i].charAt(0) == 'S' and the same string is of length 1
+			// After this point, all cards are added to the dealer
 			if(commands[i].charAt(0) == 'S' && commands[i].length() == 1) {
 				stand = true;
 				continue;
@@ -151,11 +163,8 @@ public class Game_Controller {
 			else reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());	
 		}
 
-		// Interface output
-		System.out.println(guest.get_default_hand());
-		View.score(guest.get_default_hand());
-		System.out.println(dealer.get_default_hand());
-		View.score(dealer.get_default_hand());
+		View.hand(guest, guest.get_default_hand());
+		View.hand(dealer, dealer.get_default_hand());
 
 		// End game
 		determine_winner(guest, dealer);
@@ -168,12 +177,14 @@ public class Game_Controller {
 	 * @throws FileNotFoundException 
 	 */
 	public void continue_play() throws FileNotFoundException, IOException {
+		View.divider();
 		System.out.print("Continue playing? (y/n): ");
 		String continue_play = View.scanner.next();
 
 		switch(continue_play) {
 		case "y":
-			choose_mode(View.scanner);
+			if(mode.equals("c")) play_console();
+			else play_file();
 			break;
 		case "n":
 			System.out.println("Thanks for playing");
@@ -189,72 +200,54 @@ public class Game_Controller {
 	 * If neither the player nor the dealer busts, scores are compared to determine winner
 	 * @param dealer
 	 */
-	public static void determine_winner(Player player, Player dealer) {	
+	public void determine_winner(Guest guest, Dealer dealer) {	
 		// Variables
-		int player_highest_score = 0;
-		int dealer_highest_score = 0;
-		Hand player_best_hand = new Hand();
+		Hand guest_best_hand = new Hand();
 		Hand dealer_best_hand = new Hand();
 
-		// Check if player is bust and find its hand with the highest score under 22
-		if(!player.get_default_hand().bust() && !player.get_splitted()) {
-			player_highest_score = player.get_default_hand().get_score();
-			player_best_hand = player.get_default_hand();
-		}
-		else if(player.get_default_hand().bust() && !player.get_splitted()) {
-			player_best_hand = player.get_default_hand();
+		if(!guest.get_splitted()) guest_best_hand = guest.get_default_hand();
+		else {
+			// Not else-if, so that both split hands are checked if none of them busted
+			if(!guest.get_split_hand_1().bust()) guest_best_hand = guest.get_split_hand_1();
+			if(guest_best_hand.get_score() < guest.get_split_hand_2().get_score() && !guest.get_split_hand_2().bust()) guest_best_hand = guest.get_split_hand_2();
 		}
 
-		// Not else-if, so that both split hands are checked if none of them busted
-		if(player_highest_score < player.get_split_hand_1().get_score() && !player.get_split_hand_1().bust()) {
-			player_highest_score = player.get_split_hand_1().get_score();
-			player_best_hand = player.get_split_hand_1();
-		}
-		if(player_highest_score < player.get_split_hand_2().get_score() && !player.get_split_hand_2().bust()) {
-			player_highest_score = player.get_split_hand_2().get_score();
-			player_best_hand = player.get_split_hand_2();
-		}
-
-		// Check if dealer is bust and find its hand with the highest score under 22
-		if(!dealer.get_default_hand().bust() && !dealer.get_splitted()) {
-			dealer_highest_score = dealer.get_default_hand().get_score();
-			dealer_best_hand = dealer.get_default_hand();
-		}
-		else if(dealer.get_default_hand().bust() && !dealer.get_splitted()) {
-			dealer_best_hand = dealer.get_default_hand();
-		}
-
-		// Not else-if, so that both split hands are checked if none of them busted
-		if(dealer_highest_score < dealer.get_split_hand_1().get_score() && !dealer.get_split_hand_1().bust()) {
-			dealer_highest_score = dealer.get_split_hand_1().get_score();
-			dealer_best_hand = dealer.get_split_hand_1();
-		}
-		if(dealer_highest_score < dealer.get_split_hand_2().get_score() && !dealer.get_split_hand_2().bust()) {
-			dealer_highest_score = dealer.get_split_hand_2().get_score();
-			dealer_best_hand = dealer.get_split_hand_2();
+		if(!dealer.get_splitted()) dealer_best_hand = dealer.get_default_hand();
+		else {
+			// Not else-if, so that both split hands are checked if none of them busted
+			if(!dealer.get_split_hand_1().bust()) dealer_best_hand = dealer.get_split_hand_1();
+			if(dealer_best_hand.get_score() < dealer.get_split_hand_2().get_score() && !dealer.get_split_hand_2().bust()) dealer_best_hand = dealer.get_split_hand_2();
 		}
 
 		// Interface output
-		if(player_highest_score == 0) {
-			System.out.println("Player busted.\n" +
-					"Dealer wins: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.");
+		if(guest_best_hand.bust()) {
+			System.out.print(guest_name + " busted -> ");
+			View.hand(guest, guest_best_hand);
+			System.out.print("Dealer wins -> ");
+			View.hand(dealer, dealer_best_hand);
 			dealer.set_winner(true);
 		}
-		else if(dealer_highest_score == 0) {
-			System.out.println("Dealer busted.\n" + 
-					"Player wins: " + player_best_hand.toString() + " (" + player_highest_score + ") points.");
-			player.set_winner(true);
+		else if(dealer_best_hand.bust()) {
+			System.out.print("Dealer busted -> ");
+			View.hand(dealer, dealer_best_hand); 
+			System.out.print(guest_name + " wins -> ");
+			View.hand(guest, guest_best_hand);
+			guest.set_winner(true);
 		}
-		else if(player_highest_score > dealer_highest_score) {
-			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" +
-					"Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" +
-					"Winner: Player");
-			player.set_winner(true);
+		else if(guest_best_hand.get_score() > dealer_best_hand.get_score()) {
+			System.out.print(guest_name + " -> ");
+			View.hand(guest, guest_best_hand);
+			System.out.print("Dealer -> ");
+			View.hand(dealer, dealer_best_hand);
+			System.out.println("Winner -> " + guest_name);
+			guest.set_winner(true);
 		}
 		else {
-			System.out.println("Player: " + player_best_hand.toString() + " (" + player_highest_score + ") points.\n" + 
-					"Dealer: " + dealer_best_hand.toString() + " (" + dealer_highest_score + ") points.\n" + 
-					"Winner: Dealer");
+			System.out.print(guest_name + " -> ");
+			View.hand(guest, guest_best_hand);
+			System.out.print("Dealer -> ");
+			View.hand(dealer, dealer_best_hand);
+			System.out.println("Winner -> Dealer");
 			dealer.set_winner(true);
 		}
 	}
@@ -265,7 +258,7 @@ public class Game_Controller {
 	 * @param dealer whose hands will be checked for blackjacks
 	 * @return true if either the player, dealer or both have at least one blackjack
 	 */
-	public static boolean blackjack_win(Player player, Player dealer) {
+	public boolean blackjack_win(Player player, Player dealer) {
 		if(player.get_default_hand().has_blackjack() || player.get_split_hand_1().has_blackjack() || player.get_split_hand_2().has_blackjack()) {
 			player.set_has_blackjack(true);
 		}
@@ -296,14 +289,14 @@ public class Game_Controller {
 	 * Give player the option to split hand.
 	 * @return true if split has been chosen
 	 */
-	public static boolean choose_split(Player guest_or_house) {
+	public boolean choose_split(Player guest_or_dealer) {
 		String choose_split;
 
 		System.out.println("Would you like to split? (y/n): ");
 		choose_split = View.scanner.next();
 
 		if(choose_split.equalsIgnoreCase("y")) {
-			guest_or_house.set_splitted(true);
+			guest_or_dealer.set_splitted(true);
 			return true;
 		}
 		else return false;
@@ -315,34 +308,32 @@ public class Game_Controller {
 	 * @param hand to add card drawn
 	 * @return true if stand is chosen
 	 */
-	public static boolean hit_or_stand(Stack<Card> deck, Hand hand, Player guest_or_house) {
+	public boolean hit_or_stand(Stack<Card> deck, Hand hand, Player guest_or_dealer) {
 		// Local variables
 		boolean stand = false;
 
 		while(!hand.bust() && !stand && !hand.has_blackjack()) {
-			// Interface output
-			System.out.println(hand);
-			View.score(hand);
-			System.out.print("Hit or stand? (h/s): ");
+			View.hand(guest_or_dealer, hand);
+			System.out.print("\nHit or stand? (h/s): ");
 			String hit_or_stand = View.scanner.next();
 
 			// control structure for hit or stand
 			switch(hit_or_stand) {
 			case "h":
-				guest_or_house.hit(deck, 1, hand);
+				guest_or_dealer.hit(deck, 1, hand);
 				break;
 			case "s":
 				stand = true;	
 				break;
 			default:
 				View.inavlid_input();
-				hit_or_stand(deck, hand, guest_or_house);
+				hit_or_stand(deck, hand, guest_or_dealer);
 				break;
 			}
 
 			if(hand.bust()) {
 				System.out.println(hand);
-				guest_or_house.completely_busted();
+				guest_or_dealer.completely_busted();
 			}
 		}
 
@@ -352,13 +343,13 @@ public class Game_Controller {
 	/**
 	 * Routine for a turn after splitting initial hand.
 	 * @param deck to draw from
-	 * @param guest_or_house whose turn it is
+	 * @param guest_or_dealer whose turn it is
 	 */
-	public static void split_turn(Stack<Card> deck, Player guest_or_house) {
-		guest_or_house.hit(deck, 1, guest_or_house.get_split_hand_1());
-		hit_or_stand(deck, guest_or_house.get_split_hand_1(), guest_or_house);
+	public void split_turn(Stack<Card> deck, Player guest_or_dealer) {
+		guest_or_dealer.hit(deck, 1, guest_or_dealer.get_split_hand_1());
+		hit_or_stand(deck, guest_or_dealer.get_split_hand_1(), guest_or_dealer);
 
-		guest_or_house.hit(deck, 1, guest_or_house.get_split_hand_2());
-		hit_or_stand(deck, guest_or_house.get_split_hand_2(), guest_or_house);
+		guest_or_dealer.hit(deck, 1, guest_or_dealer.get_split_hand_2());
+		hit_or_stand(deck, guest_or_dealer.get_split_hand_2(), guest_or_dealer);
 	}
 }

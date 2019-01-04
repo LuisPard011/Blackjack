@@ -26,13 +26,18 @@ public class View {
 	}
 	
 	/**
-	 * Interface output to display hand's score.
-	 */
-	public static void score(Hand hand) { System.out.println("Score is: " + hand.get_score()); }
-	
-	/**
 	 * Invalid input message.
 	 */
 	public static void inavlid_input() { System.out.println("Invalid input"); }
+	
+	/**
+	 * Show hand and who it belongs to.
+	 * @param guest_or_dealer whose hand will be shown
+	 * @param hand to be shown
+	 */
+	public static void hand(Player guest_or_dealer, Hand hand) {
+		if(guest_or_dealer instanceof Guest) System.out.println(((Guest) guest_or_dealer).get_name() + ": " + hand);
+		else if(guest_or_dealer instanceof Dealer) System.out.println("Dealer: "  + hand);
+	}
 
 }
