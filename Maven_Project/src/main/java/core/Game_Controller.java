@@ -10,9 +10,6 @@ public class Game_Controller {
 	 * CLASS VARIABLE(S) *
 	 *********************/
 	private final int draw_times = 2;
-	private Deck deck;
-	private Guest guest;
-	private Dealer dealer;
 
 	/************************
 	 * INSTANCE VARIABLE(S) *
@@ -66,13 +63,13 @@ public class Game_Controller {
 	 */
 	public void play_console() throws FileNotFoundException, IOException {
 		// Local variables
-		deck = new Deck();
-		guest = new Guest(guest_name);
-		dealer = new Dealer();
+		Deck deck = new Deck();
+		Guest guest = new Guest(guest_name);
+		Dealer dealer = new Dealer();
 		
 		View.divider();
 
-		// Player setup
+		// Guest setup
 		guest.hit(deck, draw_times, guest.get_default_hand());
 		View.hand(guest, guest.get_default_hand());
 
@@ -81,24 +78,27 @@ public class Game_Controller {
 		System.out.println("Dealer: [" + dealer.get_default_hand().get(0) + "]");
 
 		blackjack_win(guest, dealer);
-
+		
+		game:
 		if(!guest.get_winner() && !dealer.get_winner()) {
-			// Player's turn
+			// Guest's turn
 			if(guest.can_split() && choose_split(guest)) {
 				guest.split_hand();
 				split_turn(deck, guest);
 			}
 			else hit_or_stand(deck, guest.get_default_hand(), guest);
+			
+			if(blackjack_win(guest, dealer)) break game;
 
 			// Dealer's turn
 			if(!guest.completely_busted()) {
 				View.hand(dealer, dealer.get_default_hand());
 				if(dealer.can_split() && choose_split(dealer)) {
 					dealer.split_hand();
-					dealer.dealer_turn(deck, guest, dealer.get_split_hand_1());
-					dealer.dealer_turn(deck, guest, dealer.get_split_hand_2());
+					dealer.dealer_turn(deck, dealer.get_split_hand_1());
+					dealer.dealer_turn(deck, dealer.get_split_hand_2());
 				}
-				else dealer.dealer_turn(deck, guest, dealer.get_default_hand());
+				else dealer.dealer_turn(deck, dealer.get_default_hand());
 			}
 		}
 
@@ -115,8 +115,8 @@ public class Game_Controller {
 	public void play_file() throws FileNotFoundException, IOException {
 		// Local variables
 		boolean stand = false;
-		guest = new Guest(guest_name);
-		dealer = new Dealer();
+		Guest guest = new Guest(guest_name);
+		Dealer dealer = new Dealer();
 
 		// File paths
 		//		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
@@ -267,17 +267,17 @@ public class Game_Controller {
 		}
 
 		if(player.get_has_blackjack() && !dealer.get_has_blackjack()) {
-			System.out.println("Player has blackjack and dealer does not.\nWinner: Player" );
+			System.out.println(guest_name + " has blackjack and dealer does not.\nWinner: " + guest_name);
 			player.set_winner(true);
 			return true;
 		}
 		else if(!player.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Player does not have a blackjack, but dealer does.\nWinner: Dealer");
+			System.out.println(guest_name + " does not have a blackjack, but dealer does.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
 		else if(player.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Both the player and dealer have a blackjack.\nWinner: Dealer");
+			System.out.println("Both " + guest_name + " and dealer have a blackjack.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
@@ -314,7 +314,7 @@ public class Game_Controller {
 
 		while(!hand.bust() && !stand && !hand.has_blackjack()) {
 			View.hand(guest_or_dealer, hand);
-			System.out.print("\nHit or stand? (h/s): ");
+			System.out.print("Hit or stand? (h/s): ");
 			String hit_or_stand = View.scanner.next();
 
 			// control structure for hit or stand
@@ -329,11 +329,6 @@ public class Game_Controller {
 				View.inavlid_input();
 				hit_or_stand(deck, hand, guest_or_dealer);
 				break;
-			}
-
-			if(hand.bust()) {
-				System.out.println(hand);
-				guest_or_dealer.completely_busted();
 			}
 		}
 

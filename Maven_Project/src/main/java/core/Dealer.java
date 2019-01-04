@@ -8,19 +8,15 @@ public class Dealer extends Player {
 	 * ELSE *
 	 ********/
 	/**
+	 * Draw repeatedly until dealer's score is less than 16 or it has a soft 17.
 	 * @param deck to draw from
-	 * @param player to compare with when deciding win by blackjack
 	 * @param dealer_hand hand to draw to (e.g. default, split_1, split_2)
-	 * @return true if blackjack found
+	 * @return true if at least one card was drawn
 	 */
-	public boolean dealer_turn(Stack<Card> deck, Player player, Hand dealer_hand) {
-		// Draw repeatedly until dealer's score is less than 16 or it has a soft 17
-		while(dealer_hand.get_score() <= 16 || dealer_hand.get_score() == 17 && dealer_hand.get_score() > 0) {
-			hit(deck, 1, dealer_hand);
-			completely_busted();
-		}
-		
-		return false;
+	public boolean dealer_turn(Stack<Card> deck, Hand dealer_hand) {
+		boolean return_code = false;
+		while(dealer_hand.get_score() <= 16) return_code = return_code | hit(deck, 1, dealer_hand);
+		return return_code;
 	}
 
 }

@@ -10,9 +10,7 @@ public class Guest extends Player{
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
-	public Guest(String name) {
-		this.name = name;
-	}
+	public Guest(String name) { this.name = name; }
 	
 	/*************
 	 * GETTER(S) *
