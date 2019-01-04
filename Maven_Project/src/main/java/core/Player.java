@@ -9,8 +9,9 @@ public class Player {
 	private Hand default_hand;
 	private Hand split_hand_1;
 	private Hand split_hand_2;
-	private boolean splitted;
+	
 	private boolean has_blackjack;
+	private boolean splitted;
 	private boolean winner;
 
 	/******************
@@ -20,8 +21,9 @@ public class Player {
 		default_hand = new Hand();
 		split_hand_1 = new Hand();
 		split_hand_2 = new Hand();
-		splitted = false;
+		
 		has_blackjack = false;
+		splitted = false;
 		winner = false;
 	}
 
@@ -31,14 +33,16 @@ public class Player {
 	public Hand get_default_hand() { return default_hand; }
 	public Hand get_split_hand_1() { return split_hand_1; }
 	public Hand get_split_hand_2() { return split_hand_2; }
-	public boolean get_splitted() { return splitted; }
+	
 	public boolean get_has_blackjack() { return has_blackjack; }
+	public boolean get_splitted() { return splitted; }
 	public boolean get_winner() { return winner; }
 
 	/*************
 	 * SETTER(S) *
 	 *************/
 	public void set_has_blackjack(boolean true_or_false) { has_blackjack = true_or_false; }
+	public void set_splitted(boolean true_or_false) { splitted = true_or_false; }
 	public void set_winner(boolean true_or_false) { winner = true_or_false; }
 
 	/********
@@ -62,7 +66,7 @@ public class Player {
 	 * @param hand to add card drawn
 	 * @return true if stand is chosen
 	 */
-	public void hit_or_stand(Stack<Card> deck, Hand hand, Dealer dealer) {
+	public void hit_or_stand(Stack<Card> deck, Hand hand, House dealer) {
 		// Local variables
 		boolean stand = false;
 
@@ -94,23 +98,6 @@ public class Player {
 				bust();
 			}
 		}
-	}
-
-	/**
-	 * Give player the option to split hand.
-	 * @return true if split has been chosen
-	 */
-	public boolean choose_split() {
-		String choose_split;
-
-		System.out.println("Would you like to split? (y/n): ");
-		choose_split = View.scanner.next();
-
-		if(choose_split.equalsIgnoreCase("y")) {
-			splitted = true;
-			return true;
-		}
-		else return false;
 	}
 
 	/**
@@ -148,7 +135,7 @@ public class Player {
 	 * Routine for a turn after splitting initial hand.
 	 * @param deck to draw from
 	 */
-	public void split_turn(Stack<Card> deck, Dealer dealer) {
+	public void split_turn(Stack<Card> deck, House dealer) {
 		hit(deck, 1, get_split_hand_1());
 		hit_or_stand(deck, get_split_hand_1(), dealer);
 

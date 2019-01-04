@@ -38,8 +38,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="core.Dealer" project="Maven_Project" 
-    file="/Maven_Project/src/main/java/core/Dealer.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="core.House" project="Maven_Project" 
+    file="/Maven_Project/src/main/java/core/House.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="99" width="234" x="854" y="804"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

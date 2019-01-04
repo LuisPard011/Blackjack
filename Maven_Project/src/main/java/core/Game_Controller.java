@@ -12,7 +12,7 @@ public class Game_Controller {
 	private final int draw_times = 2;
 	private Deck deck;
 	private Player player;
-	private Dealer dealer;
+	private House dealer;
 
 	/********
 	 * ELSE *
@@ -50,7 +50,7 @@ public class Game_Controller {
 		// Local variables
 		deck = new Deck();
 		player = new Player();
-		dealer = new Dealer();
+		dealer = new House();
 
 		// Player setup
 		player.hit(deck, draw_times, player.get_default_hand());
@@ -65,7 +65,7 @@ public class Game_Controller {
 		if(!player.get_winner() && !dealer.get_winner()) {
 			// Player's turn
 			if(player.can_split()) {
-				if(player.choose_split()) {
+				if(choose_split(player)) {
 					player.split_hand();
 					player.split_turn(deck, dealer);
 				}
@@ -76,7 +76,7 @@ public class Game_Controller {
 			// Dealer's turn
 			System.out.println(dealer.get_default_hand());
 			if(dealer.can_split()) {
-				if(dealer.choose_split()) {
+				if(choose_split(dealer)) {
 					dealer.split_hand();
 					dealer.dealer_turn(deck, player, dealer.get_split_hand_1());
 					dealer.dealer_turn(deck, player, dealer.get_split_hand_2());
@@ -101,7 +101,7 @@ public class Game_Controller {
 		// Local variables
 		boolean stand = false;
 		player = new Player();
-		dealer = new Dealer();
+		dealer = new House();
 
 		// Paths to files
 		//		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
@@ -190,7 +190,7 @@ public class Game_Controller {
 	 * If neither the player nor the dealer busts, scores are compared to determine winner
 	 * @param dealer
 	 */
-	public static void determine_winner(Player player, Dealer dealer) {	
+	public static void determine_winner(Player player, House dealer) {	
 		// Variables
 		int player_highest_score = 0;
 		int dealer_highest_score = 0;
@@ -256,7 +256,7 @@ public class Game_Controller {
 	 * @param dealer whose hands will be checked for blackjacks
 	 * @return true if either the player, dealer or both have at least one blackjack
 	 */
-	public static boolean blackjack_win(Player player, Dealer dealer) {
+	public static boolean blackjack_win(Player player, House dealer) {
 		if(player.get_default_hand().has_blackjack() || player.get_split_hand_1().has_blackjack() || player.get_split_hand_2().has_blackjack()) {
 			player.set_has_blackjack(true);
 		}
@@ -281,5 +281,22 @@ public class Game_Controller {
 		}
 
 		return false;
+	}
+	
+	/**
+	 * Give player the option to split hand.
+	 * @return true if split has been chosen
+	 */
+	public static boolean choose_split(Player guest_or_house) {
+		String choose_split;
+
+		System.out.println("Would you like to split? (y/n): ");
+		choose_split = View.scanner.next();
+
+		if(choose_split.equalsIgnoreCase("y")) {
+			guest_or_house.set_splitted(true);
+			return true;
+		}
+		else return false;
 	}
 }

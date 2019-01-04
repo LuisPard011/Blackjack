@@ -2,7 +2,7 @@ package core;
 
 import java.util.Stack;
 
-public class Dealer extends Player {	
+public class House extends Player {	
 	
 	/********
 	 * ELSE *

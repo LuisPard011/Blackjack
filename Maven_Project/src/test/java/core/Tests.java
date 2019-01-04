@@ -37,13 +37,13 @@ public class Tests extends TestCase {
 	Player player_5 = new Player();
 	Player player_6 = new Player();
 	
-	Dealer dealer_0 = new Dealer();
-	Dealer dealer_1 = new Dealer();
-	Dealer dealer_2 = new Dealer();
-	Dealer dealer_3 = new Dealer();
-	Dealer dealer_4 = new Dealer();
-	Dealer dealer_5 = new Dealer();
-	Dealer dealer_6 = new Dealer();
+	House dealer_0 = new House();
+	House dealer_1 = new House();
+	House dealer_2 = new House();
+	House dealer_3 = new House();
+	House dealer_4 = new House();
+	House dealer_5 = new House();
+	House dealer_6 = new House();
 	
 	Deck deck_maker = new Deck();
 	Game_Controller game = new Game_Controller();
@@ -659,7 +659,7 @@ public class Tests extends TestCase {
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(player_0.choose_split()) {
+//		if(Game_Controller.choose_split(player_0)) {
 //			player_0.split_hand();
 //			player_0.split_turn(deck_1, dealer_0);
 //		}
@@ -683,7 +683,7 @@ public class Tests extends TestCase {
 //		
 //		deck_maker.make_deck(deck_1);
 //		
-//		if(dealer_0.choose_split()) {
+//		if(Game_Controller.choose_split(dealer_0)) {
 //			dealer_0.split_hand();
 //			dealer_0.dealer_turn(deck_1, player_0, dealer_0.get_split_hand_1());
 //			dealer_0.dealer_turn(deck_1, player_0, dealer_0.get_split_hand_2());
