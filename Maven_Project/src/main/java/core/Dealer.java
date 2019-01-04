@@ -2,7 +2,7 @@ package core;
 
 import java.util.Stack;
 
-public class House extends Player {	
+public class Dealer extends Player {	
 	
 	/********
 	 * ELSE *
@@ -19,7 +19,7 @@ public class House extends Player {
 		// Draw repeatedly until dealer's score is less than 16 or it has a soft 17
 		while(dealer_hand.get_score() <= 16 || dealer_hand.get_score() == 17 && dealer_hand.get_score() > 0) {
 			hit(deck, 1, dealer_hand);
-			bust();
+			completely_busted();
 		}
 		
 		return false;

@@ -50,9 +50,9 @@ public class Player {
 	 ********/
 	/**
 	 * Draw_times cards from deck and put them into hand.
-	 * @param deck
-	 * @param draw_times
-	 * @param hand
+	 * @param deck to draw from
+	 * @param draw_times number of cards from deck
+	 * @param hand to add drawn cards
 	 * @return true if at least one card was drawn
 	 */
 	public boolean hit(Stack<Card> deck, int draw_times, Hand hand) {
@@ -84,19 +84,12 @@ public class Player {
 	}
 
 	/**
-	 * @return true if player's default hand or both split hands have busted
+	 * @return true if all of this player's hands have busted
 	 */
-	public boolean bust() {
-		if(!can_split() && default_hand.bust()) {
-			System.out.println(default_hand + "\nBusted");
-			return true;
-		}
-		else if(can_split() && split_hand_1.bust() && split_hand_2.bust()) {
-			System.out.println("Busted");
-			return true;
-		}
+	public boolean completely_busted() {
+		if(!can_split() && default_hand.bust()) return true;
+		else if(can_split() && split_hand_1.bust() && split_hand_2.bust()) return true;
 		else return false;
 	}
-
 
 } 

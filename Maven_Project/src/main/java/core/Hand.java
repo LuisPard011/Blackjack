@@ -70,7 +70,7 @@ public class Hand extends ArrayList<Card>{
 	 ********/
 	/**
 	 * Determine if hand has a blackjack.
-	 * @return true if aces and cards worth 10 points are found
+	 * @return true blackjack found and this hand is not bust
 	 */
 	public boolean has_blackjack() {
 		// Variables
@@ -93,7 +93,7 @@ public class Hand extends ArrayList<Card>{
 		}
 
 		// Determine whether or not hand has blackjack
-		if(has_ace && has_ten_value) return true;
+		if(has_ace && has_ten_value && !bust()) return true;
 		else return false;
 	}
 
