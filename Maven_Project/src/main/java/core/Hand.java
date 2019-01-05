@@ -142,16 +142,14 @@ public class Hand extends ArrayList<Card>{
 	
 	/**
 	 * Helper function for soft_17().
-	 * @param ace_indices
+	 * @param ace_indices is a list with the indices of aces in this hand
 	 * @return sum of card points other than the one ace worth 11 points
 	 */
 	private int sum_of_rest(ArrayList<Integer> ace_indices) {
 		int sum = 0;
 		
 		for(int i = 0; i < size(); i++) {
-			if(!ace_indices.contains(i)) {
-				sum += get(i).get_rank();
-			}
+			if(!ace_indices.contains(i)) sum += get(i).get_rank();
 		}
 		
 		return sum;
