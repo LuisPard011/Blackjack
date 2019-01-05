@@ -119,15 +119,41 @@ public class Game_Controller {
 		Dealer dealer = new Dealer();
 
 		// File paths
-		//		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
-		//		String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
+		int path_to_play;
+		String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
+		String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
 		String path_3 = "src\\main\\java\\text_files\\Input_File_3.txt";
-		//		String path_4 = "src\\main\\java\\text_files\\Input_File_4.txt";
-		//		String path_5 = "src\\main\\java\\text_files\\Input_File_5.txt";
+		String path_4 = "src\\main\\java\\text_files\\Input_File_4.txt";
+		String path_5 = "src\\main\\java\\text_files\\Input_File_5.txt";
 
 		// Read file input
 		Reader reader = new Reader();
-		String[] commands = reader.read_file_input(path_3);
+		String[] commands; // = reader.read_file_input(path_3);
+		
+		System.out.println("What path would you like to play? [1-5]: ");
+		path_to_play = View.scanner.nextInt();
+		
+		switch(path_to_play) {
+		case 1:
+			commands = reader.read_file_input(path_1);
+			break;
+		case 2:
+			commands = reader.read_file_input(path_2);
+			break;
+		case 3:
+			commands = reader.read_file_input(path_3);
+			break;
+		case 4:
+			commands = reader.read_file_input(path_4);
+			break;
+		case 5:
+			commands = reader.read_file_input(path_5);
+			break;
+		default:
+			System.out.println("That path does not exist.\nPlease try again.\nThis time only choose a path within the range [1-5], inclusive");
+			play_file();
+			return;
+		}
 
 		// Draw player's first two cards
 		for(int i = 0; i < draw_times; ++i) {
