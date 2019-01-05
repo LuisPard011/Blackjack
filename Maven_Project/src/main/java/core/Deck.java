@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Stack;
 
 /**
- * This class is based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
+ * This class is partially based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
  */
 public class Deck extends Stack<Card> {
 

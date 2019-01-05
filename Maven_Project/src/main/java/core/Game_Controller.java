@@ -235,14 +235,13 @@ public class Game_Controller {
 
 		if(!guest.get_splitted()) guest_best_hand = guest.get_default_hand();
 		else {
-			// Not else-if, so that both split hands are checked if none of them busted
+			// Not else-if, so that both split hands are checked if none of them is bust
 			if(!guest.get_split_hand_1().bust()) guest_best_hand = guest.get_split_hand_1();
 			if(guest_best_hand.get_score() < guest.get_split_hand_2().get_score() && !guest.get_split_hand_2().bust()) guest_best_hand = guest.get_split_hand_2();
 		}
 
 		if(!dealer.get_splitted()) dealer_best_hand = dealer.get_default_hand();
 		else {
-			// Not else-if, so that both split hands are checked if none of them busted
 			if(!dealer.get_split_hand_1().bust()) dealer_best_hand = dealer.get_split_hand_1();
 			if(dealer_best_hand.get_score() < dealer.get_split_hand_2().get_score() && !dealer.get_split_hand_2().bust()) dealer_best_hand = dealer.get_split_hand_2();
 		}

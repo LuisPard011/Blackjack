@@ -3,7 +3,7 @@ package core;
 import java.util.HashMap;
 
 /**
- * This class is based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
+ * This class is partially based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
  */
 public class Card {
 
