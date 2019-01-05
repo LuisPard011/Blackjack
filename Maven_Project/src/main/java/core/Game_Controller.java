@@ -160,10 +160,10 @@ public class Game_Controller {
 		View.divider();
 
 		// Draw player's first two cards
-		for(int i = 0; i < draw_times; i++) reader.add_card_from_input(input_line, i, guest.get_default_hand());
+		for(int i = 0; i < draw_times; i++) reader.add_card_from_input(input_line[i], guest.get_default_hand());
 
 		// Draw dealer's first two cards
-		for(int i = draw_times; i < 4; i++) reader.add_card_from_input(input_line, i, dealer.get_default_hand());
+		for(int i = draw_times; i < 4; i++) reader.add_card_from_input(input_line[i], dealer.get_default_hand());
 
 		// Go through rest of the input
 		input:
@@ -182,8 +182,8 @@ public class Game_Controller {
 					}
 				}
 
-				if(!stand) reader.add_card_from_input(input_line, i, guest.get_default_hand());
-				else reader.add_card_from_input(input_line, i, dealer.get_default_hand());	
+				if(!stand) reader.add_card_from_input(input_line[i], guest.get_default_hand());
+				else reader.add_card_from_input(input_line[i], dealer.get_default_hand());	
 			}
 
 		// End game

@@ -38,14 +38,16 @@ public class Reader {
 	 * @param index of command
 	 * @param hand to add card to
 	 */
-	public void add_card_from_input(String[] commands, int index, Hand hand) {
+	public void add_card_from_input(String command, Hand hand) {
 		Card input_card;
 
-		if(commands[index].charAt(1) != '1') {
-			input_card = new Card(Character.toString(commands[index].charAt(0)), Character.toString(commands[index].charAt(1)));
-		}
-		else {
-			input_card = new Card(Character.toString(commands[index].charAt(0)), "10");
+		switch(command.charAt(1)) {
+		case '1':
+			input_card = new Card(Character.toString(command.charAt(0)), "10");
+			break;
+		default:
+			input_card = new Card(Character.toString(command.charAt(0)), Character.toString(command.charAt(1)));
+			break;
 		}
 
 		hand.add(input_card);
