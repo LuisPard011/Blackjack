@@ -64,7 +64,7 @@ public class Deck extends Stack<Card> {
 	public void make_deck(Stack<Card> deck) {
 		populate_temp_deck();
 		shuffle_temp_deck();
-		for(int i = 0; i < deck_size; ++i) deck.push(this.temp_deck[i]);
+		for(int i = 0; i < deck_size; i++) deck.push(this.temp_deck[i]);
 	}
 
 }
