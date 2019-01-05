@@ -130,6 +130,7 @@ public class Game_Controller {
 		Reader reader = new Reader();
 		String[] commands; // = reader.read_file_input(path_3);
 		
+		System.out.println("Note: Features to support paths 4 and 5 have not been implemented");
 		System.out.println("What path would you like to play? [1-5]: ");
 		path_to_play = View.scanner.nextInt();
 		
