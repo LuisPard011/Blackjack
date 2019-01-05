@@ -29,8 +29,8 @@ public class Game_Controller {
 	 * ELSE *
 	 ********/
 	/**
+	 * Start game.
 	 * Choose between console or file input modes.
-	 * @param scanner
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
@@ -57,7 +57,7 @@ public class Game_Controller {
 	}
 
 	/**
-	 * Play in console mode.
+	 * Play using console input.
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
@@ -66,7 +66,7 @@ public class Game_Controller {
 		Deck deck = new Deck();
 		Guest guest = new Guest(guest_name);
 		Dealer dealer = new Dealer();
-		
+
 		View.divider();
 
 		// Guest setup
@@ -78,29 +78,29 @@ public class Game_Controller {
 		System.out.println("Dealer: [" + dealer.get_default_hand().get(0) + "]");
 
 		blackjack_win(guest, dealer);
-		
-		game:
-		if(!guest.get_winner() && !dealer.get_winner()) {
-			// Guest's turn
-			if(guest.can_split() && choose_split(guest)) {
-				guest.split_hand();
-				split_turn(deck, guest);
-			}
-			else hit_or_stand(deck, guest.get_default_hand(), guest);
-			
-			if(blackjack_win(guest, dealer)) break game;
 
-			// Dealer's turn
-			if(!guest.completely_busted()) {
-				View.hand(dealer, dealer.get_default_hand());
-				if(dealer.can_split() && choose_split(dealer)) {
-					dealer.split_hand();
-					dealer.dealer_turn(deck, dealer.get_split_hand_1());
-					dealer.dealer_turn(deck, dealer.get_split_hand_2());
+		game:
+			if(!guest.get_winner() && !dealer.get_winner()) {
+				// Guest's turn
+				if(guest.can_split() && choose_split(guest)) {
+					guest.split_hand();
+					split_turn(deck, guest);
 				}
-				else dealer.dealer_turn(deck, dealer.get_default_hand());
+				else hit_or_stand(deck, guest.get_default_hand(), guest);
+
+				if(blackjack_win(guest, dealer)) break game;
+
+				// Dealer's turn
+				if(!guest.completely_busted()) {
+					View.hand(dealer, dealer.get_default_hand());
+					if(dealer.can_split() && choose_split(dealer)) {
+						dealer.split_hand();
+						dealer.dealer_turn(deck, dealer.get_split_hand_1());
+						dealer.dealer_turn(deck, dealer.get_split_hand_2());
+					}
+					else dealer.dealer_turn(deck, dealer.get_default_hand());
+				}
 			}
-		}
 
 		// End game
 		determine_winner(guest, dealer);
@@ -108,7 +108,7 @@ public class Game_Controller {
 	}
 
 	/**
-	 * Play in file input mode
+	 * Play using file input.
 	 * @throws FileNotFoundException
 	 * @throws IOException
 	 */
@@ -131,7 +131,7 @@ public class Game_Controller {
 
 		// Draw player's first two cards
 		for(int i = 0; i < draw_times; ++i) {
-			reader.add_card_from_input(guest, commands, i, guest.get_default_hand());
+			reader.add_card_from_input(commands, i, guest.get_default_hand());
 		}
 
 		View.divider();
@@ -139,7 +139,7 @@ public class Game_Controller {
 
 		// Draw dealer's first two cards
 		for(int i = draw_times; i < 4; ++i) {
-			reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());
+			reader.add_card_from_input(commands, i, dealer.get_default_hand());
 		}
 
 		View.hand(dealer, dealer.get_default_hand());
@@ -159,8 +159,8 @@ public class Game_Controller {
 				// maybe continue might come in handy
 			}
 
-			if(!stand) reader.add_card_from_input(guest, commands, i, guest.get_default_hand());
-			else reader.add_card_from_input(dealer, commands, i, dealer.get_default_hand());	
+			if(!stand) reader.add_card_from_input(commands, i, guest.get_default_hand());
+			else reader.add_card_from_input(commands, i, dealer.get_default_hand());	
 		}
 
 		View.hand(guest, guest.get_default_hand());
@@ -172,7 +172,7 @@ public class Game_Controller {
 	}
 
 	/**
-	 * User menu to decide whether or not to continue playing
+	 * User menu to decide whether or not to continue playing.
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
@@ -197,8 +197,9 @@ public class Game_Controller {
 	}
 
 	/**
-	 * If neither the player nor the dealer busts, scores are compared to determine winner
-	 * @param dealer
+	 * Determine game's winner.
+	 * @param guest of this game 
+	 * @param dealer of this game
 	 */
 	public void determine_winner(Guest guest, Dealer dealer) {	
 		// Variables
@@ -253,30 +254,30 @@ public class Game_Controller {
 	}
 
 	/**
-	 * Look for blackjacks in all of player's and dealer's hands.
-	 * @param player whose hands will be checked for blackjacks
+	 * Look for blackjacks in all of guest's and dealer's hands.
+	 * @param guest whose hands will be checked for blackjacks
 	 * @param dealer whose hands will be checked for blackjacks
-	 * @return true if either the player, dealer or both have at least one blackjack
+	 * @return true if either the guest, dealer or both have at least one blackjack
 	 */
-	public boolean blackjack_win(Player player, Player dealer) {
-		if(player.get_default_hand().has_blackjack() || player.get_split_hand_1().has_blackjack() || player.get_split_hand_2().has_blackjack()) {
-			player.set_has_blackjack(true);
+	public boolean blackjack_win(Player guest, Player dealer) {
+		if(guest.get_default_hand().has_blackjack() || guest.get_split_hand_1().has_blackjack() || guest.get_split_hand_2().has_blackjack()) {
+			guest.set_has_blackjack(true);
 		}
 		if(dealer.get_default_hand().has_blackjack() || dealer.get_split_hand_1().has_blackjack() || dealer.get_split_hand_2().has_blackjack()) {
 			dealer.set_has_blackjack(true);
 		}
 
-		if(player.get_has_blackjack() && !dealer.get_has_blackjack()) {
+		if(guest.get_has_blackjack() && !dealer.get_has_blackjack()) {
 			System.out.println(guest_name + " has blackjack and dealer does not.\nWinner: " + guest_name);
-			player.set_winner(true);
+			guest.set_winner(true);
 			return true;
 		}
-		else if(!player.get_has_blackjack() && dealer.get_has_blackjack()) {
+		else if(!guest.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println(guest_name + " does not have a blackjack, but dealer does.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
-		else if(player.get_has_blackjack() && dealer.get_has_blackjack()) {
+		else if(guest.get_has_blackjack() && dealer.get_has_blackjack()) {
 			System.out.println("Both " + guest_name + " and dealer have a blackjack.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
@@ -286,7 +287,7 @@ public class Game_Controller {
 	}
 
 	/**
-	 * Give player the option to split hand.
+	 * Give guest or dealer the option to split hand.
 	 * @return true if split has been chosen
 	 */
 	public boolean choose_split(Player guest_or_dealer) {
@@ -303,31 +304,32 @@ public class Game_Controller {
 	}
 
 	/**
-	 * Give player the option to either hit or stand.
+	 * Give guest the option to either hit or stand.
 	 * @param deck to draw from
 	 * @param hand to add card drawn
+	 * @param guest who will choose to hit or stand
 	 * @return true if stand is chosen
 	 */
-	public boolean hit_or_stand(Stack<Card> deck, Hand hand, Player guest_or_dealer) {
+	public boolean hit_or_stand(Stack<Card> deck, Hand hand, Guest guest) {
 		// Local variables
 		boolean stand = false;
 
 		while(!hand.bust() && !stand && !hand.has_blackjack()) {
-			View.hand(guest_or_dealer, hand);
+			View.hand(guest, hand);
 			System.out.print("Hit or stand? (h/s): ");
 			String hit_or_stand = View.scanner.next();
 
 			// control structure for hit or stand
 			switch(hit_or_stand) {
 			case "h":
-				guest_or_dealer.hit(deck, 1, hand);
+				guest.hit(deck, 1, hand);
 				break;
 			case "s":
 				stand = true;	
 				break;
 			default:
 				View.inavlid_input();
-				hit_or_stand(deck, hand, guest_or_dealer);
+				hit_or_stand(deck, hand, guest);
 				break;
 			}
 		}
@@ -338,13 +340,13 @@ public class Game_Controller {
 	/**
 	 * Routine for a turn after splitting initial hand.
 	 * @param deck to draw from
-	 * @param guest_or_dealer whose turn it is
+	 * @param guest whose turn it is
 	 */
-	public void split_turn(Stack<Card> deck, Player guest_or_dealer) {
-		guest_or_dealer.hit(deck, 1, guest_or_dealer.get_split_hand_1());
-		hit_or_stand(deck, guest_or_dealer.get_split_hand_1(), guest_or_dealer);
+	public void split_turn(Stack<Card> deck, Guest guest) {
+		guest.hit(deck, 1, guest.get_split_hand_1());
+		hit_or_stand(deck, guest.get_split_hand_1(), guest);
 
-		guest_or_dealer.hit(deck, 1, guest_or_dealer.get_split_hand_2());
-		hit_or_stand(deck, guest_or_dealer.get_split_hand_2(), guest_or_dealer);
+		guest.hit(deck, 1, guest.get_split_hand_2());
+		hit_or_stand(deck, guest.get_split_hand_2(), guest);
 	}
 }

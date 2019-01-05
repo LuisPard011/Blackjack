@@ -98,7 +98,7 @@ public class Hand extends ArrayList<Card>{
 	}
 
 	/**
-	 * @return true if hand busted
+	 * @return true if hand is bust
 	 */
 	public boolean bust() {
 		if(get_score() > 21) return true;

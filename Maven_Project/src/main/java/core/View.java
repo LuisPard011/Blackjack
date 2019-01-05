@@ -3,12 +3,12 @@ package core;
 import java.util.Scanner;
 
 public class View {
-	
+
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
 	public static Scanner scanner = new Scanner(System.in);
-	
+
 	/********
 	 * ELSE *
 	 ********/
@@ -16,7 +16,7 @@ public class View {
 	 * Divider.
 	 */
 	public static void divider(){ System.out.println("=== === === === === === === === ==="); }
-	
+
 	/**
 	 * Welcome message.
 	 */
@@ -24,12 +24,12 @@ public class View {
 		System.out.println("Hello, welcome to the Blackjack table");
 		divider();
 	}
-	
+
 	/**
 	 * Invalid input message.
 	 */
 	public static void inavlid_input() { System.out.println("Invalid input"); }
-	
+
 	/**
 	 * Show hand and who it belongs to.
 	 * @param guest_or_dealer whose hand will be shown

@@ -67,7 +67,7 @@ public class Card {
 	@Override
 	public final String toString() {
 		int r = get_rank();
-		
+
 		switch(r) {
 		case -1:
 			return "No card";

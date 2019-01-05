@@ -3,13 +3,14 @@ package core;
 import java.util.Stack;
 
 public class Player {
+
 	/************************
 	 * INSTANCE VARIABLE(S) *
 	 ************************/
 	private Hand default_hand;
 	private Hand split_hand_1;
 	private Hand split_hand_2;
-	
+
 	private boolean has_blackjack;
 	private boolean splitted;
 	private boolean winner;
@@ -21,7 +22,7 @@ public class Player {
 		default_hand = new Hand();
 		split_hand_1 = new Hand();
 		split_hand_2 = new Hand();
-		
+
 		has_blackjack = false;
 		splitted = false;
 		winner = false;
@@ -33,7 +34,7 @@ public class Player {
 	public Hand get_default_hand() { return default_hand; }
 	public Hand get_split_hand_1() { return split_hand_1; }
 	public Hand get_split_hand_2() { return split_hand_2; }
-	
+
 	public boolean get_has_blackjack() { return has_blackjack; }
 	public boolean get_splitted() { return splitted; }
 	public boolean get_winner() { return winner; }
@@ -57,12 +58,12 @@ public class Player {
 	 */
 	public boolean hit(Stack<Card> deck, int draw_times, Hand hand) {
 		int start_hand_size = hand.size();
-		
+
 		for(int i = 0; i < draw_times; i++) {
 			if(!deck.isEmpty()) hand.add(deck.pop());
 			else break;
 		}
-		
+
 		if(hand.size() > start_hand_size) return true;
 		else return false;
 	}
@@ -84,7 +85,7 @@ public class Player {
 	}
 
 	/**
-	 * @return true if all of this player's hands have busted
+	 * @return true if all of this player's hands are bust
 	 */
 	public boolean completely_busted() {
 		if(!can_split() && default_hand.bust()) return true;
