@@ -8,9 +8,6 @@ import java.util.ArrayList;
 
 public class Reader {
 
-	/********
-	 * ELSE *
-	 ********/
 	/**
 	 * Read game input from a text file.
 	 * @param path of where the file is located
