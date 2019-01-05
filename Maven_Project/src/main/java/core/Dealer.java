@@ -12,7 +12,7 @@ public class Dealer extends Player {
 	 */
 	public boolean dealer_turn(Stack<Card> deck, Hand dealer_hand) {
 		boolean return_code = false;
-		while(dealer_hand.get_score() <= 16) return_code = return_code | hit(deck, 1, dealer_hand);
+		while(dealer_hand.get_score() <= 16 || dealer_hand.soft_17()) return_code = return_code | hit(deck, 1, dealer_hand);
 		return return_code;
 	}
 

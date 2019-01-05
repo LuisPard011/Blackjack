@@ -10,7 +10,9 @@ public class Tests extends TestCase {
 	/*************
 	 * VARIABLES * 
 	 *************/
+	Card ace_c = new Card("C", "A");
 	Card ace_d = new Card("D", "A");
+	Card ace_h = new Card("H", "A");
 	Card ace_s = new Card("S", "A");
 	Card two_c = new Card("C", "2");
 	Card two_s = new Card("S", "2");
@@ -272,22 +274,65 @@ public class Tests extends TestCase {
 	 * R27
 	 * Dealer has soft 17, thus it hits
 	 */
-	//	public void test_Dealer_Soft_17() {
-	//		System.out.println("\nR27 - Dealer has soft 17, thus it hits");
-	//		View.divider();
-	//		
-	//		dealer.get_default_hand().add(ace_d);
-	//		dealer.get_default_hand().add(six_s);
-	//		
-	//		System.out.println(dealer.get_default_hand());
-	//		
-	//		deck_maker.make_deck(deck_1);
-	//		temp_card_1 = deck_1.peek();
-	//		
-	//		dealer.dealer_turn(deck_1, dealer.get_default_hand());
-	//		
-	//		assertFalse(temp_card_1 == deck_1.peek());
-	//	}
+	public void test_Soft_17() {
+		// Case 1
+		guest.get_default_hand().add(ace_d);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(two_c);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(four_h);
+		assertTrue(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().clear();
+
+		// Case 2
+		guest.get_default_hand().add(ace_d);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_s);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(two_c);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(three_s);
+		assertTrue(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().clear();
+
+		// Case 3
+		guest.get_default_hand().add(ace_d);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_s);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_h);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(four_h);
+		assertTrue(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().clear();
+
+		// Case 4
+		guest.get_default_hand().add(ace_c);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_d);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_h);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(ace_s);
+		assertFalse(guest.get_default_hand().soft_17());
+
+		guest.get_default_hand().add(three_s);
+		assertTrue(guest.get_default_hand().soft_17());
+	}
 
 	/**
 	 * R28
@@ -649,19 +694,19 @@ public class Tests extends TestCase {
 	//	public void test_Player_Split() {
 	//		System.out.println("\nR47 - Test player splitting");
 	//		View.divider();
-	//		
+	//
 	//		guest.get_default_hand().add(two_c);
 	//		guest.get_default_hand().add(two_s);
-	//		
+	//
 	//		dealer.get_default_hand().add(five_d);
-	//		
+	//
 	//		deck_maker.make_deck(deck_1);
-	//		
+	//
 	//		if(game.choose_split(guest)) {
 	//			guest.split_hand();
 	//			game.split_turn(deck_1, guest);
 	//		}
-	//		
+	//
 	//		game.determine_winner(guest, dealer);
 	//	}
 
@@ -672,21 +717,21 @@ public class Tests extends TestCase {
 	//	public void test_Dealer_Split() {
 	//		System.out.println("\nR48 - Test dealer splitting");
 	//		View.divider();
-	//		
+	//
 	//		dealer.get_default_hand().add(nine_s);
 	//		dealer.get_default_hand().add(nine_c);
-	//		
+	//
 	//		guest.get_default_hand().add(eight_c);
 	//		guest.get_default_hand().add(two_c);
-	//		
+	//
 	//		deck_maker.make_deck(deck_1);
-	//		
+	//
 	//		if(game.choose_split(dealer)) {
 	//			dealer.split_hand();
-	//			dealer.dealer_turn(deck_1, guest, dealer.get_split_hand_1());
-	//			dealer.dealer_turn(deck_1, guest, dealer.get_split_hand_2());
+	//			dealer.dealer_turn(deck_1, dealer.get_split_hand_1());
+	//			dealer.dealer_turn(deck_1, dealer.get_split_hand_2());
 	//		}
-	//		
+	//
 	//		game.determine_winner(guest, dealer);
 	//	}
 

@@ -104,6 +104,58 @@ public class Hand extends ArrayList<Card>{
 		if(get_score() > 21) return true;
 		else return false;
 	}
+	
+	/**
+	 * @return true if this hand has a soft 17
+	 */
+	public boolean soft_17() {
+		if(get_score() == 17) {
+			int number_of_aces = 0;
+			ArrayList<Integer> ace_indices = new ArrayList<>();
+			
+			for(int i = 0; i < size(); i++) {
+				if(get(i).get_rank() == 14) {
+					number_of_aces++;
+					ace_indices.add(i);
+				}
+			}
+			
+			switch(number_of_aces) {
+			case 1:
+				if(sum_of_rest(ace_indices) == 6) return true;
+				else return false;
+			case 2:
+				if(sum_of_rest(ace_indices) == 5) return true;
+				else return false;
+			case 3:
+				if(sum_of_rest(ace_indices) == 4) return true;
+				else return false;
+			case 4:
+				if(sum_of_rest(ace_indices) == 3) return true;
+				else return false;
+			default:
+				return false;
+			}
+		}
+		else return false;
+	}
+	
+	/**
+	 * Helper function for soft_17().
+	 * @param ace_indices
+	 * @return sum of card points other than the one ace worth 11 points
+	 */
+	private int sum_of_rest(ArrayList<Integer> ace_indices) {
+		int sum = 0;
+		
+		for(int i = 0; i < size(); i++) {
+			if(!ace_indices.contains(i)) {
+				sum += get(i).get_rank();
+			}
+		}
+		
+		return sum;
+	}
 
 	@Override
 	public final String toString() {

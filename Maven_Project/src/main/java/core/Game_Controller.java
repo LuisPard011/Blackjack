@@ -295,17 +295,17 @@ public class Game_Controller {
 		}
 
 		if(guest.get_has_blackjack() && !dealer.get_has_blackjack()) {
-			System.out.println(guest_name + " has blackjack and dealer does not.\nWinner: " + guest_name);
+			System.out.println(guest_name + " has blackjack, but dealer does not.\nWinner: " + guest_name);
 			guest.set_winner(true);
 			return true;
 		}
 		else if(!guest.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println(guest_name + " does not have a blackjack, but dealer does.\nWinner: Dealer");
+			System.out.println(guest_name + " does not have blackjack, but dealer does.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
 		else if(guest.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Both " + guest_name + " and dealer have a blackjack.\nWinner: Dealer");
+			System.out.println("Both " + guest_name + " and dealer have blackjack.\nWinner: Dealer");
 			dealer.set_winner(true);
 			return true;
 		}
