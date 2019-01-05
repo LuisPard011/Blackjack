@@ -87,7 +87,7 @@ public class Player {
 	/**
 	 * @return true if all of this player's hands are bust
 	 */
-	public boolean completely_busted() {
+	public boolean completely_bust() {
 		if(!can_split() && default_hand.bust()) return true;
 		else if(can_split() && split_hand_1.bust() && split_hand_2.bust()) return true;
 		else return false;

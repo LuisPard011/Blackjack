@@ -91,7 +91,7 @@ public class Game_Controller {
 				if(blackjack_win(guest, dealer)) break game;
 
 				// Dealer's turn
-				if(!guest.completely_busted()) {
+				if(!guest.completely_bust()) {
 					View.hand(dealer, dealer.get_default_hand());
 					if(dealer.can_split() && choose_split(dealer)) {
 						dealer.split_hand();
@@ -239,33 +239,27 @@ public class Game_Controller {
 
 		// Interface output
 		if(guest_best_hand.bust()) {
-			System.out.print(guest_name + " busted -> ");
+			View.winner_loser(dealer, guest, false, true);
 			View.hand(guest, guest_best_hand);
-			System.out.print("Dealer wins -> ");
 			View.hand(dealer, dealer_best_hand);
 			dealer.set_winner(true);
 		}
 		else if(dealer_best_hand.bust()) {
-			System.out.print("Dealer busted -> ");
-			View.hand(dealer, dealer_best_hand); 
-			System.out.print(guest_name + " wins -> ");
+			View.winner_loser(guest, dealer, false, true);
 			View.hand(guest, guest_best_hand);
+			View.hand(dealer, dealer_best_hand); 
 			guest.set_winner(true);
 		}
 		else if(guest_best_hand.get_score() > dealer_best_hand.get_score()) {
-			System.out.print(guest_name + " -> ");
+			View.winner_loser(guest, dealer, false, false);
 			View.hand(guest, guest_best_hand);
-			System.out.print("Dealer -> ");
 			View.hand(dealer, dealer_best_hand);
-			System.out.println("Winner -> " + guest_name);
 			guest.set_winner(true);
 		}
 		else {
-			System.out.print(guest_name + " -> ");
+			View.winner_loser(dealer, guest, false, false);
 			View.hand(guest, guest_best_hand);
-			System.out.print("Dealer -> ");
 			View.hand(dealer, dealer_best_hand);
-			System.out.println("Winner -> Dealer");
 			dealer.set_winner(true);
 		}
 	}
@@ -285,17 +279,12 @@ public class Game_Controller {
 		}
 
 		if(guest.get_has_blackjack() && !dealer.get_has_blackjack()) {
-			System.out.println(guest_name + " has blackjack, but dealer does not.\nWinner: " + guest_name);
+			View.winner_loser(guest, dealer, true, false);
 			guest.set_winner(true);
 			return true;
 		}
-		else if(!guest.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println(guest_name + " does not have blackjack, but dealer does.\nWinner: Dealer");
-			dealer.set_winner(true);
-			return true;
-		}
-		else if(guest.get_has_blackjack() && dealer.get_has_blackjack()) {
-			System.out.println("Both " + guest_name + " and dealer have blackjack.\nWinner: Dealer");
+		else if(dealer.get_has_blackjack()) {
+			View.winner_loser(dealer, guest, true, false);
 			dealer.set_winner(true);
 			return true;
 		}
