@@ -115,11 +115,11 @@ public class Game_Controller {
 	public void play_file() throws FileNotFoundException, IOException {
 		// Local variables
 		boolean stand = false;
-		
+
 		// Players
 		Guest guest = new Guest(guest_name);
 		Dealer dealer = new Dealer();
-		
+
 		// Read file input
 		Reader reader = new Reader();
 		String[] input_line;
@@ -168,17 +168,15 @@ public class Game_Controller {
 		// Go through rest of the input
 		input:
 			for(int i = 4; i < input_line.length; i++) {
-				// Add cards to player's default hand until arr[i].charAt(0) == 'S' and the same string is of length 1
-				// After this point, all cards are added to the dealer
 				if(input_line[i].length() == 1) {
 					switch(input_line[i].charAt(0)) {
-					case 'S':
+					case 'S': // Stand
 						stand = true;
 						continue input;
-					case 'H':
+					case 'H': // Hit
 						continue input;
-					case 'D':
-						break;
+					case 'D': // Split
+						continue input;
 					}
 				}
 
