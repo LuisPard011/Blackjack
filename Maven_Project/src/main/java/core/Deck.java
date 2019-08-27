@@ -8,7 +8,6 @@ public class Deck {
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
-	private static final long serialVersionUID = 1L;
 	public static final int deck_size = 52;
 	private Card[] all_cards = new Card[deck_size];
 	
@@ -61,8 +60,6 @@ public class Deck {
 			all_cards[i] = card;
 		}
 	}
-	
-	
 
 	/**
 	 * Fill the actual deck with cards from the temporary deck.

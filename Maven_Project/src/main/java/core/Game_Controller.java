@@ -2,7 +2,6 @@ package core;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Stack;
 
 public class Game_Controller {
 
@@ -75,7 +74,7 @@ public class Game_Controller {
 
 		// Dealer setup
 		dealer.hit(deck, draw_times, dealer.get_default_hand());
-		System.out.println("Dealer: [" + dealer.get_default_hand().get(0) + "]");
+		System.out.println("Dealer: [" + dealer.get_default_hand().get_cards().get(0) + "]");
 
 		blackjack_win(guest, dealer);
 

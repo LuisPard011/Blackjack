@@ -1,7 +1,5 @@
 package core;
 
-import java.util.Stack;
-
 public class Player {
 
 	/************************
@@ -57,14 +55,14 @@ public class Player {
 	 * @return true if at least one card was drawn
 	 */
 	public boolean hit(Deck deck, int draw_times, Hand hand) {
-		int start_hand_size = hand.size();
+		int start_hand_size = hand.get_cards().size();
 
 		for(int i = 0; i < draw_times; i++) {
-			if(!deck.get_deck().isEmpty()) hand.add(deck.get_deck().pop());
+			if(!deck.get_deck().isEmpty()) hand.get_cards().add(deck.get_deck().pop());
 			else break;
 		}
 
-		if(hand.size() > start_hand_size) return true;
+		if(hand.get_cards().size() > start_hand_size) return true;
 		else return false;
 	}
 
@@ -72,15 +70,15 @@ public class Player {
 	 * Split hand.
 	 */
 	public void split_hand() {
-		split_hand_1.add(default_hand.get(0));
-		split_hand_2.add(default_hand.get(1));
+		split_hand_1.get_cards().add(default_hand.get_cards().get(0));
+		split_hand_2.get_cards().add(default_hand.get_cards().get(1));
 	}
 
 	/**
 	 * @return true if initial hand can be split
 	 */
 	public boolean can_split() {
-		if(default_hand.get(0).get_rank() == default_hand.get(1).get_rank()) return true;
+		if(default_hand.get_cards().get(0).get_rank() == default_hand.get_cards().get(1).get_rank()) return true;
 		else return false;
 	}
 

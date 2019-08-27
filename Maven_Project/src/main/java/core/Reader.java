@@ -50,7 +50,7 @@ public class Reader {
 			break;
 		}
 
-		hand.add(input_card);
+		hand.get_cards().add(input_card);
 	}
 
 }
