@@ -9,7 +9,16 @@ public class Card {
 	 *********************/
 	protected final static String[] SUITS = { "D", "C", "H", "S"};
 	protected final static String[] RANKS = { "None", "None", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-	private HashMap<String, Integer> rank_value = new HashMap<String,Integer>(13); // used to be 15 instead of 13
+	
+	protected static HashMap<String, Integer> rank_values = new HashMap<String,Integer>(13);
+	
+	private void assign_ranks() {
+		for(int r = 2; r < RANKS.length; r+=1) {
+			if(r <= 10) rank_values.put(RANKS[r], r);
+			else if(r > 10 && r < 14) rank_values.put(RANKS[r], 10);
+			else rank_values.put(RANKS[r], 11);
+		}
+	}
 	
 	/************************
 	 * INSTANCE VARIABLE(S) *
@@ -28,7 +37,7 @@ public class Card {
 	public Card(String suit, String rank) {
 		this.suit = suit; 
 		this.rank = rank;
-		for(int r = 2; r < RANKS.length; r+=1) rank_value.put(RANKS[r], r);
+		assign_ranks();
 	}
 
 	/*************
@@ -43,13 +52,10 @@ public class Card {
 	/** 
 	 * Ranks have the numerical values.
 	 * 2 = 2, 3 = 3, ..., 10 = 10.
-	 * Jack = 11, Queen = 12, King = 13, Ace = 14.
+	 * Jack = Queen = King = 10, Ace = 11.
 	 * @return the numerical representation of the rank of the current card
 	 */
-	public int get_rank() {
-		if(rank.equals(RANKS[0]) || rank.equals(RANKS[1])) return -1; // "no card"
-		return rank_value.get(rank);
-	}
+	public int get_rank() { return rank_values.get(rank); }
 
 	/** 
 	 * The string representation of the rank of the current card. 
@@ -61,19 +67,6 @@ public class Card {
 	 * ELSE *
 	 ********/
 	@Override
-	public String toString() {
-		int r = get_rank();
-
-		switch(r) {
-		case -1:
-			return "No card";
-		case 11: return get_suit() + "J";
-		case 12: return get_suit() + "Q";
-		case 13: return get_suit() + "K";
-		case 14: return get_suit() + "A";
-		default:
-			return get_suit() + r;
-		}
-	}
+	public String toString() { return get_suit() + rank; }
 
 }

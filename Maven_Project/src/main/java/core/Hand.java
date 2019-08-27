@@ -32,24 +32,8 @@ public class Hand extends ArrayList<Card>{
 
 		// Count cards in hand	
 		for(Card card : this) {
-			switch(card.get_rank()) {
-			case 11:
-				score += 10;
-				break;
-			case 12:
-				score += 10;
-				break;
-			case 13:
-				score += 10;
-				break;
-			case 14:
-				score += 11;
-				aces += 1;
-				break;
-			default:
-				score += card.get_rank();
-				break;
-			}
+			score += card.get_rank();
+			if(card.get_rank() == 11) aces += 1;
 		}
 
 		// Adjust score depending on aces in hand
@@ -81,12 +65,9 @@ public class Hand extends ArrayList<Card>{
 		for(Card card : this) {
 			switch(card.get_rank()) {
 			case 10:
-			case 11:
-			case 12:
-			case 13:
 				has_ten_value = true;
 				break;
-			case 14:
+			case 11:
 				has_ace = true;
 				break;
 			}
@@ -114,7 +95,7 @@ public class Hand extends ArrayList<Card>{
 			ArrayList<Integer> ace_indices = new ArrayList<>();
 			
 			for(int i = 0; i < size(); i++) {
-				if(get(i).get_rank() == 14) {
+				if(get(i).get_rank() == 11) {
 					number_of_aces++;
 					ace_indices.add(i);
 				}

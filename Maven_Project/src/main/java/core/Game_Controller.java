@@ -127,11 +127,11 @@ public class Game_Controller {
 		// File paths
 		int path_to_play;
 		String[] paths = new String[] {
-				"src\\main\\java\\text_files\\Input_File_1.txt",
-				"src\\main\\java\\text_files\\Input_File_2.txt",
-				"src\\main\\java\\text_files\\Input_File_3.txt",
-				"src\\main\\java\\text_files\\Input_File_4.txt",
-				"src\\main\\java\\text_files\\Input_File_5.txt"};
+				"src\\main\\java\\documents\\Input_File_1.txt",
+				"src\\main\\java\\documents\\Input_File_2.txt",
+				"src\\main\\java\\documents\\Input_File_3.txt",
+				"src\\main\\java\\documents\\Input_File_4.txt",
+				"src\\main\\java\\documents\\Input_File_5.txt"};
 
 		System.out.println("Note: Features to support paths 4 and 5 have not been implemented.\nWhat path would you like to play? [1-5]: ");
 		path_to_play = View.scanner.nextInt();

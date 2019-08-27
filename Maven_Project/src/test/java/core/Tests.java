@@ -83,11 +83,11 @@ public class Tests extends TestCase {
 	public void test_File_Input() throws FileNotFoundException, IOException {
 		Reader reader = new Reader();
 		String[] commands_0, commands_1, commands_2, paths = new String[] {
-				"src\\main\\java\\text_files\\Input_File_1.txt",
-				"src\\main\\java\\text_files\\Input_File_2.txt",
-				"src\\main\\java\\text_files\\Input_File_3.txt",
-				"src\\main\\java\\text_files\\Input_File_4.txt",
-				"src\\main\\java\\text_files\\Input_File_5.txt"};
+				"src\\main\\java\\documents\\Input_File_1.txt",
+				"src\\main\\java\\documents\\Input_File_2.txt",
+				"src\\main\\java\\documents\\Input_File_3.txt",
+				"src\\main\\java\\documents\\Input_File_4.txt",
+				"src\\main\\java\\documents\\Input_File_5.txt"};
 		
 		commands_0 = reader.read_file_input(paths[0]);
 		assertEquals("SK", commands_0[0]);
