@@ -3,9 +3,6 @@ package core;
 import java.util.Random;
 import java.util.Stack;
 
-/**
- * This class is partially based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017.
- */
 public class Deck extends Stack<Card> {
 
 	/*********************
@@ -16,7 +13,7 @@ public class Deck extends Stack<Card> {
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
-	public Deck() { make_deck(this); }
+	public Deck() { make_shuffled_deck(this); }
 
 	/*********************
 	 * CLASS VARIABLE(S) *
@@ -61,7 +58,7 @@ public class Deck extends Stack<Card> {
 	 * Cards in actual deck appear in the same order as they are in the temporary deck.
 	 * @param deck to be used in game
 	 */
-	public void make_deck(Stack<Card> deck) {
+	public void make_shuffled_deck(Stack<Card> deck) {
 		populate_temp_deck();
 		shuffle_temp_deck();
 		for(int i = 0; i < deck_size; i++) deck.push(this.temp_deck[i]);

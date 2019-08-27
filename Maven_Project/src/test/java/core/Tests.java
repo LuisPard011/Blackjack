@@ -51,9 +51,12 @@ public class Tests extends TestCase {
 
 	int counter = 0;
 
-	String path_1 = "src\\main\\java\\text_files\\Input_File_1.txt";
-	String path_2 = "src\\main\\java\\text_files\\Input_File_2.txt";
-	String path_3 = "src\\main\\java\\text_files\\Input_File_3.txt";
+	String[] paths = new String[] {
+			"src\\main\\java\\text_files\\Input_File_1.txt",
+			"src\\main\\java\\text_files\\Input_File_2.txt",
+			"src\\main\\java\\text_files\\Input_File_3.txt",
+			"src\\main\\java\\text_files\\Input_File_4.txt",
+			"src\\main\\java\\text_files\\Input_File_5.txt"};
 
 	/*********
 	 * TESTS * 
@@ -63,7 +66,7 @@ public class Tests extends TestCase {
 	 * Check there are 52 cards in the deck
 	 */
 	public void test_Cards_In_Deck() {	
-		deck_maker.make_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_1);
 
 		while(!deck_1.isEmpty()) {
 			deck_1.pop();
@@ -81,8 +84,8 @@ public class Tests extends TestCase {
 	 * I use the rank of cards to compare the order of decks
 	 */
 	public void test_Shuffling() {	
-		deck_maker.make_deck(deck_1);
-		deck_maker.make_deck(deck_2);
+		deck_maker.make_shuffled_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_2);
 
 		arr_1 = new int[Deck.deck_size];
 		arr_2 = new int[Deck.deck_size];
@@ -106,15 +109,15 @@ public class Tests extends TestCase {
 	 * @throws FileNotFoundException 
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException {
-		commands_0 = reader.read_file_input(path_1);
+		commands_0 = reader.read_file_input(paths[0]);
 		assertEquals("SK", commands_0[0]);
 		assertEquals("CA", commands_0[commands_0.length-1]);
 
-		commands_1 = reader.read_file_input(path_2);
+		commands_1 = reader.read_file_input(paths[1]);
 		assertEquals("SK", commands_1[0]);
 		assertEquals("DJ", commands_1[commands_1.length-1]);
 
-		commands_2 = reader.read_file_input(path_3);
+		commands_2 = reader.read_file_input(paths[2]);
 		assertEquals("S10", commands_2[0]);
 		assertEquals("D2", commands_2[commands_2.length-1]);
 	}
@@ -181,7 +184,7 @@ public class Tests extends TestCase {
 	 * Test if the player can hit
 	 */
 	public void test_Player_Hit() {
-		deck_maker.make_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_1);
 		temp_card_1 = deck_1.peek();
 		guest.hit(deck_1, 1, guest.get_default_hand());
 
@@ -194,7 +197,7 @@ public class Tests extends TestCase {
 	 * Test player can hit repeatedly
 	 */
 	public void test_Player_Multi_Hits() {
-		deck_maker.make_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_1);
 
 		temp_card_1 = deck_1.peek();
 		guest.hit(deck_1, 1, guest.get_default_hand());
@@ -264,7 +267,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(two_s);
 		System.out.println(dealer.get_default_hand());
 
-		deck_maker.make_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_1);
 		dealer.dealer_turn(deck_1, dealer.get_default_hand());
 
 		assertTrue(dealer.get_default_hand().get_score() >= 16);
@@ -346,7 +349,7 @@ public class Tests extends TestCase {
 		System.out.println("\nR28 - Dealer can hit repeatedly");
 		View.divider();
 
-		deck_maker.make_deck(deck_1);
+		deck_maker.make_shuffled_deck(deck_1);
 		dealer.get_default_hand().add(two_s);
 
 		// Draw repeatedly until score >= 16 or soft 17

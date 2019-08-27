@@ -5,7 +5,7 @@ import java.util.Stack;
 public class Dealer extends Player {	
 
 	/**
-	 * Draw repeatedly until dealer's score is less than 16.
+	 * Draw repeatedly while dealer's score is less than or equal to 16, or dealer has a soft 17.
 	 * @param deck to draw from
 	 * @param dealer_hand hand to draw to (e.g. default, split_1, split_2)
 	 * @return true if at least one card was drawn

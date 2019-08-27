@@ -1,0 +1,5 @@
+ 1. These classes are partially based on code provided by professor Michael Jason Hinek for COMP 1406 during the summer of 2017:
+    - Card.java
+    - Deck.java
+
+ 2. //
