@@ -673,7 +673,7 @@ public class Tests extends TestCase {
 	//		System.out.println("\nR47 - Test player splitting");
 	//		View.divider();
 	//
-	//		guest.get_default_hand().get_cards().add(two_c);
+	//		guest.get_default_hand().get_cards().add(cards.get("C2"));
 	//		guest.get_default_hand().get_cards().add(cards.get("S2"));
 	//
 	//		dealer.get_default_hand().get_cards().add(cards.get("D5"));
@@ -697,10 +697,10 @@ public class Tests extends TestCase {
 	//		View.divider();
 	//
 	//		dealer.get_default_hand().get_cards().add(cards.get("S9"));
-	//		dealer.get_default_hand().get_cards().add(nine_c);
+	//		dealer.get_default_hand().get_cards().add(cards.get("C9"));
 	//
 	//		guest.get_default_hand().get_cards().add(cards.get("C8"));
-	//		guest.get_default_hand().get_cards().add(two_c);
+	//		guest.get_default_hand().get_cards().add(cards.get("C2"));
 	//
 	//		deck_maker.make_deck(deck_1);
 	//
