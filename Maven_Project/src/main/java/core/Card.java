@@ -9,14 +9,14 @@ public class Card {
 	 *********************/
 	protected final static String[] SUITS = { "D", "C", "H", "S"};
 	protected final static String[] RANKS = { "None", "None", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
-
+	private HashMap<String, Integer> rank_value = new HashMap<String,Integer>(13); // used to be 15 instead of 13
+	
 	/************************
 	 * INSTANCE VARIABLE(S) *
 	 ************************/
 	private String suit;
 	private String rank;
-	private HashMap<String, Integer> rankValue;
-
+	
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
@@ -28,8 +28,7 @@ public class Card {
 	public Card(String suit, String rank) {
 		this.suit = suit; 
 		this.rank = rank;
-		rankValue = new HashMap<String,Integer>(15);
-		for(int r = 2; r < RANKS.length; r+=1) rankValue.put(RANKS[r], r);
+		for(int r = 2; r < RANKS.length; r+=1) rank_value.put(RANKS[r], r);
 	}
 
 	/*************
@@ -49,7 +48,7 @@ public class Card {
 	 */
 	public int get_rank() {
 		if(rank.equals(RANKS[0]) || rank.equals(RANKS[1])) return -1; // "no card"
-		return rankValue.get(rank);
+		return rank_value.get(rank);
 	}
 
 	/** 

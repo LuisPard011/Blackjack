@@ -13,13 +13,13 @@ public class Deck extends Stack<Card> {
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
-	public Deck() { make_shuffled_deck(this); }
+	public Deck() { make_shuffled_deck(); }
 
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
 	public static final int deck_size = 52;
-	private Card[] temp_deck = new Card[deck_size];
+	private Card[] all_cards = new Card[deck_size];
 
 	/********
 	 * ELSE *
@@ -27,12 +27,12 @@ public class Deck extends Stack<Card> {
 	/**
 	 * Fill the temporary deck with cards.
 	 */
-	public void populate_temp_deck() {
+	private void populate_all_cards() {
 		int index = 0;
 
 		for(int r=2; r<=14; r+=1) {
 			for(int s=0; s<4; s+=1) {
-				temp_deck[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
+				all_cards[index++] = new Card(Card.SUITS[s], Card.RANKS[r]);
 			}
 		}
 	}
@@ -40,16 +40,16 @@ public class Deck extends Stack<Card> {
 	/**
 	 * Shuffle the temporary deck, randomly.
 	 */
-	public void shuffle_temp_deck() {
+	private void shuffle_all_cards() {
 		Random rnd = new Random();
-		Card swap;
-		int pos;
+		Card card;
+		int position;
 
-		for(int i = deck_size-1; i>=0; i=i-1) {
-			pos = rnd.nextInt(i+1);
-			swap = temp_deck[pos];
-			temp_deck[pos] = temp_deck[i];
-			temp_deck[i] = swap;
+		for(int i = deck_size-1; i>=0; i-=1) {
+			position = rnd.nextInt(i+1);
+			card = all_cards[position];
+			all_cards[position] = all_cards[i];
+			all_cards[i] = card;
 		}
 	}
 
@@ -58,10 +58,10 @@ public class Deck extends Stack<Card> {
 	 * Cards in actual deck appear in the same order as they are in the temporary deck.
 	 * @param deck to be used in game
 	 */
-	public void make_shuffled_deck(Stack<Card> deck) {
-		populate_temp_deck();
-		shuffle_temp_deck();
-		for(int i = 0; i < deck_size; i++) deck.push(this.temp_deck[i]);
+	private void make_shuffled_deck() {
+		populate_all_cards();
+		shuffle_all_cards();
+		for(int i = 0; i < deck_size; i++) this.push(all_cards[i]);
 	}
 
 }
