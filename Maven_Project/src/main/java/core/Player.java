@@ -56,11 +56,11 @@ public class Player {
 	 * @param hand to add drawn cards
 	 * @return true if at least one card was drawn
 	 */
-	public boolean hit(Stack<Card> deck, int draw_times, Hand hand) {
+	public boolean hit(Deck deck, int draw_times, Hand hand) {
 		int start_hand_size = hand.size();
 
 		for(int i = 0; i < draw_times; i++) {
-			if(!deck.isEmpty()) hand.add(deck.pop());
+			if(!deck.get_deck().isEmpty()) hand.add(deck.get_deck().pop());
 			else break;
 		}
 

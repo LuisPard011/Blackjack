@@ -3,23 +3,32 @@ package core;
 import java.util.Random;
 import java.util.Stack;
 
-public class Deck extends Stack<Card> {
+public class Deck {
 
 	/*********************
 	 * CLASS VARIABLE(S) *
 	 *********************/
 	private static final long serialVersionUID = 1L;
+	public static final int deck_size = 52;
+	private Card[] all_cards = new Card[deck_size];
+	
+	/************************
+	 * INSTANCE VARIABLE(S) *
+	 ************************/
+	Stack<Card> deck;
 
 	/******************
 	 * CONSTRUCTOR(S) *
 	 ******************/
-	public Deck() { make_shuffled_deck(); }
+	public Deck() { 
+		deck = new Stack<>();
+		make_shuffled_deck(); 
+	}
 
-	/*********************
-	 * CLASS VARIABLE(S) *
-	 *********************/
-	public static final int deck_size = 52;
-	private Card[] all_cards = new Card[deck_size];
+	/*************
+	 * GETTER(S) *
+	 *************/
+	public Stack<Card> get_deck(){ return deck; }
 
 	/********
 	 * ELSE *
@@ -52,6 +61,8 @@ public class Deck extends Stack<Card> {
 			all_cards[i] = card;
 		}
 	}
+	
+	
 
 	/**
 	 * Fill the actual deck with cards from the temporary deck.
@@ -61,7 +72,7 @@ public class Deck extends Stack<Card> {
 	private void make_shuffled_deck() {
 		populate_all_cards();
 		shuffle_all_cards();
-		for(int i = 0; i < deck_size; i++) this.push(all_cards[i]);
+		for(int i = 0; i < deck_size; i++) deck.push(all_cards[i]);
 	}
 
 }

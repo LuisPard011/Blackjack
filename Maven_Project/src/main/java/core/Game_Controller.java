@@ -317,7 +317,7 @@ public class Game_Controller {
 	 * @param guest who will choose to hit or stand
 	 * @return true if stand is chosen
 	 */
-	public boolean hit_or_stand(Stack<Card> deck, Hand hand, Guest guest) {
+	public boolean hit_or_stand(Deck deck, Hand hand, Guest guest) {
 		// Local variables
 		boolean stand = false;
 
@@ -349,7 +349,7 @@ public class Game_Controller {
 	 * @param deck to draw from
 	 * @param guest whose turn it is
 	 */
-	public void split_turn(Stack<Card> deck, Guest guest) {
+	public void split_turn(Deck deck, Guest guest) {
 		guest.hit(deck, 1, guest.get_split_hand_1());
 		hit_or_stand(deck, guest.get_split_hand_1(), guest);
 

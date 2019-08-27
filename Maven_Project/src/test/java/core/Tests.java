@@ -43,8 +43,8 @@ public class Tests extends TestCase {
 	public void test_Cards_In_Deck() {
 		int counter = 0;
 		
-		while(!deck.isEmpty()) {
-			deck.pop();
+		while(!deck.get_deck().isEmpty()) {
+			deck.get_deck().pop();
 			counter += 1;
 		}
 		
@@ -63,8 +63,8 @@ public class Tests extends TestCase {
 		Deck deck_2 = new Deck();
 
 		for(int i = 0; i < Deck.deck_size; ++i) {
-			arr_1[i] = deck.pop().get_rank();
-			arr_2[i] = deck_2.pop().get_rank();
+			arr_1[i] = deck.get_deck().pop().get_rank();
+			arr_2[i] = deck_2.get_deck().pop().get_rank();
 		}
 
 		assertEquals(false, Arrays.equals(arr_1, arr_2));
@@ -164,7 +164,7 @@ public class Tests extends TestCase {
 	 * Test if the player can hit
 	 */
 	public void test_Player_Hit() {
-		Card temp_card_1 = deck.peek();
+		Card temp_card_1 = deck.get_deck().peek();
 		guest.hit(deck, 1, guest.get_default_hand());
 
 		assertEquals(temp_card_1.get_rank(), guest.get_default_hand().get(0).get_rank());
@@ -176,9 +176,9 @@ public class Tests extends TestCase {
 	 * Test player can hit repeatedly
 	 */
 	public void test_Player_Multi_Hits() {
-		Card temp_card_1 = deck.peek();
+		Card temp_card_1 = deck.get_deck().peek();
 		guest.hit(deck, 1, guest.get_default_hand());
-		Card temp_card_2 = deck.peek();
+		Card temp_card_2 = deck.get_deck().peek();
 		guest.hit(deck, 1, guest.get_default_hand());
 
 		assertEquals(temp_card_1.get_rank(), guest.get_default_hand().get(0).get_rank());
