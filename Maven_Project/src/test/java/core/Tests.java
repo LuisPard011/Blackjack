@@ -12,6 +12,10 @@ public class Tests extends TestCase {
 	/*********
 	 * SETUP * 
 	 *********/
+	Dealer dealer = new Dealer();
+	Deck deck = new Deck();
+	Game_Controller game = new Game_Controller();
+	Guest guest = new Guest("Guest");
 	HashMap<String, Card> cards = new HashMap<>(52);
 	
 	private void create_cards() {
@@ -19,55 +23,31 @@ public class Tests extends TestCase {
 			for(int j = 0; j < Card.RANKS.length; j++) {
 				String suit = Card.SUITS[i], rank = Card.RANKS[j];
 				cards.put(suit+rank, new Card(suit, rank));
-			}
-		}
-	}
+			}}}
 	
-	public Tests() {
-		create_cards();
-	}
-
-	Guest guest = new Guest("Guest");
-	Dealer dealer = new Dealer();
-
-	Game_Controller game = new Game_Controller();
-	Reader reader = new Reader();
-
-	Deck deck_1 = new Deck();
-	Deck deck_2 = new Deck();
-
-	String[] commands_0;
-	String[] commands_1;
-	String[] commands_2;
-	
-	int[] arr_1;
-	int[] arr_2;
-	
-	Card temp_card_1;
-	Card temp_card_2;
-
-	int counter = 0;
-
-	String[] paths = new String[] {
-			"src\\main\\java\\text_files\\Input_File_1.txt",
-			"src\\main\\java\\text_files\\Input_File_2.txt",
-			"src\\main\\java\\text_files\\Input_File_3.txt",
-			"src\\main\\java\\text_files\\Input_File_4.txt",
-			"src\\main\\java\\text_files\\Input_File_5.txt"};
+	public Tests() {create_cards();}
 
 	/*********
 	 * TESTS * 
 	 *********/
+	
+	/**
+	 * R0-10 do not require tests
+	 */
+	
+	
 	/**
 	 * R11
 	 * Check there are 52 cards in the deck
 	 */
-	public void test_Cards_In_Deck() {	
-		while(!deck_1.isEmpty()) {
-			deck_1.pop();
+	public void test_Cards_In_Deck() {
+		int counter = 0;
+		
+		while(!deck.isEmpty()) {
+			deck.pop();
 			counter += 1;
 		}
-
+		
 		assertEquals(52, counter);
 	}
 
@@ -78,12 +58,12 @@ public class Tests extends TestCase {
 	 * Else it passes
 	 * I use the rank of cards to compare the order of decks
 	 */
-	public void test_Shuffling() {	
-		arr_1 = new int[Deck.deck_size];
-		arr_2 = new int[Deck.deck_size];
+	public void test_Shuffling() {
+		int[] arr_1  = new int[Deck.deck_size], arr_2 = new int[Deck.deck_size];
+		Deck deck_2 = new Deck();
 
 		for(int i = 0; i < Deck.deck_size; ++i) {
-			arr_1[i] = deck_1.pop().get_rank();
+			arr_1[i] = deck.pop().get_rank();
 			arr_2[i] = deck_2.pop().get_rank();
 		}
 
@@ -101,6 +81,14 @@ public class Tests extends TestCase {
 	 * @throws FileNotFoundException 
 	 */
 	public void test_File_Input() throws FileNotFoundException, IOException {
+		Reader reader = new Reader();
+		String[] commands_0, commands_1, commands_2, paths = new String[] {
+				"src\\main\\java\\text_files\\Input_File_1.txt",
+				"src\\main\\java\\text_files\\Input_File_2.txt",
+				"src\\main\\java\\text_files\\Input_File_3.txt",
+				"src\\main\\java\\text_files\\Input_File_4.txt",
+				"src\\main\\java\\text_files\\Input_File_5.txt"};
+		
 		commands_0 = reader.read_file_input(paths[0]);
 		assertEquals("SK", commands_0[0]);
 		assertEquals("CA", commands_0[commands_0.length-1]);
@@ -176,8 +164,8 @@ public class Tests extends TestCase {
 	 * Test if the player can hit
 	 */
 	public void test_Player_Hit() {
-		temp_card_1 = deck_1.peek();
-		guest.hit(deck_1, 1, guest.get_default_hand());
+		Card temp_card_1 = deck.peek();
+		guest.hit(deck, 1, guest.get_default_hand());
 
 		assertEquals(temp_card_1.get_rank(), guest.get_default_hand().get(0).get_rank());
 		assertEquals(temp_card_1.get_suit(), guest.get_default_hand().get(0).get_suit());
@@ -188,10 +176,10 @@ public class Tests extends TestCase {
 	 * Test player can hit repeatedly
 	 */
 	public void test_Player_Multi_Hits() {
-		temp_card_1 = deck_1.peek();
-		guest.hit(deck_1, 1, guest.get_default_hand());
-		temp_card_2 = deck_1.peek();
-		guest.hit(deck_1, 1, guest.get_default_hand());
+		Card temp_card_1 = deck.peek();
+		guest.hit(deck, 1, guest.get_default_hand());
+		Card temp_card_2 = deck.peek();
+		guest.hit(deck, 1, guest.get_default_hand());
 
 		assertEquals(temp_card_1.get_rank(), guest.get_default_hand().get(0).get_rank());
 		assertEquals(temp_card_1.get_suit(), guest.get_default_hand().get(0).get_suit());
@@ -256,7 +244,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(cards.get("S2"));
 		System.out.println(dealer.get_default_hand());
 
-		dealer.dealer_turn(deck_1, dealer.get_default_hand());
+		dealer.dealer_turn(deck, dealer.get_default_hand());
 
 		assertTrue(dealer.get_default_hand().get_score() >= 16);
 	}
@@ -340,7 +328,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().add(cards.get("S2"));
 
 		// Draw repeatedly until score >= 16 or soft 17
-		dealer.dealer_turn(deck_1, dealer.get_default_hand()); 
+		dealer.dealer_turn(deck, dealer.get_default_hand()); 
 
 		assertTrue(dealer.get_default_hand().size() > 2);
 	}
