@@ -8,7 +8,7 @@ import java.util.HashMap;
 import junit.framework.TestCase;
 
 public class Tests extends TestCase {
-	
+
 	/*********
 	 * SETUP * 
 	 *********/
@@ -17,37 +17,32 @@ public class Tests extends TestCase {
 	Game_Controller game = new Game_Controller();
 	Guest guest = new Guest("Guest");
 	HashMap<String, Card> cards = new HashMap<>(52);
-	
+
 	private void create_cards() {
 		for(int i = 0; i < Card.SUITS.length; i++) {
 			for(int j = 0; j < Card.RANKS.length; j++) {
 				String suit = Card.SUITS[i], rank = Card.RANKS[j];
 				cards.put(suit+rank, new Card(suit, rank));
 			}}}
-	
+
 	public Tests() {create_cards();}
 
 	/*********
 	 * TESTS * 
 	 *********/
-	
-	/**
-	 * R0-10 do not require tests
-	 */
-	
-	
+
 	/**
 	 * R11
 	 * Check there are 52 cards in the deck
 	 */
 	public void test_Cards_In_Deck() {
 		int counter = 0;
-		
+
 		while(!deck.get_deck().isEmpty()) {
 			deck.get_deck().pop();
 			counter += 1;
 		}
-		
+
 		assertEquals(52, counter);
 	}
 
@@ -71,10 +66,6 @@ public class Tests extends TestCase {
 	}
 
 	/**
-	 * R13-15 do not require tests
-	 */
-
-	/**
 	 * R16
 	 * Test support for file input
 	 * @throws IOException 
@@ -88,7 +79,7 @@ public class Tests extends TestCase {
 				"src\\main\\java\\documents\\Input_File_3.txt",
 				"src\\main\\java\\documents\\Input_File_4.txt",
 				"src\\main\\java\\documents\\Input_File_5.txt"};
-		
+
 		commands_0 = reader.read_file_input(paths[0]);
 		assertEquals("SK", commands_0[0]);
 		assertEquals("CA", commands_0[commands_0.length-1]);
