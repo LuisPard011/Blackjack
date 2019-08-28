@@ -10,93 +10,10 @@ public class View {
 	 * CLASS VARIABLE(S) *
 	 *********************/
 	public static Scanner scanner = new Scanner(System.in);
-
-	/********
-	 * ELSE *
-	 ********/
-	/**
-	 * Divider.
-	 */
-	public static void divider(){ System.out.println("=== === === === === === === === ==="); }
-
-	/**
-	 * Welcome message.
-	 */
-	public static void welcome() {
-		System.out.println("Hello, welcome to the Blackjack table");
-		divider();
-	}
-
-	/**
-	 * Invalid input message.
-	 */
-	public static void inavlid_input() { System.out.println("Invalid input"); }
-
-	/**
-	 * Show hand and who it belongs to.
-	 * @param guest_or_dealer whose hand will be shown
-	 * @param hand to be shown
-	 */
-	public static void hand(Player guest_or_dealer, Hand hand) {
-		if(guest_or_dealer instanceof Guest) System.out.println("Guest: " + hand);
-		else if(guest_or_dealer instanceof Dealer) System.out.println("Dealer: "  + hand);
-	}
 	
-	/**
-	 * Winner console message.
-	 * @param winner player
-	 * @param loser player
-	 * @param blackjack true if win by blackjack
-	 * @param bust true if any player busts
-	 */
-	public static void winner_loser(Player winner, Player loser, boolean blackjack, boolean bust) {
-		if(blackjack) {
-			if(winner instanceof Guest) {
-				System.out.println("Guest has blackjack, but dealer does not\nWinner: Guest");
-			}
-			else System.out.println("Dealer has blackjack\nWinner: Dealer");
-		}
-		else if(bust) {
-			if(winner instanceof Guest) System.out.println("Dealer busts\nWinner: Guest");
-			else System.out.println("Guest busts\nWinner: Dealer");
-		}
-		else {
-			if(winner instanceof Guest) System.out.println("Winner: Guest");
-			else System.out.println("Winner: Dealer");
-		}
-	}
-	
-	public static void dealers_first_card(Dealer dealer) { 
-		System.out.println("Dealer: [" + dealer.get_default_hand().get_cards().get(0) + "]"); 
-	}
-	
-	public static String console_or_file_input() { 
-		System.out.println("Would you like to play using console or file input? (c/f): ");
-		return scanner.next();
-	}
-	
-	public static String select_file_input_path() { 
-		System.out.println("Note: Features to support paths 4 and 5 have not been implemented.\nWhat path would you like to play? [1-5]: ");
-		int path_to_play = scanner.nextInt();
-		
-		String[] paths = new String[] {
-				"src\\main\\java\\input_files\\Input_File_1.txt",
-				"src\\main\\java\\input_files\\Input_File_2.txt",
-				"src\\main\\java\\input_files\\Input_File_3.txt",
-				"src\\main\\java\\input_files\\Input_File_4.txt",
-				"src\\main\\java\\input_files\\Input_File_5.txt"};
-		
-		if(path_to_play >= 1 && path_to_play <= 5) return paths[path_to_play-1]; 
-		else {
-			System.out.println("That path does not exist.\nPlease try again.\nThis time only choose a path within the range [1-5], inclusive.");
-			return select_file_input_path();
-		}
-	}
-	
-	/***********
-	* BOOLEANS *
-	 ***********/
-	
+	/**********
+	* BOOLEAN *
+	 **********/
 	/**
 	 * Give guest or dealer the option to split hand.
 	 * @return true if split has been chosen
@@ -172,5 +89,102 @@ public class View {
 		
 		return false;
 	}
+	
+	/**********
+	 * STRING *
+	 **********/
+	/**
+	 * 
+	 * @return
+	 */
+	public static String console_or_file_input() { 
+		System.out.println("Would you like to play using console or file input? (c/f): ");
+		return scanner.next();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public static String select_file_input_path() { 
+		System.out.println("Note: Features to support paths 4 and 5 have not been implemented.\nWhat path would you like to play? [1-5]: ");
+		int path_to_play = scanner.nextInt();
+		
+		String[] paths = new String[] {
+				"src\\main\\java\\input_files\\Input_File_1.txt",
+				"src\\main\\java\\input_files\\Input_File_2.txt",
+				"src\\main\\java\\input_files\\Input_File_3.txt",
+				"src\\main\\java\\input_files\\Input_File_4.txt",
+				"src\\main\\java\\input_files\\Input_File_5.txt"};
+		
+		if(path_to_play >= 1 && path_to_play <= 5) return paths[path_to_play-1]; 
+		else {
+			System.out.println("That path does not exist.\nPlease try again.\nThis time only choose a path within the range [1-5], inclusive.");
+			return select_file_input_path();
+		}
+	}
+
+	/********
+	 * VOID *
+	 ********/
+	/**
+	 * Divider.
+	 */
+	public static void divider(){ System.out.println("=== === === === === === === === ==="); }
+
+	/**
+	 * Welcome message.
+	 */
+	public static void welcome() {
+		System.out.println("Hello, welcome to the Blackjack table");
+		divider();
+	}
+
+	/**
+	 * Invalid input message.
+	 */
+	public static void inavlid_input() { System.out.println("Invalid input"); }
+
+	/**
+	 * Show hand and who it belongs to.
+	 * @param guest_or_dealer whose hand will be shown
+	 * @param hand to be shown
+	 */
+	public static void hand(Player guest_or_dealer, Hand hand) {
+		if(guest_or_dealer instanceof Guest) System.out.println("Guest: " + hand);
+		else if(guest_or_dealer instanceof Dealer) System.out.println("Dealer: "  + hand);
+	}
+	
+	/**
+	 * Winner console message.
+	 * @param winner player
+	 * @param loser player
+	 * @param blackjack true if win by blackjack
+	 * @param bust true if any player busts
+	 */
+	public static void winner_loser(Player winner, Player loser, boolean blackjack, boolean bust) {
+		if(blackjack) {
+			if(winner instanceof Guest) {
+				System.out.println("Guest has blackjack, but dealer does not\nWinner: Guest");
+			}
+			else System.out.println("Dealer has blackjack\nWinner: Dealer");
+		}
+		else if(bust) {
+			if(winner instanceof Guest) System.out.println("Dealer busts\nWinner: Guest");
+			else System.out.println("Guest busts\nWinner: Dealer");
+		}
+		else {
+			if(winner instanceof Guest) System.out.println("Winner: Guest");
+			else System.out.println("Winner: Dealer");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param dealer
+	 */
+	public static void dealers_first_card(Dealer dealer) { 
+		System.out.println("Dealer: [" + dealer.get_default_hand().get_cards().get(0) + "]"); 
+	}	
 
 }

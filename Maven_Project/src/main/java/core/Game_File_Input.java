@@ -5,6 +5,9 @@ import java.io.IOException;
 
 public class Game_File_Input extends Game {
 	
+	/******************
+	 * CONSTRUCTOR(S) *
+	 ******************/
 	public Game_File_Input() {
 		super();
 	}
