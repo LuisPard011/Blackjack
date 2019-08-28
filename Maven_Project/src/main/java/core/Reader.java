@@ -42,10 +42,10 @@ public class Reader {
 		Card input_card;
 
 		switch(command.charAt(1)) {
-		case '1':
-			input_card = new Card(Character.toString(command.charAt(0)), "10");
+		case '1': // 10s
+			input_card = new Card(Character.toString(command.charAt(0)), "10"); 
 			break;
-		default:
+		default: // All other ranks
 			input_card = new Card(Character.toString(command.charAt(0)), Character.toString(command.charAt(1)));
 			break;
 		}
