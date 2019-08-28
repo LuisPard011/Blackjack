@@ -36,7 +36,7 @@ public class View {
 	 * @param hand to be shown
 	 */
 	public static void hand(Player guest_or_dealer, Hand hand) {
-		if(guest_or_dealer instanceof Guest) System.out.println(((Guest) guest_or_dealer).get_name() + ": " + hand);
+		if(guest_or_dealer instanceof Guest) System.out.println("Guest: " + hand);
 		else if(guest_or_dealer instanceof Dealer) System.out.println("Dealer: "  + hand);
 	}
 	
@@ -50,17 +50,17 @@ public class View {
 	public static void winner_loser(Player winner, Player loser, boolean blackjack, boolean bust) {
 		if(blackjack) {
 			if(winner instanceof Guest) {
-				System.out.println(((Guest) winner).get_name() + " has blackjack, but dealer does not\nWinner: " + ((Guest) winner).get_name());
+				System.out.println("Guest has blackjack, but dealer does not\nWinner: Guest");
 			}
 			else System.out.println("Dealer has blackjack\nWinner: Dealer");
 		}
 		else if(bust) {
-			if(winner instanceof Guest) System.out.println("Dealer busts\n" + ((Guest) winner).get_name() + " wins");
-			else System.out.println("Guest busts\nDealer wins");
+			if(winner instanceof Guest) System.out.println("Dealer busts\nWinner: Guest");
+			else System.out.println("Guest busts\nWinner: Dealer");
 		}
 		else {
-			if(winner instanceof Guest) System.out.println(((Guest) winner).get_name() + " wins");
-			else System.out.println("Dealer wins");
+			if(winner instanceof Guest) System.out.println("Winner: Guest");
+			else System.out.println("Winner: Dealer");
 		}
 	}
 
