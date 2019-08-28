@@ -14,7 +14,6 @@ public class Tests extends TestCase {
 	 *********/
 	Dealer dealer = new Dealer();
 	Deck deck = new Deck();
-	Game game = new Game();
 	Guest guest = new Guest();
 	HashMap<String, Card> cards = new HashMap<>(52);
 

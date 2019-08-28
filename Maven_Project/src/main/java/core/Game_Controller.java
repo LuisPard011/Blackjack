@@ -4,19 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Game_Controller {
-
-	/************************
-	 * INSTANCE VARIABLE(S) *
-	 ************************/
-	private String mode;
-	private Game game;
-
-	/******************
-	 * CONSTRUCTOR(S) *
-	 ******************/
-	public Game_Controller() {
-		mode = "";
-	}
+	
+	/*********************
+	 * CLASS VARIABLE(S) *
+	 *********************/
+	protected final static int draw_times = 2;
 
 	/********
 	 * ELSE *
@@ -29,25 +21,26 @@ public class Game_Controller {
 	 */
 	public void start() throws FileNotFoundException, IOException {
 		View.welcome();
-		mode = View.console_or_file_input();
+		String mode = View.console_or_file_input();
 		
 		boolean continue_playing = true;
 		
 		while(continue_playing) {
 			switch(mode) {
 			case "c":
-				game = new Game_Console();
+				Game_Console game_console = new Game_Console();
+				game_console.play();
 				break;
 			case "f":
-				game = new Game_File_Input();
+				Game_File_Input game_file_input = new Game_File_Input();
+				game_file_input.play();
 				break;
 			default:
 				View.inavlid_input();
 				start();
 				return;
 			}
-			
-			game.play();
+
 			continue_playing = View.continue_playing();
 		}
 
