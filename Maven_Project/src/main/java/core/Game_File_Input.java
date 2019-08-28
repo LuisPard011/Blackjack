@@ -5,9 +5,7 @@ import java.io.IOException;
 
 public class Game_File_Input extends Game {
 
-	public Game_File_Input() {
-		super();
-	}
+	public Game_File_Input() { super(); }
 
 	/**
 	 * Play using file input.
