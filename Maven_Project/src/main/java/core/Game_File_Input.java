@@ -3,9 +3,9 @@ package core;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class File_Game extends Game {
+public class Game_File_Input extends Game {
 	
-	public File_Game() {
+	public Game_File_Input() {
 		super();
 	}
 	

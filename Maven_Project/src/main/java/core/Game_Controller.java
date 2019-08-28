@@ -38,10 +38,10 @@ public class Game_Controller {
 		while(continue_playing) {
 			switch(mode) {
 			case "c":
-				game = new Console_Game();
+				game = new Game_Console();
 				break;
 			case "f":
-				game = new File_Game();
+				game = new Game_File_Input();
 				break;
 			default:
 				View.inavlid_input();
@@ -54,30 +54,18 @@ public class Game_Controller {
 		}
 
 	}
-
+	
 	/**
-	 * User menu to decide whether or not to continue playing.
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
+	 * Routine for a turn after splitting initial hand.
+	 * @param deck to draw from
+	 * @param guest whose turn it is
 	 */
-	public boolean continue_playing() throws FileNotFoundException, IOException {
-		View.divider();
-		System.out.print("Continue playing? (y/n): ");
-		String continue_play = View.scanner.next();
+	public void split_turn(Deck deck, Guest guest) {
+		guest.hit(deck, 1, guest.get_split_hand_1());
+		hit_or_stand(deck, guest.get_split_hand_1(), guest);
 
-		switch(continue_play) {
-		case "y":
-			return true;
-		case "n":
-			System.out.println("Thanks for playing");
-			break;
-		default:
-			View.inavlid_input();
-			continue_playing();
-			break;
-		}
-		
-		return false;
+		guest.hit(deck, 1, guest.get_split_hand_2());
+		hit_or_stand(deck, guest.get_split_hand_2(), guest);
 	}
 	
 }

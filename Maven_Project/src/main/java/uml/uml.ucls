@@ -92,8 +92,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="core.File_Game" project="Maven_Project" 
-    file="/Maven_Project/src/main/java/core/File_Game.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="core.Game_File_Input" project="Maven_Project" 
+    file="/Maven_Project/src/main/java/core/Game_File_Input.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="539" y="59"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -101,8 +101,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="core.Console_Game" project="Maven_Project" 
-    file="/Maven_Project/src/main/java/core/Console_Game.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="core.Game_Console" project="Maven_Project" 
+    file="/Maven_Project/src/main/java/core/Game_Console.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="784" y="63"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
