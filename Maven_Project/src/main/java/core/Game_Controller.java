@@ -29,9 +29,7 @@ public class Game_Controller {
 	 */
 	public void start() throws FileNotFoundException, IOException {
 		View.welcome();
-
-		System.out.println("Would you like to play using console or file input? (c/f): ");
-		mode = View.scanner.next();
+		mode = View.console_or_file_input();
 		
 		boolean continue_playing = true;
 		
@@ -50,22 +48,9 @@ public class Game_Controller {
 			}
 			
 			game.play();
-			continue_playing = continue_playing();
+			continue_playing = View.continue_playing();
 		}
 
-	}
-	
-	/**
-	 * Routine for a turn after splitting initial hand.
-	 * @param deck to draw from
-	 * @param guest whose turn it is
-	 */
-	public void split_turn(Deck deck, Guest guest) {
-		guest.hit(deck, 1, guest.get_split_hand_1());
-		hit_or_stand(deck, guest.get_split_hand_1(), guest);
-
-		guest.hit(deck, 1, guest.get_split_hand_2());
-		hit_or_stand(deck, guest.get_split_hand_2(), guest);
 	}
 	
 }

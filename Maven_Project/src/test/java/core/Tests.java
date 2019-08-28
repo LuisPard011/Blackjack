@@ -219,7 +219,7 @@ public class Tests extends TestCase {
 
 		dealer.get_default_hand().get_cards().add(cards.get("C8"));
 
-		game.determine_winner(guest, dealer);
+		Winner_Caller.determine_winner(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 
@@ -353,7 +353,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("DK"));
 		dealer.get_default_hand().get_cards().add(cards.get("SK"));
 
-		game.determine_winner(guest, dealer);
+		Winner_Caller.determine_winner(guest, dealer);
 
 		assertTrue(dealer.get_default_hand().bust());
 		assertTrue(guest.get_winner());
@@ -551,7 +551,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("S6"));
 		dealer.get_default_hand().get_cards().add(cards.get("S9"));
 
-		assertTrue(game.blackjack_win(guest, dealer));
+		assertTrue(Winner_Caller.blackjack_win(guest, dealer));
 		assertTrue(guest.get_winner());
 	}
 
@@ -570,7 +570,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("S6"));
 		dealer.get_default_hand().get_cards().add(cards.get("H10")); 	// ten
 
-		game.blackjack_win(guest, dealer);
+		Winner_Caller.blackjack_win(guest, dealer);
 		assertTrue(dealer.get_winner());
 		dealer.get_default_hand().get_cards().clear();
 
@@ -582,7 +582,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("DA"));	// ace
 		dealer.get_default_hand().get_cards().add(cards.get("S9"));
 
-		game.blackjack_win(guest, dealer);
+		Winner_Caller.blackjack_win(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 
@@ -634,7 +634,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("CK"));
 		dealer.get_default_hand().get_cards().add(cards.get("S6"));
 
-		game.determine_winner(guest, dealer);
+		Winner_Caller.determine_winner(guest, dealer);
 		assertTrue(guest.get_winner());
 	}
 
@@ -651,7 +651,7 @@ public class Tests extends TestCase {
 		dealer.get_default_hand().get_cards().add(cards.get("CK"));
 		dealer.get_default_hand().get_cards().add(cards.get("S6"));
 
-		game.determine_winner(guest, dealer);
+		Winner_Caller.determine_winner(guest, dealer);
 		assertTrue(dealer.get_winner());
 	}
 
@@ -676,7 +676,7 @@ public class Tests extends TestCase {
 	//			game.split_turn(deck_1, guest);
 	//		}
 	//
-	//		game.determine_winner(guest, dealer);
+	//		Winner_Caller.determine_winner(guest, dealer);
 	//	}
 
 	/**
@@ -701,7 +701,7 @@ public class Tests extends TestCase {
 	//			dealer.dealer_turn(deck_1, dealer.get_split_hand_2());
 	//		}
 	//
-	//		game.determine_winner(guest, dealer);
+	//		Winner_Caller.determine_winner(guest, dealer);
 	//	}
 
 }

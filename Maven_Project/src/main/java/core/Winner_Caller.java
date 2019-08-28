@@ -1,6 +1,6 @@
 package core;
 
-public class Handler_Win {
+public class Winner_Caller {
 	
 	/**
 	 * Determine game's winner.

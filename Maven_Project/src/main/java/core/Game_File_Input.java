@@ -20,42 +20,7 @@ public class Game_File_Input extends Game {
 
 		// Read file input
 		Reader reader = new Reader();
-		String[] input_line;
-
-		// File paths
-		int path_to_play;
-		String[] paths = new String[] {
-				"src\\main\\java\\input_files\\Input_File_1.txt",
-				"src\\main\\java\\input_files\\Input_File_2.txt",
-				"src\\main\\java\\input_files\\Input_File_3.txt",
-				"src\\main\\java\\input_files\\Input_File_4.txt",
-				"src\\main\\java\\input_files\\Input_File_5.txt"};
-
-		System.out.println("Note: Features to support paths 4 and 5 have not been implemented.\nWhat path would you like to play? [1-5]: ");
-		path_to_play = View.scanner.nextInt();
-
-		switch(path_to_play) {
-		case 1:
-			input_line = reader.read_file_input(paths[0]);
-			break;
-		case 2:
-			input_line = reader.read_file_input(paths[1]);
-			break;
-		case 3:
-			input_line = reader.read_file_input(paths[2]);
-			break;
-		case 4:
-			input_line = reader.read_file_input(paths[3]);
-			break;
-		case 5:
-			input_line = reader.read_file_input(paths[4]);
-			break;
-		default:
-			System.out.println("That path does not exist.\nPlease try again.\nThis time only choose a path within the range [1-5], inclusive");
-			play();
-			return;
-		}
-
+		String[] input_line = reader.read_file_input(View.select_file_input_path());
 		View.divider();
 
 		// Draw player's first two cards
@@ -84,7 +49,7 @@ public class Game_File_Input extends Game {
 			}
 
 		// End game
-		determine_winner(get_guest(), get_dealer());
+		Winner_Caller.determine_winner(get_guest(), get_dealer());
 	}
 
 }
