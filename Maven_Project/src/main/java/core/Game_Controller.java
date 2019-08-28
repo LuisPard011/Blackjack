@@ -5,11 +5,6 @@ import java.io.IOException;
 
 public class Game_Controller {
 	
-	/*********************
-	 * CLASS VARIABLE(S) *
-	 *********************/
-	protected final static int draw_times = 2;
-
 	/********
 	 * ELSE *
 	 ********/
@@ -44,6 +39,19 @@ public class Game_Controller {
 			continue_playing = View.continue_playing();
 		}
 
+	}
+	
+	/**
+	 * Routine for a turn after splitting initial hand.
+	 * @param deck to draw from
+	 * @param guest whose turn it is
+	 */
+	public static void split_turn(Deck deck, Guest guest) {
+		guest.hit(deck, 1, guest.get_split_hand_1());
+		View.hit_or_stand(deck, guest.get_split_hand_1(), guest);
+
+		guest.hit(deck, 1, guest.get_split_hand_2());
+		View.hit_or_stand(deck, guest.get_split_hand_2(), guest);
 	}
 	
 }

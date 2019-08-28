@@ -3,7 +3,14 @@ package core;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class Game_Console {
+public class Game_Console extends Game{
+	
+	private Deck deck;
+	
+	public Game_Console() {
+		super();
+		deck = new Deck();
+	}
 	
 	/**
 	 * Play using console input.
@@ -11,47 +18,43 @@ public class Game_Console {
 	 * @throws FileNotFoundException 
 	 */
 	public void play() throws FileNotFoundException, IOException {
-		Dealer dealer = new Dealer();
-		Deck deck = new Deck();
-		Guest guest = new Guest();
-		
 		View.divider();
 
 		// Guest setup
-		guest.hit(deck, Game_Controller.draw_times, guest.get_default_hand());
-		View.hand(guest, guest.get_default_hand());
+		get_guest().hit(deck, draw_times, get_guest().get_default_hand());
+		View.hand(get_guest(), get_guest().get_default_hand());
 
 		// Dealer setup
-		dealer.hit(deck, Game_Controller.draw_times, dealer.get_default_hand());
-		View.dealers_first_card(dealer);
+		get_dealer().hit(deck, draw_times, get_dealer().get_default_hand());
+		View.dealers_first_card(get_dealer());
 
-		Winner_Caller.blackjack_win(guest, dealer);
+		Winner_Caller.blackjack_win(get_guest(), get_dealer());
 
 		game:
-			if(!guest.get_winner() && !dealer.get_winner()) {
+			if(!get_guest().get_winner() && !get_dealer().get_winner()) {
 				// Guest's turn
-				if(guest.can_split() && View.choose_split(guest)) {
-					guest.split_hand();
-					No_Name.split_turn(deck, guest);
+				if(get_guest().can_split() && View.choose_split(get_guest())) {
+					get_guest().split_hand();
+					Game_Controller.split_turn(deck, get_guest());
 				}
-				else View.hit_or_stand(deck, guest.get_default_hand(), guest);
+				else View.hit_or_stand(deck, get_guest().get_default_hand(), get_guest());
 
-				if(Winner_Caller.blackjack_win(guest, dealer)) break game;
+				if(Winner_Caller.blackjack_win(get_guest(), get_dealer())) break game;
 
 				// Dealer's turn
-				if(!guest.completely_bust()) {
-					View.hand(dealer, dealer.get_default_hand());
-					if(dealer.can_split() && View.choose_split(dealer)) {
-						dealer.split_hand();
-						dealer.dealer_turn(deck, dealer.get_split_hand_1());
-						dealer.dealer_turn(deck, dealer.get_split_hand_2());
+				if(!get_guest().completely_bust()) {
+					View.hand(get_dealer(), get_dealer().get_default_hand());
+					if(get_dealer().can_split() && View.choose_split(get_dealer())) {
+						get_dealer().split_hand();
+						get_dealer().dealer_turn(deck, get_dealer().get_split_hand_1());
+						get_dealer().dealer_turn(deck, get_dealer().get_split_hand_2());
 					}
-					else dealer.dealer_turn(deck, dealer.get_default_hand());
+					else get_dealer().dealer_turn(deck, get_dealer().get_default_hand());
 				}
 			}
 
 		// End game
-		Winner_Caller.determine_winner(guest, dealer);
+		Winner_Caller.determine_winner(get_guest(), get_dealer());
 	}
 
 }

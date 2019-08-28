@@ -1,6 +1,5 @@
 package core;
 
-public class Guest extends Player{
+public class Guest extends Player {
 
-	
 }
