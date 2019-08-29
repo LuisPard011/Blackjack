@@ -25,6 +25,7 @@ public class Game_File_Input extends Game {
 
 		boolean guest_turn = true;
 		int counter = 0;
+		int guest_counter = 0;
 		input:
 			for(int i = 4; i < input_line.length; i++) { // Go through rest of the input
 				if(counter > 0) {
@@ -38,15 +39,54 @@ public class Game_File_Input extends Game {
 					}
 				}
 				
+				if(guest_counter > 0) {
+					if(guest_counter == input_line.length) {
+						Winner_Caller.determine_winner(get_guest(), get_dealer());
+						return;
+					}
+					else {
+						guest_counter--;
+						continue;
+					}
+				}
+				
 				if(input_line[i].length() == 1) {
-					switch(input_line[i].charAt(0)) {
-					case 'S': // Stand
+					switch(input_line[i]) {
+					case "S": // Stand
 						guest_turn = guest_turn ? false : true;
 						continue input;
-					case 'H': // Hit
+					case "H": // Hit
 						continue input;
-					case 'D': // Split
+					case "D": // Split
 						get_guest().split_hand();
+						guest_counter = i+1;
+						reader.add_card_from_input(input_line[guest_counter], get_guest().get_split_hand_1());
+						guest_counter += 1;
+						
+						// input_line[guest_counter] now is either H or S
+						if(input_line[guest_counter].equalsIgnoreCase("h")) {
+							guest_counter += 1; // split hand 1
+							while(!input_line[guest_counter].equalsIgnoreCase("s") || get_guest().get_split_hand_1().get_score() > 21) { // Until bust or stand
+								reader.add_card_from_input(input_line[guest_counter], get_guest().get_split_hand_1());
+								guest_counter += 1;
+							}
+							if(get_guest().get_split_hand_1().bust()) { // Exited while loop because of a bust
+								reader.add_card_from_input(input_line[guest_counter], get_guest().get_split_hand_2());
+							}
+							else { // Exited while loop because player chose to stand, move on to split hand 2
+								guest_counter += 1; // Skip the S and draw
+								reader.add_card_from_input(input_line[guest_counter], get_guest().get_split_hand_2()); // draw
+								guest_counter += 1; // Move on to next command
+								if(input_line[guest_counter].equalsIgnoreCase("h")) {
+									guest_counter += 1;
+									while(!input_line[guest_counter].equalsIgnoreCase("s") || get_guest().get_split_hand_2().get_score() > 21) { // Until bust or stand
+										reader.add_card_from_input(input_line[guest_counter], get_guest().get_split_hand_2());
+										guest_counter += 1;
+									}
+								}		
+							}
+						}
+						
 						continue input;
 					}
 				}
