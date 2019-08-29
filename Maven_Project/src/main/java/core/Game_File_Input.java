@@ -23,10 +23,21 @@ public class Game_File_Input extends Game {
 		// Draw dealer's first two cards
 		for(int i = draw_times; i < 4; i++) reader.add_card_from_input(input_line[i], get_dealer().get_default_hand());
 
-		// Go through rest of the input
 		boolean guest_turn = true;
+		int counter = 0;
 		input:
-			for(int i = 4; i < input_line.length; i++) {
+			for(int i = 4; i < input_line.length; i++) { // Go through rest of the input
+				if(counter > 0) {
+					if(counter == input_line.length) {
+						Winner_Caller.determine_winner(get_guest(), get_dealer());
+						return;
+					}
+					else {
+						counter--;
+						continue;
+					}
+				}
+				
 				if(input_line[i].length() == 1) {
 					switch(input_line[i].charAt(0)) {
 					case 'S': // Stand
@@ -35,12 +46,27 @@ public class Game_File_Input extends Game {
 					case 'H': // Hit
 						continue input;
 					case 'D': // Split
+						get_guest().split_hand();
 						continue input;
 					}
 				}
 
 				if(guest_turn) reader.add_card_from_input(input_line[i], get_guest().get_default_hand());
-				else reader.add_card_from_input(input_line[i], get_dealer().get_default_hand());
+				else {
+					if(get_dealer().can_split()) {
+						get_dealer().split_hand();
+						counter = i;
+						while (get_dealer().get_split_hand_1().get_score() <= 16 || get_dealer().get_split_hand_1().soft_17()) {
+							reader.add_card_from_input(input_line[counter], get_dealer().get_split_hand_1());
+							counter++;
+						}
+						while (get_dealer().get_split_hand_2().get_score() <= 16 || get_dealer().get_split_hand_2().soft_17()) {
+							reader.add_card_from_input(input_line[counter], get_dealer().get_split_hand_2());
+							counter++;
+						}
+					}
+					else reader.add_card_from_input(input_line[i], get_dealer().get_default_hand());
+				}
 			}
 
 		// End game

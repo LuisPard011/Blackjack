@@ -72,6 +72,7 @@ public class Player {
 	public void split_hand() {
 		split_hand_1.get_cards().add(default_hand.get_cards().get(0));
 		split_hand_2.get_cards().add(default_hand.get_cards().get(1));
+		splitted = true;
 	}
 
 	/**
